@@ -6,52 +6,60 @@ import { phoneNumber, businessPhone, telHref } from "@/lib/site-config";
 
 export default function Footer() {
   return (
-    <footer className="bg-att-gray-50 border-t border-att-gray-200" role="contentinfo">
-      <div className="att-container py-12">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-8">
-          <div className="col-span-2 md:col-span-2">
+    <footer className="bg-att-dark text-white" role="contentinfo">
+      <div className="att-container py-14">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-10">
+          <div className="col-span-2">
             <Image
-              src="/images/att-preferred-dealer.png"
+              src="/images/att-preferred-dealer-white.png"
               alt="AT&T Preferred Dealer"
-              width={180}
-              height={45}
-              className="h-9 w-auto mb-3"
+              width={600}
+              height={269}
+              className="h-11 w-auto mb-4"
             />
-            <p className="text-sm text-att-gray-600 max-w-xs mb-3">
-              An AT&T Preferred Dealer helping households and businesses find the right AT&T Fiber, Internet Air, and Wireless plan.
+            <p className="text-white/70 text-sm max-w-xs mb-4 leading-relaxed">
+              An AT&amp;T Preferred Dealer helping households and businesses find the right
+              AT&amp;T Fiber, Internet Air, and Wireless plan.
             </p>
-            <a href={telHref(phoneNumber)} className="text-sm font-semibold text-att-blue hover:underline">
-              Call {phoneNumber}
+            <a href={telHref(phoneNumber)} className="font-bold text-white hover:text-att-sky text-lg">
+              {phoneNumber}
             </a>
-            <p className="text-xs text-att-gray-500 mt-1">Available 24/7</p>
+            <p className="text-white/60 text-sm mt-1">Available 24/7</p>
           </div>
+
           <div>
-            <h4 className="font-semibold text-att-gray-900 mb-4">AT&T Services</h4>
-            <ul className="space-y-2 text-sm text-att-gray-600">
-              <li><Link href="/" className="hover:underline">Internet</Link></li>
-              <li><Link href="/att-internet-air" className="hover:underline">AT&T Internet Air</Link></li>
-              <li><Link href="/wireless" className="hover:underline">Wireless Phone</Link></li>
-              <li><Link href="/business" className="hover:underline">Business</Link></li>
+            <h3 className="font-bold text-white mb-4 text-base">AT&amp;T Services</h3>
+            <ul className="space-y-2.5 text-sm text-white/70">
+              <li><Link href="/" className="hover:text-white">Internet</Link></li>
+              <li><Link href="/att-internet-air" className="hover:text-white">AT&amp;T Internet Air</Link></li>
+              <li><Link href="/wireless" className="hover:text-white">Wireless Phone</Link></li>
+              <li><Link href="/business" className="hover:text-white">Business</Link></li>
             </ul>
           </div>
+
           <div>
-            <h4 className="font-semibold text-att-gray-900 mb-4">Support</h4>
-            <ul className="space-y-2 text-sm text-att-gray-600">
-              <li><a href={telHref(phoneNumber)} className="hover:underline">Call {phoneNumber}</a></li>
-              <li><a href={telHref(businessPhone)} className="hover:underline">Business: {businessPhone}</a></li>
-              <li><Link href="/faq" className="hover:underline">FAQ</Link></li>
+            <h3 className="font-bold text-white mb-4 text-base">Support</h3>
+            <ul className="space-y-2.5 text-sm text-white/70">
+              <li><a href={telHref(phoneNumber)} className="hover:text-white">Call {phoneNumber}</a></li>
+              <li><a href={telHref(businessPhone)} className="hover:text-white">Business: {businessPhone}</a></li>
+              <li><Link href="/faq" className="hover:text-white">FAQ</Link></li>
             </ul>
           </div>
+
           <div>
-            <h4 className="font-semibold text-att-gray-900 mb-4">Legal</h4>
-            <ul className="space-y-2 text-sm text-att-gray-600">
-              <li><Link href="/privacy" className="hover:underline">Privacy Policy</Link></li>
-              <li><Link href="/espanol" className="hover:underline">ESPAÑOL</Link></li>
+            <h3 className="font-bold text-white mb-4 text-base">Legal</h3>
+            <ul className="space-y-2.5 text-sm text-white/70">
+              <li><Link href="/privacy" className="hover:text-white">Privacy Policy</Link></li>
+              <li><Link href="/espanol" className="hover:text-white">ESPAÑOL</Link></li>
             </ul>
           </div>
         </div>
-        <div className="pt-8 border-t border-att-gray-200 text-sm text-att-gray-500">
-          <p>AT&T and globe logo are registered trademarks of AT&T Intellectual Property. © 2026 AT&T Intellectual Property. All rights reserved.</p>
+
+        <div className="pt-8 border-t border-white/15 text-white/55 text-[13px] leading-relaxed">
+          <p>
+            AT&amp;T and the globe logo are registered trademarks of AT&amp;T Intellectual Property.
+            © 2026 AT&amp;T Intellectual Property. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>

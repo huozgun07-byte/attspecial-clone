@@ -1,56 +1,80 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AvailabilityModal from "@/components/AvailabilityModal";
+import HeroPanel from "@/components/HeroPanel";
 import { IconPhone } from "@/components/Icons";
 import { phoneNumber, telHref } from "@/lib/site-config";
+
+const phones = ["iPhone 15 Pro", "Samsung Galaxy S24", "Google Pixel 8"];
 
 export default function WirelessPage() {
   const [showFormModal, setShowFormModal] = useState(false);
 
   return (
-    <div className="min-h-screen bg-white font-sans antialiased flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col">
       <Header />
 
       <main className="flex-1">
-        <section className="relative overflow-hidden py-16 sm:py-24" aria-labelledby="hero-title">
-          <Image
-            src="/images/hero-wireless.jpg"
-            alt=""
-            fill
-            priority
-            className="object-cover object-center"
-            aria-hidden="true"
-          />
-          <div className="absolute inset-0 bg-gray-900/70" aria-hidden="true" />
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 id="hero-title" className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">AT&T Wireless</h1>
-            <p className="text-xl text-gray-200 mb-8 max-w-3xl mx-auto">Get the best deals on the latest smartphones with America's most reliable 5G network.</p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button onClick={() => setShowFormModal(true)} className="w-full sm:w-auto bg-blue-700 text-white py-4 px-8 rounded-full font-semibold text-lg hover:bg-blue-800 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Shop Phones</button>
-              <a href={telHref(phoneNumber)} className="w-full sm:w-auto border-2 border-white text-white py-4 px-8 rounded-full font-semibold text-lg hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Call {phoneNumber}</a>
-            </div>
+        <HeroPanel image="/images/hero-wireless.jpg" imagePosition="object-[62%_center]">
+          <p className="att-eyebrow text-att-sky mb-3">AT&amp;T Wireless</p>
+          <h1 id="hero-title" className="att-display mb-5">
+            The latest phones on America&apos;s most reliable 5G network
+          </h1>
+          <p className="text-white/90 text-lg max-w-xl mb-8">
+            Unlimited plans, trade-in offers, and 5G coverage built for the whole family.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <button onClick={() => setShowFormModal(true)} className="btn-on-dark">
+              Shop phones
+            </button>
+            <a href={telHref(phoneNumber)} className="btn-outline-white">
+              Call {phoneNumber}
+            </a>
           </div>
-        </section>
+        </HeroPanel>
 
-        <section className="py-16 bg-white" aria-labelledby="phones-title">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12"><h2 id="phones-title" className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Popular Phones</h2></div>
-            <div className="grid md:grid-cols-3 gap-8" role="list">
-              {["iPhone 15 Pro", "Samsung Galaxy S24", "Google Pixel 8"].map((phone, i) => (
-                <article key={i} className="bg-white border border-gray-200 rounded-xl p-6 text-center hover:shadow-lg transition-shadow" role="listitem">
-                  <div className="icon-badge" aria-hidden="true">
-                    <IconPhone />
+        <section className="att-section bg-white" aria-labelledby="phones-title">
+          <div className="att-container">
+            <div className="text-center mb-10 sm:mb-12">
+              <h2 id="phones-title" className="att-h2">Popular phones</h2>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6" role="list">
+              {phones.map((phone) => (
+                <article key={phone} className="plan-card" role="listitem">
+                  <div className="plan-body text-center">
+                    <div className="icon-badge" aria-hidden="true">
+                      <IconPhone />
+                    </div>
+                    <h3 className="feature-title mb-2">{phone}</h3>
+                    <p className="text-att-gray-600 text-sm mb-6 flex-1">
+                      From $0/mo with eligible trade-in
+                    </p>
+                    <button onClick={() => setShowFormModal(true)} className="btn-secondary w-full">
+                      View deals
+                    </button>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{phone}</h3>
-                  <p className="text-gray-600 mb-4">From $0/mo with eligible trade-in</p>
-                  <button className="w-full bg-blue-700 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">View Deals</button>
                 </article>
               ))}
             </div>
+            <p className="att-fine text-att-gray-500 text-center mt-8 max-w-3xl mx-auto">
+              Trade-in offers require eligible device in good condition and qualifying unlimited plan.
+              Credits applied over 36 months. Limited time offer, subject to change.
+            </p>
+          </div>
+        </section>
+
+        <section className="att-section bg-att-gray-100" aria-labelledby="wireless-cta-title">
+          <div className="att-container text-center">
+            <h2 id="wireless-cta-title" className="att-h2 mb-3">Ready to switch?</h2>
+            <p className="att-lead mb-8 max-w-2xl mx-auto">
+              Talk to an AT&amp;T Preferred Dealer specialist and find the plan that fits your household.
+            </p>
+            <a href={telHref(phoneNumber)} className="btn-primary">
+              Call {phoneNumber}
+            </a>
           </div>
         </section>
       </main>

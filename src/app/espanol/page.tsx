@@ -5,37 +5,60 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AvailabilityModal from "@/components/AvailabilityModal";
 import { espanolAddressFormLabels } from "@/components/AddressForm";
+import { IconFiber, Icon5G, IconPhone } from "@/components/Icons";
 import { phoneNumber, telHref } from "@/lib/site-config";
+
+const servicios = [
+  { title: "AT&T Fiber", desc: "Velocidades simétricas ultra rápidas en una red 100% de fibra.", Icon: IconFiber },
+  { title: "AT&T Internet Air", desc: "Internet en casa sobre la red 5G de AT&T, sin contrato anual.", Icon: Icon5G },
+  { title: "Teléfono Inalámbrico", desc: "Planes ilimitados y los últimos teléfonos con cobertura 5G.", Icon: IconPhone },
+];
 
 export default function EspanolPage() {
   const [showFormModal, setShowFormModal] = useState(false);
 
   return (
-    <div className="min-h-screen bg-white font-sans antialiased flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col">
       <Header />
 
       <main className="flex-1">
-        <section className="relative bg-gradient-to-b from-blue-50 to-white py-16 sm:py-24" aria-labelledby="hero-title">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 id="hero-title" className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">AT&T en Español</h1>
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">Obtenga las mejores ofertas en Internet de fibra, telefonía inalámbrica y más. Soporte en español disponible 24/7.</p>
+        <section className="att-container pt-5 pb-10 sm:pt-7 sm:pb-12" aria-labelledby="hero-title">
+          <div className="surface-card px-6 py-14 sm:px-12 sm:py-20 text-center">
+            <p className="att-eyebrow text-att-navy mb-3">AT&amp;T Preferred Dealer</p>
+            <h1 id="hero-title" className="att-h2 mb-4 max-w-3xl mx-auto">AT&amp;T en Español</h1>
+            <p className="att-lead mb-8 max-w-2xl mx-auto">
+              Obtenga las mejores ofertas en Internet de fibra, telefonía inalámbrica y más.
+              Soporte en español disponible 24/7.
+            </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button onClick={() => setShowFormModal(true)} className="w-full sm:w-auto bg-blue-700 text-white py-4 px-8 rounded-lg font-semibold text-lg hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Ver Ofertas</button>
-              <a href={telHref(phoneNumber)} className="w-full sm:w-auto border-2 border-blue-700 text-blue-700 py-4 px-8 rounded-lg font-semibold text-lg hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Llame al {phoneNumber}</a>
+              <button onClick={() => setShowFormModal(true)} className="btn-primary">
+                Ver ofertas
+              </button>
+              <a href={telHref(phoneNumber)} className="btn-outline">
+                Llame al {phoneNumber}
+              </a>
             </div>
           </div>
         </section>
 
-        <section className="py-16 bg-white" aria-labelledby="services-title">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12"><h2 id="services-title" className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Servicios Disponibles</h2></div>
-            <div className="grid md:grid-cols-3 gap-8" role="list">
-              {["AT&T Fiber", "AT&T Internet Air", "Teléfono Inalámbrico"].map((service, i) => (
-                <article key={i} className="bg-white border border-gray-200 rounded-xl p-6 text-center hover:shadow-lg transition-shadow" role="listitem">
-                  <div className="text-4xl mb-4" aria-hidden="true">{i === 0 ? "🌐" : i === 1 ? "📶" : "📱"}</div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{service}</h3>
-                  <p className="text-gray-600 mb-4">Velocidades ultra rápidas, cobertura 5G, mejores planes</p>
-                  <button className="w-full bg-blue-700 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Más Info</button>
+        <section className="att-section bg-white" aria-labelledby="services-title">
+          <div className="att-container">
+            <div className="text-center mb-10 sm:mb-12">
+              <h2 id="services-title" className="att-h2">Servicios disponibles</h2>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6" role="list">
+              {servicios.map((servicio) => (
+                <article key={servicio.title} className="plan-card" role="listitem">
+                  <div className="plan-body text-center">
+                    <div className="icon-badge" aria-hidden="true">
+                      <servicio.Icon />
+                    </div>
+                    <h3 className="feature-title mb-2">{servicio.title}</h3>
+                    <p className="text-att-gray-600 text-sm mb-6 flex-1">{servicio.desc}</p>
+                    <button onClick={() => setShowFormModal(true)} className="btn-secondary w-full">
+                      Más info
+                    </button>
+                  </div>
                 </article>
               ))}
             </div>

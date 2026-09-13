@@ -96,7 +96,7 @@ export default function AddressForm({
       </div>
 
       <div>
-        <label htmlFor={`${idPrefix}-street`} className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor={`${idPrefix}-street`} className="label-text">
           {labels.street}
         </label>
         <input
@@ -105,19 +105,19 @@ export default function AddressForm({
           value={street}
           onChange={(e) => setStreet(e.target.value)}
           placeholder={labels.streetPlaceholder}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none disabled:bg-gray-100 disabled:text-gray-400"
+          className="input-field disabled:bg-att-gray-100 disabled:text-att-gray-400"
           required
           autoComplete="street-address"
           disabled={disabled}
         />
         {showHelpText && labels.streetHelp && (
-          <p className="text-xs text-gray-500 mt-1">{labels.streetHelp}</p>
+          <p className="helper-text">{labels.streetHelp}</p>
         )}
       </div>
 
       {showUnit && (
         <div>
-          <label htmlFor={`${idPrefix}-unit`} className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor={`${idPrefix}-unit`} className="label-text">
             {labels.unit}
           </label>
           <input
@@ -126,7 +126,7 @@ export default function AddressForm({
             value={unit}
             onChange={(e) => setUnit(e.target.value)}
             placeholder={labels.unitPlaceholder}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none disabled:bg-gray-100 disabled:text-gray-400"
+            className="input-field disabled:bg-att-gray-100 disabled:text-att-gray-400"
             autoComplete="address-line2"
             disabled={disabled}
           />
@@ -134,7 +134,7 @@ export default function AddressForm({
       )}
 
       <div>
-        <label htmlFor={`${idPrefix}-zip`} className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor={`${idPrefix}-zip`} className="label-text">
           {labels.zip}
         </label>
         <input
@@ -143,23 +143,23 @@ export default function AddressForm({
           value={zip}
           onChange={(e) => setZip(e.target.value)}
           placeholder={labels.zipPlaceholder}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none disabled:bg-gray-100 disabled:text-gray-400"
+          className="input-field disabled:bg-att-gray-100 disabled:text-att-gray-400"
           required
           autoComplete="postal-code"
           disabled={disabled}
         />
         {showHelpText && labels.zipHelp && (
-          <p className="text-xs text-gray-500 mt-1">{labels.zipHelp}</p>
+          <p className="helper-text">{labels.zipHelp}</p>
         )}
       </div>
 
       {showMoving && (
-        <label className="flex items-center gap-2 text-sm text-gray-600">
+        <label className="flex items-center gap-2.5 text-sm text-att-gray-700">
           <input
             type="checkbox"
             checked={moving}
             onChange={(e) => setMoving(e.target.checked)}
-            className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+            className="w-4 h-4 rounded border-att-gray-400 text-att-navy focus:ring-att-cyan"
             disabled={disabled}
           />
           {labels.moving}
@@ -169,7 +169,7 @@ export default function AddressForm({
       <button
         type="submit"
         disabled={disabled}
-        className="w-full bg-blue-700 text-white py-3 px-6 rounded-full font-semibold text-base hover:bg-blue-800 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed"
+        className="btn-primary w-full disabled:opacity-60 disabled:cursor-not-allowed"
       >
         {submitLabel}
       </button>

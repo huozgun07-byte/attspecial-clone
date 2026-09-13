@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import Modal from "@/components/Modal";
 import AddressCheckFlow from "@/components/AddressCheckFlow";
 import AvailabilityModal from "@/components/AvailabilityModal";
+import HeroSwoosh from "@/components/HeroSwoosh";
 import { AddressFormData } from "@/components/AddressForm";
 import { AvailabilityResponse } from "@/lib/api";
 import { IconFiber, IconContract, IconInstall, IconSupport } from "@/components/Icons";
@@ -34,66 +35,73 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-white font-sans antialiased flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col">
       <Header />
 
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="relative overflow-hidden att-section" aria-labelledby="hero-title">
-          <Image
-            src="/images/hero-family.jpg"
-            alt=""
-            fill
-            priority
-            className="object-cover object-center"
-            aria-hidden="true"
-          />
-          <div className="hero-overlay" aria-hidden="true" />
+        {/* ---------------- Hero ---------------- */}
+        <section className="att-container pt-5 pb-10 sm:pt-7 sm:pb-12" aria-labelledby="hero-title">
+          <div className="att-hero-shell">
+            <Image
+              src="/images/hero-family.jpg"
+              alt=""
+              fill
+              priority
+              sizes="(max-width: 1296px) 100vw, 1296px"
+              className="object-cover object-[68%_center]"
+              aria-hidden="true"
+            />
+            <div className="att-hero-scrim" aria-hidden="true" />
 
-          <div className="relative att-container">
-            <div className="grid lg:grid-cols-2 gap-12 items-start">
-              {/* Left Content */}
+            {/* AT&T brand swoosh, bottom-left — same motif as att.com / attspecial.com */}
+            <HeroSwoosh />
+
+            <div className="relative grid lg:grid-cols-[1.1fr_minmax(300px,410px)] gap-8 lg:gap-14 items-center p-6 sm:p-9 lg:p-12">
+              {/* Left — offer copy */}
               <div>
                 <Image
                   src="/images/att-fiber-logo-whtblue.png"
                   alt="AT&T Fiber"
                   width={170}
                   height={36}
-                  className="h-6 w-auto mb-5"
+                  className="h-7 w-auto mb-5"
                 />
-                <p className="text-att-cyan/90 font-semibold text-sm mb-4" role="status">
-                  Get a $200 Reward Card with purchase of an AT&T Fiber plan (300 Mbps or higher).
-                </p>
-                <h1 id="hero-title" className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-                  Get started with <br />
-                  <span className="text-att-cyan">AT&T Fiber® 1 Gig</span>
+                <h1 id="hero-title" className="att-display mb-5">
+                  Get started with <br className="hidden sm:block" />
+                  AT&amp;T Fiber<sup className="att-reg">®</sup> 1 Gig
                 </h1>
-                <div className="flex items-baseline gap-2 mb-2" aria-label="Price">
-                  <span className="text-4xl sm:text-5xl font-bold text-white">$50</span>
-                  <span className="text-att-gray-300">/mo*</span>
+
+                <div className="flex items-baseline gap-1.5 mb-1" aria-label="Price">
+                  <span className="text-white font-bold text-2xl sm:text-3xl">$</span>
+                  <span className="text-white font-bold text-5xl sm:text-6xl tracking-tight">50</span>
+                  <span className="text-white/90 text-lg">/mo*</span>
                 </div>
-                <p className="text-sm text-att-gray-200 mb-6">
-                  + taxes & fees for 12 mos. w/ elig AutoPay & Paperless bill
+                <p className="text-white font-bold text-base sm:text-lg mb-3">
+                  + taxes &amp; fees for 12 mos.
                 </p>
-                <p className="text-sm text-att-gray-200 mb-8">
-                  Price after discounts $30/mo for 12 mos new customers, and $10/mo AutoPay & Paperless bill. Discounts start w/in 3 bills.
-                  <a
-                    href="#modal-terms-1g"
-                    className="text-att-cyan font-medium hover:underline ml-1"
-                    onClick={(e) => { e.preventDefault(); setShowTermsModal("modal-terms-1g"); }}
-                  >
-                    See details
-                  </a>
-                </p>
+                <div className="text-white/85 max-w-xl space-y-0.5 att-fine">
+                  <p>w/ elig AutoPay &amp; Paperless bill. Ltd. avail/areas.</p>
+                  <p>
+                    Price after discounts $30/mo for 12 mos new customers, and $10/mo AutoPay &amp; Paperless bill. Discounts start w/in 3 bills.{" "}
+                    <a
+                      href="#modal-terms-1g"
+                      className="font-bold underline underline-offset-2 text-white hover:text-att-sky"
+                      onClick={(e) => { e.preventDefault(); setShowTermsModal("modal-terms-1g"); }}
+                    >
+                      See details
+                    </a>
+                  </p>
+                </div>
               </div>
 
-              {/* Right Side - Address Form */}
-              <div className="bg-white rounded-xl shadow-xl p-6 border border-att-gray-100" role="region" aria-label="Check availability">
-                <h3 className="text-lg font-semibold text-att-gray-900 mb-4">Find the best plan for you</h3>
+              {/* Right — availability card */}
+              <div className="att-hero-card" role="region" aria-label="Check availability">
+                <h2 className="att-h3 mb-4">Find the best plan for you</h2>
                 <AddressCheckFlow
                   idPrefix="hero"
                   source="home-hero"
                   submitLabel="Shop internet"
+                  showHelpText={false}
                   initialData={checkedAddress}
                   initialResult={checkedResult}
                   onResult={handleAddressResult}
@@ -103,62 +111,44 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Reward Card Promo Strip */}
-        <section className="py-12 bg-att-blue/5 border-b border-att-gray-200" aria-labelledby="reward-title">
-          <div className="att-container">
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-8 text-center sm:text-left">
+        {/* ---------------- Reward card ---------------- */}
+        <section className="att-container pb-14 sm:pb-16" aria-labelledby="reward-title">
+          <div className="surface-card p-6 sm:p-10">
+            <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
               <Image
                 src="/images/att-reward-card.png"
-                alt="AT&T Reward Card"
-                width={140}
-                height={90}
-                className="w-32 sm:w-40 flex-shrink-0"
+                alt="AT&T Visa Reward Card"
+                width={900}
+                height={594}
+                className="w-64 sm:w-80 md:w-[360px] flex-shrink-0 drop-shadow-md"
               />
-              <div>
-                <h2 id="reward-title" className="text-2xl sm:text-3xl font-bold text-att-gray-900 mb-1">
-                  Get a $250 AT&T Visa® Reward Card
+              <div className="text-center md:text-left">
+                <h2 id="reward-title" className="att-h2 mb-3">
+                  Get a $250 AT&amp;T Visa<sup className="att-reg">®</sup> Reward Card
                 </h2>
-                <p className="text-base sm:text-lg text-att-gray-600">
-                  with purchase of AT&T Fiber.{" "}
-                  <a
-                    href="#modal-terms-250-visa"
-                    className="text-att-blue font-semibold hover:underline"
-                    onClick={(e) => { e.preventDefault(); setShowRewardModal("modal-terms-250-visa"); }}
-                  >
-                    See details.
-                  </a>
+                <p className="att-lead mb-4">
+                  with purchase of AT&amp;T Fiber. Redemption required.
                 </p>
+                <a
+                  href="#modal-terms-250-visa"
+                  className="text-att-navy font-bold underline underline-offset-2 hover:text-att-navy-dark"
+                  onClick={(e) => { e.preventDefault(); setShowRewardModal("modal-terms-250-visa"); }}
+                >
+                  See details
+                </a>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Why AT&T Fiber Section */}
-        <section className="att-section bg-att-gray-50 border-y border-att-gray-200" aria-labelledby="why-title">
+        {/* ---------------- Plans ---------------- */}
+        <section className="att-section bg-white border-t border-att-gray-200" aria-labelledby="plans-title">
           <div className="att-container">
-            <div className="text-center mb-12">
-              <h2 id="why-title" className="text-3xl sm:text-4xl font-bold text-att-gray-900 mb-3">
-                Why choose AT&T Fiber
-              </h2>
-              <p className="text-att-gray-600 max-w-2xl mx-auto">
-                A 100% fiber network built for how your household actually uses the internet.
+            <div className="text-center mb-10 sm:mb-12">
+              <h2 id="plans-title" className="att-h2 mb-3">Find the best plan for you</h2>
+              <p className="att-lead max-w-2xl mx-auto">
+                Symmetrical speeds on a 100% fiber network, with no annual contract on eligible plans.
               </p>
-            </div>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
-              {features.map((feature) => (
-                <FeatureCard key={feature.title} feature={feature} />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Plans Section */}
-        <section className="att-section bg-white" aria-labelledby="plans-title">
-          <div className="att-container">
-            <div className="text-center mb-12">
-              <h2 id="plans-title" className="text-3xl sm:text-4xl font-bold text-att-gray-900 mb-4">
-                Find the best plan for you
-              </h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" role="list">
@@ -172,25 +162,39 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Disclaimer */}
-            <div className="mt-12 text-xs text-att-gray-500 max-w-3xl mx-auto space-y-2" role="contentinfo">
+            <div className="mt-10 att-fine text-att-gray-500 max-w-3xl mx-auto space-y-2" role="contentinfo">
               <p>† Speed based on wired connection. Actual speeds may vary. For 5GIG, single device wired speed maximum 4.7Gbps. For more info, go to www.att.com/speed101.</p>
-              <p>* Limited time offer. Subject to change. New AT&T Fiber customers will receive a discount for 12 months off the monthly recurring charge for an AT&T Fiber plan ($15/mo w/300M or 500M; $32/mo w/1 Gig or higher). Pay full plan cost until discount starts w/in 3 bills. After 12 mos, prevailing rate for fiber plan applies.</p>
+              <p>* Limited time offer. Subject to change. New AT&amp;T Fiber customers will receive a discount for 12 months off the monthly recurring charge for an AT&amp;T Fiber plan ($15/mo w/300M or 500M; $32/mo w/1 Gig or higher). Pay full plan cost until discount starts w/in 3 bills. After 12 mos, prevailing rate for fiber plan applies.</p>
             </div>
           </div>
         </section>
 
-        {/* How It Works Section */}
-        <section className="att-section bg-att-gray-50 border-t border-att-gray-200" aria-labelledby="steps-title">
+        {/* ---------------- Why AT&T Fiber ---------------- */}
+        <section className="att-section bg-att-gray-100" aria-labelledby="why-title">
           <div className="att-container">
-            <div className="text-center mb-12">
-              <h2 id="steps-title" className="text-3xl sm:text-4xl font-bold text-att-gray-900 mb-3">
-                Getting connected is easy
-              </h2>
+            <div className="text-center mb-10 sm:mb-12">
+              <h2 id="why-title" className="att-h2 mb-3">Why choose AT&amp;T Fiber</h2>
+              <p className="att-lead max-w-2xl mx-auto">
+                A 100% fiber network built for how your household actually uses the internet.
+              </p>
             </div>
-            <div className="grid sm:grid-cols-3 gap-10">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
+              {features.map((feature) => (
+                <FeatureCard key={feature.title} feature={feature} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ---------------- How it works ---------------- */}
+        <section className="att-section bg-white" aria-labelledby="steps-title">
+          <div className="att-container">
+            <div className="text-center mb-10 sm:mb-12">
+              <h2 id="steps-title" className="att-h2">Getting connected is easy</h2>
+            </div>
+            <div className="grid sm:grid-cols-3 gap-8 sm:gap-10">
               {steps.map((step, i) => (
-                <div key={step.title} className="text-center sm:text-left">
+                <div key={step.title} className="surface-card p-6">
                   <div className="step-number" aria-hidden="true">{i + 1}</div>
                   <h3 className="step-title">{step.title}</h3>
                   <p className="step-desc">{step.desc}</p>
@@ -203,12 +207,12 @@ export default function Home() {
 
       <Footer />
 
-      {/* Modals */}
+      {/* ---------------- Modals ---------------- */}
       {showBusinessModal && (
         <Modal onClose={() => setShowBusinessModal(false)} title="Looking for great deals on AT&T Business?">
           <div className="text-center">
-            <h3 className="text-2xl font-bold text-att-gray-900 mb-4">Call Now</h3>
-            <a href={`tel:${businessPhone.replace(/\./g, "")}`} className="text-3xl font-bold text-att-blue hover:underline block mb-2">
+            <h3 className="att-h3 mb-4">Call Now</h3>
+            <a href={`tel:${businessPhone.replace(/\./g, "")}`} className="text-3xl font-bold text-att-navy hover:underline block mb-2">
               {businessPhone}
             </a>
             <p className="text-att-gray-600">{businessHours}</p>
@@ -230,11 +234,11 @@ export default function Home() {
       {showTermsModal && (
         <Modal onClose={() => setShowTermsModal(null)} title="Pricing & Discount Details" large>
           <div className="space-y-4 text-sm text-att-gray-600">
-            <p className="font-semibold">DISCOUNTED FIBER OFFER: Subj to change.</p>
-            <p>New AT&T Fiber customers will receive a discount for 12 months off the monthly recurring charge for an AT&T Fiber plan ($15/mo w/300M or 500M; $32/mo w/1 Gig or higher). Pay full plan cost until discount starts w/in 3 bills. After 12 mos, prevailing rate for fiber plan applies.</p>
-            <p className="font-semibold">Autopay & Paperless Bill Discount:</p>
-            <p>$10/mo if enrolled in Autopay & paperless billing w/ your bank account or the AT&T Points Plus® Card from Citi. Discount reduced to $5/mo when enrolled with a debit card. No discount if enrolled with any other credit card.</p>
-            <p className="font-semibold">Taxes & Fees:</p>
+            <p className="font-bold text-att-ink">DISCOUNTED FIBER OFFER: Subj to change.</p>
+            <p>New AT&amp;T Fiber customers will receive a discount for 12 months off the monthly recurring charge for an AT&amp;T Fiber plan ($15/mo w/300M or 500M; $32/mo w/1 Gig or higher). Pay full plan cost until discount starts w/in 3 bills. After 12 mos, prevailing rate for fiber plan applies.</p>
+            <p className="font-bold text-att-ink">Autopay &amp; Paperless Bill Discount:</p>
+            <p>$10/mo if enrolled in Autopay &amp; paperless billing w/ your bank account or the AT&amp;T Points Plus® Card from Citi. Discount reduced to $5/mo when enrolled with a debit card. No discount if enrolled with any other credit card.</p>
+            <p className="font-bold text-att-ink">Taxes &amp; Fees:</p>
             <p>Up to $99 installation fee may apply, plus tax where applicable. Monthly State Cost Recovery charge applies in NV, OH, TX.</p>
           </div>
         </Modal>
@@ -243,9 +247,9 @@ export default function Home() {
       {showRewardModal && (
         <Modal onClose={() => setShowRewardModal(null)} title="$250 AT&T Visa® Reward Card" large>
           <div className="space-y-4 text-sm text-att-gray-600">
-            <p className="font-semibold">$250 REWARD CARD OFFER: Limited time offer, subject to change.</p>
-            <p>$250 AT&T Visa® Reward Card for purchase of any AT&T Fiber speeds. For new residential AT&T Fiber customers who purchase through attspecial.com. Redemption req&apos;d. Employees and residents of select multi-dwelling units not eligible.</p>
-            <p className="text-xs text-att-gray-500">Card issued by The Bancorp Bank N.A., Member FDIC, pursuant to a license from Visa U.S.A. Inc.</p>
+            <p className="font-bold text-att-ink">$250 REWARD CARD OFFER: Limited time offer, subject to change.</p>
+            <p>$250 AT&amp;T Visa® Reward Card for purchase of any AT&amp;T Fiber speeds. For new residential AT&amp;T Fiber customers who purchase through attspecial.com. Redemption req&apos;d. Employees and residents of select multi-dwelling units not eligible.</p>
+            <p className="att-fine text-att-gray-500">Card issued by The Bancorp Bank N.A., Member FDIC, pursuant to a license from Visa U.S.A. Inc.</p>
           </div>
         </Modal>
       )}
@@ -271,12 +275,10 @@ function PlanCard({ plan, onCtaClick, onDetailsClick }: { plan: Plan; onCtaClick
     <article className={`plan-card ${plan.highlighted ? "plan-card-highlighted" : ""}`} role="listitem">
       <div className="plan-header">
         <span className="text-white font-bold tracking-wide text-sm uppercase">{plan.name}</span>
-        {plan.badge && (
-          <span className="plan-badge">{plan.badge}</span>
-        )}
+        {plan.badge && <span className="plan-badge">{plan.badge}</span>}
       </div>
       <div className="plan-body">
-        <p className="plan-label">AT&T Fiber</p>
+        <p className="plan-label">AT&amp;T Fiber</p>
         <div className="plan-speed">{plan.speed}</div>
         <div className="plan-price">
           <span className="plan-price-amount">{plan.price}</span>
@@ -292,7 +294,7 @@ function PlanCard({ plan, onCtaClick, onDetailsClick }: { plan: Plan; onCtaClick
         </a>
         <button
           onClick={onCtaClick}
-          className={`plan-cta ${plan.highlighted ? "plan-cta-primary" : "plan-cta-secondary"}`}
+          className={`w-full ${plan.highlighted ? "btn-primary" : "btn-secondary"}`}
         >
           {plan.cta}
         </button>

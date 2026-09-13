@@ -11,144 +11,119 @@ export default function Header() {
   const pathname = usePathname();
 
   return (
-    <>
-      {/* Top Bar */}
-      <div className="bg-att-dark-blue text-white py-2">
-        <div className="att-container flex justify-between items-center">
-          <div className="flex items-center gap-4 text-sm">
-            <span>Order AT&T today!</span>
-            <a href={telHref(phoneNumber)} className="font-bold hover:underline">
-              Call {phoneNumber}
+    <header className="bg-white sticky top-0 z-50">
+      {/* Row 1 — logo + call block (attspecial.com / att.com: all white, no colored bar) */}
+      <div className="att-container">
+        <div className="flex items-center justify-between gap-4 pt-4 pb-3 sm:pt-5">
+          <Link href="/" className="flex-shrink-0" aria-label="AT&T Preferred Dealer - Home">
+            <Image
+              src="/images/att-preferred-dealer.png"
+              alt="AT&T Preferred Dealer"
+              width={240}
+              height={100}
+              className="h-12 w-auto sm:h-14"
+              priority
+            />
+          </Link>
+
+          <div className="text-right leading-tight">
+            <p className="text-att-ink text-xs sm:text-sm">Order AT&amp;T today!</p>
+            <a
+              href={telHref(phoneNumber)}
+              className="block font-bold text-att-navy hover:text-att-navy-dark text-lg sm:text-2xl lg:text-[28px] tracking-tight"
+            >
+              <span className="hidden sm:inline">Call </span>{phoneNumber}
             </a>
-            <span className="hidden sm:inline">Available 24/7</span>
+            <p className="text-att-gray-600 text-xs sm:text-sm">Available 24/7</p>
           </div>
-          <Link href={pathname === "/espanol" ? "/" : "/espanol"} className="text-sm hover:underline">
+        </div>
+      </div>
+
+      {/* Row 2 — navigation */}
+      <div className="att-container">
+        <div className="flex items-center justify-between border-t border-att-gray-200 sm:border-t-0">
+          <nav className="hidden md:flex items-center gap-9 py-3" aria-label="Main navigation">
+            {navItems
+              .filter((item) => item.href !== "/espanol")
+              .map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className={`text-[15px] font-medium transition-colors ${
+                    pathname === item.href
+                      ? "text-att-navy"
+                      : "text-att-ink hover:text-att-navy"
+                  }`}
+                  aria-current={pathname === item.href ? "page" : undefined}
+                >
+                  {item.label}
+                </Link>
+              ))}
+          </nav>
+
+          {/* Mobile menu button */}
+          <button
+            className="md:hidden my-2 p-2 rounded-md text-att-ink hover:bg-att-gray-100 focus:outline-none focus:ring-2 focus:ring-att-cyan"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-menu"
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+              {mobileMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
+
+          <Link
+            href={pathname === "/espanol" ? "/" : "/espanol"}
+            className="py-3 text-[15px] font-medium text-att-ink hover:text-att-navy"
+          >
             {pathname === "/espanol" ? "ENGLISH" : "ESPAÑOL"}
           </Link>
         </div>
       </div>
 
-      {/* Header */}
-      <header className="bg-white border-b border-att-gray-200 sticky top-0 z-50">
-        <div className="att-container">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <Link href="/" className="flex-shrink-0" aria-label="AT&T Preferred Dealer - Home">
-              {/* Using the raster logo: the generated .svg version has an
-                  unescaped "&" in its "AT&T" text node, which is invalid XML
-                  and fails to render in the browser (that's what broke the
-                  header logo). The .png is the proven, working asset. */}
-              <Image
-                src="/images/att-preferred-dealer.png"
-                alt="AT&T Preferred Dealer"
-                width={220}
-                height={55}
-                className="h-12 w-auto sm:h-14"
-                priority
-              />
-            </Link>
+      <div className="border-b border-att-gray-200" />
 
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
-              {navItems.map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className={`text-sm font-medium transition-colors ${
-                    pathname === item.href
-                      ? "text-att-blue"
-                      : "text-att-gray-700 hover:text-att-blue"
-                  }`}
-                  aria-current={pathname === item.href ? "page" : undefined}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
-
-            {/* Mobile menu button */}
-            <button
-              className="md:hidden p-2 rounded-lg text-att-gray-700 hover:bg-att-gray-100 focus:outline-none focus:ring-2 focus:ring-att-cyan"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-expanded={mobileMenuOpen}
-              aria-controls="mobile-menu"
-              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                {mobileMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-
-            {/* CTA Buttons */}
-            <div className="flex items-center gap-3">
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div id="mobile-menu" className="md:hidden border-b border-att-gray-200 bg-white animate-slide-down">
+          <nav className="att-container py-3 flex flex-col" aria-label="Mobile navigation">
+            {navItems.map((item) => (
               <Link
-                href={telHref(phoneNumber)}
-                className="hidden sm:flex items-center gap-2 px-4 py-2 bg-att-blue text-white text-sm font-semibold rounded-full hover:bg-att-dark-blue transition-colors focus:outline-none focus:ring-2 focus:ring-att-cyan focus:ring-offset-2"
+                key={item.label}
+                href={item.href}
+                className={`px-1 py-3 text-base font-medium border-b border-att-gray-100 last:border-b-0 ${
+                  pathname === item.href ? "text-att-navy" : "text-att-ink"
+                }`}
+                onClick={() => setMobileMenuOpen(false)}
+                aria-current={pathname === item.href ? "page" : undefined}
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                </svg>
-                Call Now
+                {item.label}
               </Link>
-              <a
-                href={telHref(phoneNumber)}
-                className="text-att-blue font-bold text-sm hover:underline focus:outline-none focus:ring-2 focus:ring-att-cyan rounded"
-              >
-                {phoneNumber}
-              </a>
-            </div>
-          </div>
+            ))}
+            <Link
+              href={telHref(phoneNumber)}
+              className="btn-primary w-full mt-4"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Call {phoneNumber}
+            </Link>
+          </nav>
         </div>
-
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div id="mobile-menu" className="md:hidden py-4 border-t border-att-gray-200 animate-slide-down">
-            <nav className="flex flex-col gap-2" aria-label="Mobile navigation">
-              {navItems.map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className={`px-4 py-3 text-base font-medium rounded-lg transition-colors ${
-                    pathname === item.href
-                      ? "bg-att-blue/5 text-att-blue"
-                      : "text-att-gray-700 hover:bg-att-gray-50"
-                  }`}
-                  onClick={() => setMobileMenuOpen(false)}
-                  aria-current={pathname === item.href ? "page" : undefined}
-                >
-                  {item.label}
-                </Link>
-              ))}
-              <div className="pt-4 border-t border-att-gray-200 flex flex-col gap-3">
-                <Link
-                  href={telHref(phoneNumber)}
-                  className="flex items-center justify-center gap-2 px-4 py-3 bg-att-blue text-white font-semibold rounded-full hover:bg-att-dark-blue"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
-                  Call Now: {phoneNumber}
-                </Link>
-              </div>
-            </nav>
-          </div>
-        )}
-      </header>
+      )}
 
       <style jsx global>{`
         @keyframes slide-down {
-          from { opacity: 0; transform: translateY(-10px); }
+          from { opacity: 0; transform: translateY(-8px); }
           to { opacity: 1; transform: translateY(0); }
         }
-        .animate-slide-down {
-          animation: slide-down 0.2s ease-out;
-        }
+        .animate-slide-down { animation: slide-down 0.2s ease-out; }
       `}</style>
-    </>
+    </header>
   );
 }

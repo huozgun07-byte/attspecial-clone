@@ -69,28 +69,28 @@ export default function AddressCheckFlow({
     return (
       <div className="space-y-4">
         {checkedAddress?.street && (
-          <p className="text-xs text-gray-500">
-            Showing results for <span className="font-medium text-gray-700">{checkedAddress.street}{checkedAddress.zip ? `, ${checkedAddress.zip}` : ""}</span>.
+          <p className="text-xs text-att-gray-500">
+            Showing results for <span className="font-medium text-att-gray-700">{checkedAddress.street}{checkedAddress.zip ? `, ${checkedAddress.zip}` : ""}</span>.
           </p>
         )}
         <div
           className={`rounded-lg p-4 text-sm border ${
             result.available
-              ? "bg-green-50 text-green-800 border-green-200"
-              : "bg-amber-50 text-amber-800 border-amber-200"
+              ? "bg-white text-att-ink border-att-gray-300"
+              : "bg-white text-att-ink border-att-gray-300"
           }`}
           role="status"
         >
           {result.message}
         </div>
         {result.available && result.plans.length > 0 && (
-          <ul className="space-y-2 text-sm text-gray-700" role="list">
+          <ul className="space-y-2 text-sm text-att-gray-700" role="list">
             {result.plans.map((plan) => (
-              <li key={plan.name} className="flex justify-between border-b border-gray-100 pb-2">
+              <li key={plan.name} className="flex justify-between border-b border-att-gray-200 pb-2">
                 <span>
                   {plan.name} — {plan.speed}
                 </span>
-                <span className="font-semibold">${plan.price}/mo*</span>
+                <span className="font-bold">${plan.price}/mo*</span>
               </li>
             ))}
           </ul>
@@ -98,7 +98,7 @@ export default function AddressCheckFlow({
         <button
           type="button"
           onClick={() => setState({ status: "form" })}
-          className="text-blue-700 text-sm font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
+          className="text-att-navy text-sm font-bold underline underline-offset-2 hover:text-att-navy-dark focus:outline-none focus:ring-2 focus:ring-att-cyan rounded"
         >
           Check a different address
         </button>
@@ -119,7 +119,7 @@ export default function AddressCheckFlow({
         onSubmit={handleSubmit}
       />
       {state.status === "error" && (
-        <p className="text-sm text-red-600" role="alert">
+        <p className="text-sm text-red-700" role="alert">
           {state.message}
         </p>
       )}

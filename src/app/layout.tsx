@@ -75,12 +75,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://attspecial.com" />
-        <link rel="preload" as="image" href="/images/att-preferred-dealer.svg" />
-        <link rel="preload" as="image" href="/images/feature-fiber.svg" />
-        <link rel="preload" as="image" href="/images/feature-contract.svg" />
-        <link rel="preload" as="image" href="/images/feature-install.svg" />
-        <link rel="preload" as="image" href="/images/feature-support.svg" />
-        <link rel="preload" as="image" href="/images/att-reward-card.svg" />
+        <link rel="preload" as="image" href="/images/att-preferred-dealer.png" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
