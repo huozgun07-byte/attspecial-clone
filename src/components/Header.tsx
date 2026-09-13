@@ -44,11 +44,12 @@ export default function Header() {
             {/* Logo */}
             <Link href="/" className="flex-shrink-0" aria-label="AT&T Preferred Dealer - Home">
               <Image
-                src="https://attspecial.com/wp-content/uploads/2026/03/att_pref_deal_hz_lkp_rgb-1.png"
+                src="/images/att-preferred-dealer.svg"
                 alt="AT&T Preferred Dealer"
                 width={180}
                 height={45}
                 className="h-10 w-auto"
+                priority
               />
             </Link>
 

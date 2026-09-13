@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60">
+  <defs>
+    <linearGradient id="fiberBlue" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0067B5"/>
+      <stop offset="100%" style="stop-color:#004B87"/>
+    </linearGradient>
+    <linearGradient id="fiberWhite" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FFFFFF"/>
+      <stop offset="100%" style="stop-color:#E8F4FD"/>
+    </linearGradient>
+  </defs>
+  <!-- AT&T Globe -->
+  <circle cx="30" cy="30" r="24" fill="url(#fiberBlue)"/>
+  <path d="M14 30c0-8 6.5-14.5 16-14.5s16 6.5 16 14.5-6.5 14.5-16 14.5S14 38 14 30" fill="none" stroke="white" stroke-width="2.5"/>
+  <path d="M30 6L30 54" stroke="white" stroke-width="2.5"/>
+  <ellipse cx="30" cy="30" rx="15" ry="6" fill="none" stroke="white" stroke-width="1.5" opacity="0.5"/>
+  <!-- Fiber Text -->
+  <text x="65" y="40" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="bold" fill="url(#fiberBlue)">Fiber</text>
+  <text x="65" y="56" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#666">® 1 Gig</text>
+</svg>

@@ -42,7 +42,7 @@ export default function Footer() {
           <p>AT&T and globe logo are registered trademarks of AT&T Intellectual Property.</p>
           <div className="flex items-center gap-2">
             <Image
-              src="https://attspecial.com/wp-content/themes/attspecial-2021/assets/img/updater.svg"
+              src="/images/updater-logo.svg"
               alt="Powered by Updater"
               width={100}
               height={30}

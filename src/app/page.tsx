@@ -142,13 +142,14 @@ export default function Home() {
 
               {/* Right Side - Reward Card & Fiber Logo */}
               <div className="flex flex-col items-center gap-8">
-                <Image
-                  src="https://attspecial.com/wp-content/uploads/2022/06/ATT-RewardCard.png"
-                  alt="AT&T Reward Card"
-                  width={300}
-                  height={200}
-                  className="w-full max-w-md"
-                />
+<Image
+                src="/images/att-reward-card.svg"
+                alt="AT&T Reward Card"
+                width={400}
+                height={250}
+                className="w-full max-w-md"
+                priority
+              />
                 <div className="text-center">
                   <h3 className="text-xl font-bold text-gray-900 mb-2">Get a $250 AT&T Visa® Reward Card</h3>
                   <p className="text-sm text-gray-600 mb-4">with purchase of AT&T Fiber.</p>
