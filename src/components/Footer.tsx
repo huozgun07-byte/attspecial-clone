@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-
-const phoneNumber = "866.307.3525";
+import { phoneNumber, telHref } from "@/lib/site-config";
 
 export default function Footer() {
   return (
@@ -20,7 +19,7 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold text-gray-900 mb-4">Support</h4>
             <ul className="space-y-2 text-sm text-gray-600">
-              <li><a href={`tel:${phoneNumber.replace(/\./g, "")}`} className="hover:underline">Call {phoneNumber}</a></li>
+              <li><a href={telHref(phoneNumber)} className="hover:underline">Call {phoneNumber}</a></li>
               <li>Available 24/7</li>
             </ul>
           </div>

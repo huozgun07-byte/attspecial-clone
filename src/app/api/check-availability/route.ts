@@ -1,9 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
 
 export async function POST(request: NextRequest) {
   try {
+    const ip = getClientIp(request);
+    const { allowed } = rateLimit(`check-availability:${ip}`, 20, 10 * 60 * 1000);
+    if (!allowed) {
+      return NextResponse.json({ error: "Too many requests. Please try again in a few minutes." }, { status: 429 });
+    }
+
     const body = await request.json();
-    const { street, unit, zip, moving } = body;
+    const { street, unit, zip, moving, website } = body;
+
+    // Honeypot: real visitors never fill this hidden field in. Respond as if
+    // everything worked so the bot doesn't learn its submission was caught.
+    if (typeof website === "string" && website.trim() !== "") {
+      return NextResponse.json({
+        available: true,
+        message: "Great news! AT&T Fiber is available at your address.",
+        plans: [],
+      });
+    }
 
     // Validation
     if (!street || !zip) {

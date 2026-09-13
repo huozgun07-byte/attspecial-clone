@@ -1,13 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Modal from "@/components/Modal";
-
-const phoneNumber = "866.307.3525";
+import AvailabilityModal from "@/components/AvailabilityModal";
+import { phoneNumber, telHref } from "@/lib/site-config";
 
 export default function WirelessPage() {
   const [showFormModal, setShowFormModal] = useState(false);
@@ -23,7 +20,7 @@ export default function WirelessPage() {
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">Get the best deals on the latest smartphones with America's most reliable 5G network.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <button onClick={() => setShowFormModal(true)} className="w-full sm:w-auto bg-blue-700 text-white py-4 px-8 rounded-lg font-semibold text-lg hover:bg-blue-800 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Shop Phones</button>
-              <a href={`tel:${phoneNumber.replace(/\./g, "")}`} className="w-full sm:w-auto border-2 border-blue-700 text-blue-700 py-4 px-8 rounded-lg font-semibold text-lg hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Call {phoneNumber}</a>
+              <a href={telHref(phoneNumber)} className="w-full sm:w-auto border-2 border-blue-700 text-blue-700 py-4 px-8 rounded-lg font-semibold text-lg hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Call {phoneNumber}</a>
             </div>
           </div>
         </section>
@@ -48,13 +45,15 @@ export default function WirelessPage() {
       <Footer />
 
       {showFormModal && (
-        <Modal onClose={() => setShowFormModal(false)} title="Check For Deals">
-          <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); setShowFormModal(false); }}>
-            <div><label className="block text-sm font-medium text-gray-700 mb-1">Street Address*</label><input type="text" placeholder="35 Magnolia RD" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" required autoComplete="street-address" /></div>
-            <div><label className="block text-sm font-medium text-gray-700 mb-1">Zip Code*</label><input type="text" placeholder="23225" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" required autoComplete="postal-code" /></div>
-            <button type="submit" className="w-full bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-800">Shop Plans</button>
-          </form>
-        </Modal>
+        <AvailabilityModal
+          source="wireless"
+          title="Check For Deals"
+          submitLabel="Shop Plans"
+          showUnit={false}
+          showMoving={false}
+          showHelpText={false}
+          onClose={() => setShowFormModal(false)}
+        />
       )}
     </div>
   );

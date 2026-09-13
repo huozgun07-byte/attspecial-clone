@@ -1,54 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Modal from "@/components/Modal";
-
-const plans = [
-  {
-    name: "Basic",
-    speed: "300 Mbps",
-    price: "$35",
-    details: "Price after discounts: $15/mo for 12 mos for new customers and $10/mo AutoPay & Paperless bill.",
-    cta: "Shop internet",
-    modal: "modal-terms-300",
-    badge: "Best Value",
-  },
-  {
-    name: "Home",
-    speed: "500 Mbps",
-    price: "$40",
-    details: "Price after discounts: $15/mo for 12 mos for new customers and $10/mo AutoPay & Paperless bill.",
-    cta: "Shop internet",
-    modal: "modal-terms-500",
-    badge: "Popular",
-  },
-  {
-    name: "Smart Home",
-    speed: "1 GIG",
-    price: "$50",
-    details: "Ltd. avail/areas. Price after discounts $30/mo for 12 mos for new customers, and $10/mo AutoPay & Paperless bill.",
-    cta: "Shop internet",
-    modal: "modal-terms-1g",
-    badge: "Recommended",
-    highlighted: true,
-  },
-  {
-    name: "Elite",
-    speed: "5 GIG",
-    price: "$95",
-    details: "Ltd avail/areas. Price after discounts $30/mo for 12 mos for new customers and $10/mo AutoPay & Paperless bill.",
-    cta: "Shop internet",
-    modal: "modal-terms-5g",
-    badge: "Ultimate",
-  },
-];
-
-const phoneNumber = "866.307.3525";
-const businessPhone = "866.803.4362";
+import AddressCheckFlow from "@/components/AddressCheckFlow";
+import AvailabilityModal from "@/components/AvailabilityModal";
+import { plans, phoneNumber, businessPhone, businessHours, telHref, type Plan } from "@/lib/site-config";
 
 export default function Home() {
   const [showBusinessModal, setShowBusinessModal] = useState(false);
@@ -91,65 +50,29 @@ export default function Home() {
                 {/* Address Form */}
                 <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100" role="region" aria-label="Check availability">
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">Find the best plan for you</h3>
-                  <form onSubmit={(e) => { e.preventDefault(); setShowFormModal(true); }} className="space-y-4" noValidate>
-                    <div>
-                      <label htmlFor="street" className="block text-sm font-medium text-gray-700 mb-1">Street Address*</label>
-                      <input
-                        type="text"
-                        id="street"
-                        placeholder="35 Magnolia RD"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                        required
-                        autoComplete="street-address"
-                      />
-                      <p className="text-xs text-gray-500 mt-1">Please provide a street address (e.g. 35 Magnolia RD).</p>
-                    </div>
-                    <div>
-                      <label htmlFor="unit" className="block text-sm font-medium text-gray-700 mb-1">Apt/Unit</label>
-                      <input
-                        type="text"
-                        id="unit"
-                        placeholder="Apt, Suite, Unit (optional)"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                        autoComplete="address-line2"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="zip" className="block text-sm font-medium text-gray-700 mb-1">Zip Code*</label>
-                      <input
-                        type="text"
-                        id="zip"
-                        placeholder="23225"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                        required
-                        autoComplete="postal-code"
-                      />
-                      <p className="text-xs text-gray-500 mt-1">Please provide a valid zip code (e.g. 23225).</p>
-                    </div>
-                    <label className="flex items-center gap-2 text-sm text-gray-600">
-                      <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" defaultChecked />
-                      I'm moving to this address
-                    </label>
-                    <button
-                      type="submit"
-                      className="w-full bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold text-base hover:bg-blue-800 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                    >
-                      Shop internet
-                    </button>
-                  </form>
+                  <AddressCheckFlow idPrefix="hero" source="home-hero" submitLabel="Shop internet" />
                 </div>
               </div>
 
               {/* Right Side - Reward Card & Fiber Logo */}
               <div className="flex flex-col items-center gap-8">
-<Image
-                src="/images/att-reward-card.svg"
-                alt="AT&T Reward Card"
-                width={400}
-                height={250}
-                className="w-full max-w-md"
-                priority
-              />
+                <div className="inline-flex items-center gap-2 bg-blue-700 rounded-full px-4 py-2">
+                  <Image
+                    src="/images/att-fiber-logo-whtblue.png"
+                    alt="AT&T Fiber"
+                    width={170}
+                    height={36}
+                    className="h-5 w-auto"
+                  />
+                </div>
+                <Image
+                  src="/images/att-reward-card.png"
+                  alt="AT&T Reward Card"
+                  width={400}
+                  height={256}
+                  className="w-full max-w-md"
+                  priority
+                />
                 <div className="text-center">
                   <h3 className="text-xl font-bold text-gray-900 mb-2">Get a $250 AT&T Visa® Reward Card</h3>
                   <p className="text-sm text-gray-600 mb-4">with purchase of AT&T Fiber.</p>
@@ -201,63 +124,24 @@ export default function Home() {
           <div className="text-center">
             <h3 className="text-2xl font-bold text-gray-900 mb-4">Call Now</h3>
             <a
-              href={`tel:${businessPhone.replace(/\./g, "")}`}
+              href={telHref(businessPhone)}
               className="text-3xl font-bold text-blue-700 hover:underline block mb-2"
             >
               {businessPhone}
             </a>
-            <p className="text-gray-600">Mon–Fri 6AM–6PM | Sat 9AM–3PM MST</p>
+            <p className="text-gray-600">{businessHours}</p>
           </div>
         </Modal>
       )}
 
       {showFormModal && (
-        <Modal onClose={() => setShowFormModal(false)} title="Check For Deals">
-          <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); setShowFormModal(false); }}>
-            <div>
-              <label htmlFor="modal-street" className="block text-sm font-medium text-gray-700 mb-1">Street Address*</label>
-              <input
-                type="text"
-                id="modal-street"
-                placeholder="35 Magnolia RD"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                required
-                autoComplete="street-address"
-              />
-            </div>
-            <div>
-              <label htmlFor="modal-unit" className="block text-sm font-medium text-gray-700 mb-1">Apt/Unit</label>
-              <input
-                type="text"
-                id="modal-unit"
-                placeholder="Apt, Suite, Unit (optional)"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                autoComplete="address-line2"
-              />
-            </div>
-            <div>
-              <label htmlFor="modal-zip" className="block text-sm font-medium text-gray-700 mb-1">Zip Code*</label>
-              <input
-                type="text"
-                id="modal-zip"
-                placeholder="23225"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                required
-                autoComplete="postal-code"
-              />
-            </div>
-            <label className="flex items-center gap-2 text-sm text-gray-600">
-              <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" defaultChecked />
-              I'm moving to this address
-            </label>
-            <button
-              type="submit"
-              className="w-full bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold text-base hover:bg-blue-800 transition-colors"
-            >
-              Shop Plans
-            </button>
-          </form>
-        </Modal>
+        <AvailabilityModal
+          source="home-plan-card"
+          title="Check For Deals"
+          submitLabel="Shop Plans"
+          showHelpText={false}
+          onClose={() => setShowFormModal(false)}
+        />
       )}
 
       {showTermsModal && (
@@ -265,12 +149,12 @@ export default function Home() {
           <div className="space-y-4 text-sm text-gray-600">
             {showTermsModal.includes("250") ? (
               <>
-                <p className="font-semibold">$250 REWARD CARD OFFER: Ends 12/27/25.</p>
+                <p className="font-semibold">$250 REWARD CARD OFFER: Limited time offer, subject to change.</p>
                 <p>$250 AT&T Visa® Reward Card for purchase of any AT&T Fiber speeds. For new residential AT&T Fiber customers who purchase through attspecial.com. Redemption req'd. Employees and residents of select multi-dwelling units not eligible.</p>
               </>
             ) : (
               <>
-                <p className="font-semibold">$200 REWARD CARD OFFER: Ends 3/31/26.</p>
+                <p className="font-semibold">$200 REWARD CARD OFFER: Limited time offer, subject to change.</p>
                 <p>$200 AT&T Visa® Reward Card for purchase of an AT&T Fiber plan (300Mbps or higher). For new residential AT&T Fiber customers who order through attspecial.com or by calling the number on the site. Redemption req'd.</p>
               </>
             )}
@@ -295,7 +179,7 @@ export default function Home() {
   );
 }
 
-function PlanCard({ plan, onCtaClick, onDetailsClick }: { plan: typeof plans[0]; onCtaClick: () => void; onDetailsClick: (modal: string) => void }) {
+function PlanCard({ plan, onCtaClick, onDetailsClick }: { plan: Plan; onCtaClick: () => void; onDetailsClick: (modal: string) => void }) {
   return (
     <article className={`relative bg-white rounded-xl border ${plan.highlighted ? "border-blue-300 shadow-lg ring-2 ring-blue-200" : "border-gray-200 shadow-sm hover:shadow-md"} transition-shadow p-6 flex flex-col h-full`} role="listitem">
       {plan.badge && (

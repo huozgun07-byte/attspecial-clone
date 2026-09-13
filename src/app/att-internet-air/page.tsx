@@ -1,13 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Modal from "@/components/Modal";
-
-const phoneNumber = "866.307.3525";
+import AvailabilityModal from "@/components/AvailabilityModal";
+import { phoneNumber, telHref } from "@/lib/site-config";
 
 export default function ATTInternetAirPage() {
   const [showFormModal, setShowFormModal] = useState(false);
@@ -34,7 +31,7 @@ export default function ATTInternetAirPage() {
                 Check Availability
               </button>
               <a
-                href={`tel:${phoneNumber.replace(/\./g, "")}`}
+                href={telHref(phoneNumber)}
                 className="w-full sm:w-auto border-2 border-blue-700 text-blue-700 py-4 px-8 rounded-lg font-semibold text-lg hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               >
                 Call {phoneNumber}
@@ -128,52 +125,13 @@ export default function ATTInternetAirPage() {
 
       {/* Modal */}
       {showFormModal && (
-        <Modal onClose={() => setShowFormModal(false)} title="Check For Deals">
-          <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); setShowFormModal(false); }}>
-            <div>
-              <label htmlFor="street" className="block text-sm font-medium text-gray-700 mb-1">Street Address*</label>
-              <input
-                type="text"
-                id="street"
-                placeholder="35 Magnolia RD"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                required
-                autoComplete="street-address"
-              />
-            </div>
-            <div>
-              <label htmlFor="unit" className="block text-sm font-medium text-gray-700 mb-1">Apt/Unit</label>
-              <input
-                type="text"
-                id="unit"
-                placeholder="Apt, Suite, Unit (optional)"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                autoComplete="address-line2"
-              />
-            </div>
-            <div>
-              <label htmlFor="zip" className="block text-sm font-medium text-gray-700 mb-1">Zip Code*</label>
-              <input
-                type="text"
-                id="zip"
-                placeholder="23225"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                required
-                autoComplete="postal-code"
-              />
-            </div>
-            <label className="flex items-center gap-2 text-sm text-gray-600">
-              <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" defaultChecked />
-              I'm moving to this address
-            </label>
-            <button
-              type="submit"
-              className="w-full bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold text-base hover:bg-blue-800 transition-colors"
-            >
-              Shop Plans
-            </button>
-          </form>
-        </Modal>
+        <AvailabilityModal
+          source="att-internet-air"
+          title="Check For Deals"
+          submitLabel="Shop Plans"
+          showHelpText={false}
+          onClose={() => setShowFormModal(false)}
+        />
       )}
     </div>
   );

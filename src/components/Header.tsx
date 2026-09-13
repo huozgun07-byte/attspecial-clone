@@ -4,16 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-
-const phoneNumber = "866.307.3525";
-
-const navItems = [
-  { label: "Internet", href: "/" },
-  { label: "AT&T Internet Air", href: "/att-internet-air" },
-  { label: "Wireless Phone", href: "/wireless" },
-  { label: "Business", href: "/business" },
-  { label: "ESPAÑOL", href: "/espanol" },
-];
+import { phoneNumber, navItems, telHref } from "@/lib/site-config";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -26,7 +17,7 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
           <div className="flex items-center gap-4 text-sm">
             <span>Order AT&T today!</span>
-            <a href={`tel:${phoneNumber.replace(/\./g, "")}`} className="font-bold hover:underline">
+            <a href={telHref(phoneNumber)} className="font-bold hover:underline">
               Call {phoneNumber}
             </a>
             <span className="hidden sm:inline">Available 24/7</span>
@@ -44,10 +35,10 @@ export default function Header() {
             {/* Logo */}
             <Link href="/" className="flex-shrink-0" aria-label="AT&T Preferred Dealer - Home">
               <Image
-                src="/images/att-preferred-dealer.svg"
+                src="/images/att-preferred-dealer.png"
                 alt="AT&T Preferred Dealer"
-                width={180}
-                height={45}
+                width={240}
+                height={100}
                 className="h-10 w-auto"
                 priority
               />
@@ -91,7 +82,7 @@ export default function Header() {
             {/* CTA Buttons */}
             <div className="flex items-center gap-3">
               <Link
-                href={`tel:${phoneNumber.replace(/\./g, "")}`}
+                href={telHref(phoneNumber)}
                 className="hidden sm:flex items-center gap-2 px-4 py-2 bg-blue-700 text-white text-sm font-semibold rounded-lg hover:bg-blue-800 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -100,7 +91,7 @@ export default function Header() {
                 Call Now
               </Link>
               <a
-                href={`tel:${phoneNumber.replace(/\./g, "")}`}
+                href={telHref(phoneNumber)}
                 className="text-blue-700 font-bold text-sm hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
               >
                 {phoneNumber}
@@ -130,7 +121,7 @@ export default function Header() {
               ))}
               <div className="pt-4 border-t border-gray-200 flex flex-col gap-3">
                 <Link
-                  href={`tel:${phoneNumber.replace(/\./g, "")}`}
+                  href={telHref(phoneNumber)}
                   className="flex items-center justify-center gap-2 px-4 py-3 bg-blue-700 text-white font-semibold rounded-lg hover:bg-blue-800"
                   onClick={() => setMobileMenuOpen(false)}
                 >

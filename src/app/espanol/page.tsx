@@ -1,13 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Modal from "@/components/Modal";
-
-const phoneNumber = "866.307.3525";
+import AvailabilityModal from "@/components/AvailabilityModal";
+import { espanolAddressFormLabels } from "@/components/AddressForm";
+import { phoneNumber, telHref } from "@/lib/site-config";
 
 export default function EspanolPage() {
   const [showFormModal, setShowFormModal] = useState(false);
@@ -23,7 +21,7 @@ export default function EspanolPage() {
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">Obtenga las mejores ofertas en Internet de fibra, telefonía inalámbrica y más. Soporte en español disponible 24/7.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <button onClick={() => setShowFormModal(true)} className="w-full sm:w-auto bg-blue-700 text-white py-4 px-8 rounded-lg font-semibold text-lg hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Ver Ofertas</button>
-              <a href={`tel:${phoneNumber.replace(/\./g, "")}`} className="w-full sm:w-auto border-2 border-blue-700 text-blue-700 py-4 px-8 rounded-lg font-semibold text-lg hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Llame al {phoneNumber}</a>
+              <a href={telHref(phoneNumber)} className="w-full sm:w-auto border-2 border-blue-700 text-blue-700 py-4 px-8 rounded-lg font-semibold text-lg hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Llame al {phoneNumber}</a>
             </div>
           </div>
         </section>
@@ -48,13 +46,16 @@ export default function EspanolPage() {
       <Footer />
 
       {showFormModal && (
-        <Modal onClose={() => setShowFormModal(false)} title="Verificar Disponibilidad">
-          <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); setShowFormModal(false); }}>
-            <div><label className="block text-sm font-medium text-gray-700 mb-1">Dirección*</label><input type="text" placeholder="Calle Principal 123" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" required autoComplete="street-address" /></div>
-            <div><label className="block text-sm font-medium text-gray-700 mb-1">Código Postal*</label><input type="text" placeholder="23225" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" required autoComplete="postal-code" /></div>
-            <button type="submit" className="w-full bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-800">Ver Planes</button>
-          </form>
-        </Modal>
+        <AvailabilityModal
+          source="espanol"
+          title="Verificar Disponibilidad"
+          submitLabel="Ver Planes"
+          labels={espanolAddressFormLabels}
+          showUnit={false}
+          showMoving={false}
+          showHelpText={false}
+          onClose={() => setShowFormModal(false)}
+        />
       )}
     </div>
   );

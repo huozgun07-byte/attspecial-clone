@@ -1,14 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Modal from "@/components/Modal";
-
-const phoneNumber = "866.307.3525";
-const businessPhone = "866.803.4362";
+import { businessPhone, businessHours, telHref } from "@/lib/site-config";
 
 export default function BusinessPage() {
   const [showModal, setShowModal] = useState(false);
@@ -24,9 +20,9 @@ export default function BusinessPage() {
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">Reliable connectivity, advanced security, and dedicated support for businesses of all sizes.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <button onClick={() => setShowModal(true)} className="w-full sm:w-auto bg-blue-700 text-white py-4 px-8 rounded-lg font-semibold text-lg hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Get a Quote</button>
-              <a href={`tel:${businessPhone.replace(/\./g, "")}`} className="w-full sm:w-auto border-2 border-blue-700 text-blue-700 py-4 px-8 rounded-lg font-semibold text-lg hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Call {businessPhone}</a>
+              <a href={telHref(businessPhone)} className="w-full sm:w-auto border-2 border-blue-700 text-blue-700 py-4 px-8 rounded-lg font-semibold text-lg hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Call {businessPhone}</a>
             </div>
-            <p className="text-sm text-gray-500 mt-4">Mon–Fri 6AM–6PM | Sat 9AM–3PM MST</p>
+            <p className="text-sm text-gray-500 mt-4">{businessHours}</p>
           </div>
         </section>
 
@@ -57,8 +53,8 @@ export default function BusinessPage() {
         <Modal onClose={() => setShowModal(false)} title="Business Inquiry">
           <div className="text-center">
             <p className="text-gray-600 mb-4">Call our business specialists:</p>
-            <a href={`tel:${businessPhone.replace(/\./g, "")}`} className="text-2xl font-bold text-blue-700 hover:underline block mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded">{businessPhone}</a>
-            <p className="text-gray-500">Mon–Fri 6AM–6PM | Sat 9AM–3PM MST</p>
+            <a href={telHref(businessPhone)} className="text-2xl font-bold text-blue-700 hover:underline block mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded">{businessPhone}</a>
+            <p className="text-gray-500">{businessHours}</p>
           </div>
         </Modal>
       )}
