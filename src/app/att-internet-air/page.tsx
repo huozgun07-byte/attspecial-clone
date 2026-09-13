@@ -9,9 +9,21 @@ import { IconBox, IconDocument, Icon5G } from "@/components/Icons";
 import { phoneNumber, telHref } from "@/lib/site-config";
 
 const airFeatures = [
-  { title: "Simple Setup", desc: "Plug in the All-Fi Hub and connect in minutes. No technician visit required.", Icon: IconBox },
-  { title: "No Annual Contract", desc: "Cancel anytime without early termination fees. Month-to-month flexibility.", Icon: IconDocument },
-  { title: "5G Network", desc: "Powered by AT&T's nationwide 5G network for reliable connectivity.", Icon: Icon5G },
+  {
+    title: "You set it up yourself",
+    desc: "The All-Fi Hub arrives ready to go. Plug it in, follow the app, and you're online in minutes — no technician appointment to wait around for.",
+    Icon: IconBox,
+  },
+  {
+    title: "Month to month",
+    desc: "No annual contract and no early termination fee. Useful if you're renting, between homes, or waiting for fiber to reach your street.",
+    Icon: IconDocument,
+  },
+  {
+    title: "Runs on AT&T 5G",
+    desc: "Your home connection uses the same nationwide 5G network as AT&T phones, with unlimited data and no overage charges.",
+    Icon: Icon5G,
+  },
 ];
 
 const included = [
@@ -33,10 +45,11 @@ export default function ATTInternetAirPage() {
         <HeroPanel image="/images/hero-internet-air.jpg" imagePosition="object-[70%_center]">
           <p className="att-eyebrow text-att-sky mb-3">AT&amp;T Internet Air™</p>
           <h1 id="hero-title" className="att-display mb-5 max-w-2xl">
-            Home internet over the AT&amp;T 5G network
+            AT&amp;T Internet Air™ — home internet over 5G
           </h1>
           <p className="text-white/90 text-lg max-w-xl mb-8">
-            No annual contract. No hidden fees. Just fast, reliable internet — set up in minutes.
+            For addresses fiber hasn&apos;t reached yet: up to 100 Mbps, unlimited data,
+            $55/mo with AutoPay, and you plug it in yourself.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <button onClick={() => setShowFormModal(true)} className="btn-on-dark">
@@ -55,7 +68,7 @@ export default function ATTInternetAirPage() {
         <section className="att-section bg-white" aria-labelledby="features-title">
           <div className="att-container">
             <div className="text-center mb-10 sm:mb-12">
-              <h2 id="features-title" className="att-h2">Why choose AT&amp;T Internet Air?</h2>
+              <h2 id="features-title" className="att-h2">What AT&amp;T Internet Air is good at</h2>
             </div>
             <div className="grid md:grid-cols-3 gap-8 sm:gap-10">
               {airFeatures.map((feature) => (
@@ -75,7 +88,7 @@ export default function ATTInternetAirPage() {
         <section className="att-section bg-att-gray-100" aria-labelledby="pricing-title">
           <div className="att-container">
             <div className="text-center mb-10 sm:mb-12">
-              <h2 id="pricing-title" className="att-h2">Simple, transparent pricing</h2>
+              <h2 id="pricing-title" className="att-h2">One plan, one price</h2>
             </div>
             <div className="max-w-2xl mx-auto bg-white rounded-2xl p-8 sm:p-10 border border-att-gray-200">
               <div className="text-center mb-8">
@@ -108,9 +121,10 @@ export default function ATTInternetAirPage() {
         {/* Coverage */}
         <section className="att-section bg-white" aria-labelledby="coverage-title">
           <div className="att-container text-center">
-            <h2 id="coverage-title" className="att-h2 mb-3">Check availability in your area</h2>
+            <h2 id="coverage-title" className="att-h2 mb-3">Is it available where you live?</h2>
             <p className="att-lead mb-8 max-w-2xl mx-auto">
-              AT&amp;T Internet Air is expanding rapidly. Enter your address to see if you&apos;re covered.
+              Coverage depends on the 5G signal at your specific address. Give us the address and
+              we&apos;ll check both Internet Air and Fiber, then tell you which one you should actually take.
             </p>
             <button onClick={() => setShowFormModal(true)} className="btn-primary">
               Check my address

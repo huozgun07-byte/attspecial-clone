@@ -9,9 +9,21 @@ import { IconFiber, Icon5G, IconPhone } from "@/components/Icons";
 import { phoneNumber, telHref } from "@/lib/site-config";
 
 const servicios = [
-  { title: "AT&T Fiber", desc: "Velocidades simétricas ultra rápidas en una red 100% de fibra.", Icon: IconFiber },
-  { title: "AT&T Internet Air", desc: "Internet en casa sobre la red 5G de AT&T, sin contrato anual.", Icon: Icon5G },
-  { title: "Teléfono Inalámbrico", desc: "Planes ilimitados y los últimos teléfonos con cobertura 5G.", Icon: IconPhone },
+  {
+    title: "AT&T Fiber",
+    desc: "Red 100% de fibra desde 300 Mbps hasta 5 GIG, con velocidad de subida igual a la de bajada, datos ilimitados e instalación profesional incluida.",
+    Icon: IconFiber,
+  },
+  {
+    title: "AT&T Internet Air",
+    desc: "Internet en casa sobre la red 5G de AT&T para direcciones donde todavía no llega la fibra: hasta 100 Mbps, $55/mes con AutoPay y usted mismo lo instala.",
+    Icon: Icon5G,
+  },
+  {
+    title: "Teléfono Inalámbrico",
+    desc: "Líneas ilimitadas, créditos por entregar su teléfono actual y cobertura 5G en todo el país.",
+    Icon: IconPhone,
+  },
 ];
 
 export default function EspanolPage() {
@@ -27,8 +39,8 @@ export default function EspanolPage() {
             <p className="att-eyebrow text-att-navy mb-3">AT&amp;T Preferred Dealer</p>
             <h1 id="hero-title" className="att-h2 mb-4 max-w-3xl mx-auto">AT&amp;T en Español</h1>
             <p className="att-lead mb-8 max-w-2xl mx-auto">
-              Obtenga las mejores ofertas en Internet de fibra, telefonía inalámbrica y más.
-              Soporte en español disponible 24/7.
+              Verificamos la disponibilidad en su dirección, le explicamos los descuentos y
+              agendamos la instalación. Atención en español las 24 horas, todos los días.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <button onClick={() => setShowFormModal(true)} className="btn-primary">
@@ -44,7 +56,7 @@ export default function EspanolPage() {
         <section className="att-section bg-white" aria-labelledby="services-title">
           <div className="att-container">
             <div className="text-center mb-10 sm:mb-12">
-              <h2 id="services-title" className="att-h2">Servicios disponibles</h2>
+              <h2 id="services-title" className="att-h2">Qué puede ordenar con nosotros</h2>
             </div>
             <div className="grid md:grid-cols-3 gap-6" role="list">
               {servicios.map((servicio) => (

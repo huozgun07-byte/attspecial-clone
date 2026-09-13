@@ -21,10 +21,11 @@ export default function WirelessPage() {
         <HeroPanel image="/images/hero-wireless.jpg" imagePosition="object-[62%_center]">
           <p className="att-eyebrow text-att-sky mb-3">AT&amp;T Wireless</p>
           <h1 id="hero-title" className="att-display mb-5">
-            The latest phones on America&apos;s most reliable 5G network
+            AT&amp;T wireless plans and phone deals
           </h1>
           <p className="text-white/90 text-lg max-w-xl mb-8">
-            Unlimited plans, trade-in offers, and 5G coverage built for the whole family.
+            Unlimited lines, trade-in credits on the latest handsets, and nationwide 5G —
+            bundled with your internet if you want a single bill.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <button onClick={() => setShowFormModal(true)} className="btn-on-dark">
@@ -39,7 +40,7 @@ export default function WirelessPage() {
         <section className="att-section bg-white" aria-labelledby="phones-title">
           <div className="att-container">
             <div className="text-center mb-10 sm:mb-12">
-              <h2 id="phones-title" className="att-h2">Popular phones</h2>
+              <h2 id="phones-title" className="att-h2">Phones people order most</h2>
             </div>
             <div className="grid md:grid-cols-3 gap-6" role="list">
               {phones.map((phone) => (
@@ -50,7 +51,7 @@ export default function WirelessPage() {
                     </div>
                     <h3 className="feature-title mb-2">{phone}</h3>
                     <p className="text-att-gray-600 text-sm mb-6 flex-1">
-                      From $0/mo with eligible trade-in
+                      From $0/mo with an eligible trade-in and unlimited plan
                     </p>
                     <button onClick={() => setShowFormModal(true)} className="btn-secondary w-full">
                       View deals
@@ -68,9 +69,10 @@ export default function WirelessPage() {
 
         <section className="att-section bg-att-gray-100" aria-labelledby="wireless-cta-title">
           <div className="att-container text-center">
-            <h2 id="wireless-cta-title" className="att-h2 mb-3">Ready to switch?</h2>
+            <h2 id="wireless-cta-title" className="att-h2 mb-3">Not sure how many lines you need?</h2>
             <p className="att-lead mb-8 max-w-2xl mx-auto">
-              Talk to an AT&amp;T Preferred Dealer specialist and find the plan that fits your household.
+              Tell a specialist what phones you have now and how many people are on the account.
+              They&apos;ll work out the trade-in credits and what the bill actually lands at.
             </p>
             <a href={telHref(phoneNumber)} className="btn-primary">
               Call {phoneNumber}

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Modal from "@/components/Modal";
@@ -11,7 +12,7 @@ import HeroSwoosh from "@/components/HeroSwoosh";
 import { AddressFormData } from "@/components/AddressForm";
 import { AvailabilityResponse } from "@/lib/api";
 import { IconFiber, IconContract, IconInstall, IconSupport } from "@/components/Icons";
-import { plans, features, steps, businessPhone, businessHours, type Plan, type Feature } from "@/lib/site-config";
+import { plans, features, steps, faqs, businessPhone, businessHours, type Plan, type Feature } from "@/lib/site-config";
 
 const featureIcons: Record<Feature["icon"], (props: { className?: string }) => React.ReactElement> = {
   fiber: IconFiber,
@@ -67,8 +68,8 @@ export default function Home() {
                   className="h-7 w-auto mb-5"
                 />
                 <h1 id="hero-title" className="att-display mb-5">
-                  Get started with <br className="hidden sm:block" />
-                  AT&amp;T Fiber<sup className="att-reg">®</sup> 1 Gig
+                  AT&amp;T Fiber<sup className="att-reg">®</sup> 1 Gig <br className="hidden sm:block" />
+                  internet at your address
                 </h1>
 
                 <div className="flex items-baseline gap-1.5 mb-1" aria-label="Price">
@@ -96,7 +97,7 @@ export default function Home() {
 
               {/* Right — availability card */}
               <div className="att-hero-card" role="region" aria-label="Check availability">
-                <h2 className="att-h3 mb-4">Find the best plan for you</h2>
+                <h2 className="att-h3 mb-4">Check availability at your address</h2>
                 <AddressCheckFlow
                   idPrefix="hero"
                   source="home-hero"
@@ -145,9 +146,11 @@ export default function Home() {
         <section className="att-section bg-white border-t border-att-gray-200" aria-labelledby="plans-title">
           <div className="att-container">
             <div className="text-center mb-10 sm:mb-12">
-              <h2 id="plans-title" className="att-h2 mb-3">Find the best plan for you</h2>
+              <h2 id="plans-title" className="att-h2 mb-3">AT&amp;T Fiber plans and pricing</h2>
               <p className="att-lead max-w-2xl mx-auto">
-                Symmetrical speeds on a 100% fiber network, with no annual contract on eligible plans.
+                Four speeds, from 300 Mbps up to 5 GIG. Every plan is symmetrical, unlimited,
+                and month to month on eligible terms — the prices below already include the
+                new-customer and AutoPay discounts.
               </p>
             </div>
 
@@ -173,9 +176,10 @@ export default function Home() {
         <section className="att-section bg-att-gray-100" aria-labelledby="why-title">
           <div className="att-container">
             <div className="text-center mb-10 sm:mb-12">
-              <h2 id="why-title" className="att-h2 mb-3">Why choose AT&amp;T Fiber</h2>
+              <h2 id="why-title" className="att-h2 mb-3">What you get with AT&amp;T Fiber</h2>
               <p className="att-lead max-w-2xl mx-auto">
-                A 100% fiber network built for how your household actually uses the internet.
+                A 100% fiber network behaves differently from cable, and the differences are
+                the ones you notice on a work call or a Saturday night.
               </p>
             </div>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
@@ -190,7 +194,10 @@ export default function Home() {
         <section className="att-section bg-white" aria-labelledby="steps-title">
           <div className="att-container">
             <div className="text-center mb-10 sm:mb-12">
-              <h2 id="steps-title" className="att-h2">Getting connected is easy</h2>
+              <h2 id="steps-title" className="att-h2 mb-3">How ordering works</h2>
+              <p className="att-lead max-w-2xl mx-auto">
+                Three steps, one phone call if you'd rather talk to someone.
+              </p>
             </div>
             <div className="grid sm:grid-cols-3 gap-8 sm:gap-10">
               {steps.map((step, i) => (
@@ -201,6 +208,76 @@ export default function Home() {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* ---------------- Fiber vs Internet Air ---------------- */}
+        <section className="att-section bg-att-gray-100 border-t border-att-gray-200" aria-labelledby="compare-title">
+          <div className="att-container">
+            <div className="text-center mb-10 sm:mb-12">
+              <h2 id="compare-title" className="att-h2 mb-3">
+                AT&amp;T Fiber or AT&amp;T Internet Air?
+              </h2>
+              <p className="att-lead max-w-2xl mx-auto">
+                Fiber is the better service wherever it is built. Internet Air is how AT&amp;T
+                covers addresses the fiber network hasn&apos;t reached yet.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+              <article className="bg-white rounded-2xl border border-att-gray-200 p-6 sm:p-8">
+                <h3 className="att-h3 mb-4">AT&amp;T Fiber</h3>
+                <ul className="space-y-3 text-att-gray-700 text-base" role="list">
+                  <li>300 Mbps to 5 GIG, symmetrical upload and download</li>
+                  <li>Unlimited data, no annual contract on eligible plans</li>
+                  <li>Professional installation included</li>
+                  <li>From $35/mo with AutoPay &amp; Paperless bill</li>
+                </ul>
+                <p className="att-fine text-att-gray-500 mt-5">
+                  Available where the fiber network has been built — check your address above.
+                </p>
+              </article>
+
+              <article className="bg-white rounded-2xl border border-att-gray-200 p-6 sm:p-8">
+                <h3 className="att-h3 mb-4">AT&amp;T Internet Air™</h3>
+                <ul className="space-y-3 text-att-gray-700 text-base" role="list">
+                  <li>Up to 100 Mbps over the AT&amp;T 5G network</li>
+                  <li>Unlimited data, no annual contract</li>
+                  <li>Self-setup in minutes, no technician visit</li>
+                  <li>$55/mo with AutoPay &amp; Paperless bill ($60/mo without)</li>
+                </ul>
+                <p className="att-fine text-att-gray-500 mt-5">
+                  <Link href="/att-internet-air" className="text-att-navy font-bold underline underline-offset-2">
+                    See AT&amp;T Internet Air details
+                  </Link>
+                </p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        {/* ---------------- FAQ preview ---------------- */}
+        <section className="att-section bg-white" aria-labelledby="faq-preview-title">
+          <div className="att-container max-w-4xl">
+            <div className="text-center mb-10">
+              <h2 id="faq-preview-title" className="att-h2 mb-3">Before you order</h2>
+              <p className="att-lead">
+                The questions we answer most often on the ordering line.
+              </p>
+            </div>
+            <dl className="divide-y divide-att-gray-200 border-y border-att-gray-200">
+              {faqs.slice(0, 4).map((faq) => (
+                <div key={faq.q} className="py-6">
+                  <dt className="font-bold text-att-ink mb-2 text-lg">{faq.q}</dt>
+                  <dd className="text-att-gray-600">{faq.a}</dd>
+                </div>
+              ))}
+            </dl>
+            <p className="mt-8 text-center">
+              <Link href="/faq" className="btn-outline">
+                Read all questions
+              </Link>
+            </p>
           </div>
         </section>
       </main>
