@@ -329,7 +329,7 @@ export default function Home() {
         <Modal onClose={() => setShowRewardModal(null)} title="$250 AT&T Visa® Reward Card" large>
           <div className="space-y-4 text-sm text-att-gray-600">
             <p className="font-bold text-att-ink">$250 REWARD CARD OFFER: Limited time offer, subject to change.</p>
-            <p>$250 AT&amp;T Visa® Reward Card for purchase of any AT&amp;T Fiber speeds. For new residential AT&amp;T Fiber customers who purchase through attspecial.com. Redemption req&apos;d. Employees and residents of select multi-dwelling units not eligible.</p>
+            <p>$250 AT&amp;T Visa® Reward Card for purchase of any AT&amp;T Fiber speeds. For new residential AT&amp;T Fiber customers who order through this site. Redemption req&apos;d. Employees and residents of select multi-dwelling units not eligible.</p>
             <p className="att-fine text-att-gray-500">Card issued by The Bancorp Bank N.A., Member FDIC, pursuant to a license from Visa U.S.A. Inc.</p>
           </div>
         </Modal>

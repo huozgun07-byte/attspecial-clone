@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { phoneNumber, telHref } from "@/lib/site-config";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-const phoneNumber = "866.307.3525";
 
 export default function NotFound() {
   return (
@@ -25,7 +25,7 @@ export default function NotFound() {
               Go Home
             </Link>
             <a
-              href={`tel:${phoneNumber.replace(/\./g, "")}`}
+              href={telHref(phoneNumber)}
               className="border-2 border-att-navy text-att-navy py-3 px-8 rounded-lg font-semibold hover:bg-att-light-blue transition-colors"
             >
               Call {phoneNumber}
