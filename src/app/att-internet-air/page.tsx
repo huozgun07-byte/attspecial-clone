@@ -22,7 +22,7 @@ export default function ATTInternetAirPage() {
             alt=""
             fill
             priority
-            className="object-cover object-[70%_20%]"
+            className="object-cover object-center"
             aria-hidden="true"
           />
           <div className="absolute inset-0 bg-gray-900/70" aria-hidden="true" />

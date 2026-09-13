@@ -37,7 +37,7 @@ export default function Home() {
             alt=""
             fill
             priority
-            className="object-cover object-[75%_30%]"
+            className="object-cover object-center"
             aria-hidden="true"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-gray-900/85 via-gray-900/60 to-gray-900/10" aria-hidden="true" />
@@ -92,23 +92,23 @@ export default function Home() {
         </section>
 
         {/* Reward Card Promo Strip */}
-        <section className="py-10 bg-blue-50 border-b border-gray-200" aria-labelledby="reward-title">
+        <section className="py-12 bg-blue-50 border-b border-gray-200" aria-labelledby="reward-title">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-center sm:text-left">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-8 text-center sm:text-left">
               <Image
                 src="/images/att-reward-card.png"
                 alt="AT&T Reward Card"
                 width={140}
                 height={90}
-                className="w-28 sm:w-32 flex-shrink-0"
+                className="w-32 sm:w-40 flex-shrink-0"
               />
               <div>
-                <h2 id="reward-title" className="text-lg font-bold text-gray-900">Get a $250 AT&T Visa® Reward Card</h2>
-                <p className="text-sm text-gray-600">
+                <h2 id="reward-title" className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">Get a $250 AT&T Visa® Reward Card</h2>
+                <p className="text-base sm:text-lg text-gray-600">
                   with purchase of AT&T Fiber.{" "}
                   <a
                     href="#modal-terms-250-visa"
-                    className="text-blue-700 font-medium hover:underline"
+                    className="text-blue-700 font-semibold hover:underline"
                     onClick={(e) => { e.preventDefault(); setShowRewardModal("modal-terms-250-visa"); }}
                   >
                     See details.
