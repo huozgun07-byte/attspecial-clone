@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AvailabilityModal from "@/components/AvailabilityModal";
@@ -15,29 +16,38 @@ export default function ATTInternetAirPage() {
 
       <main className="flex-1">
         {/* Hero */}
-        <section className="relative bg-gradient-to-b from-blue-50 to-white py-16 sm:py-24" aria-labelledby="hero-title">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 id="hero-title" className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
+        <section className="relative overflow-hidden py-16 sm:py-24" aria-labelledby="hero-title">
+          <Image
+            src="/images/hero-internet-air.jpg"
+            alt=""
+            fill
+            priority
+            className="object-cover object-[70%_20%]"
+            aria-hidden="true"
+          />
+          <div className="absolute inset-0 bg-gray-900/70" aria-hidden="true" />
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 id="hero-title" className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
               AT&T Internet Air™
             </h1>
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-200 mb-8 max-w-3xl mx-auto">
               No annual contract. No hidden fees. Just fast, reliable home internet over the AT&T 5G network.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
               <button
                 onClick={() => setShowFormModal(true)}
-                className="w-full sm:w-auto bg-blue-700 text-white py-4 px-8 rounded-lg font-semibold text-lg hover:bg-blue-800 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                className="w-full sm:w-auto bg-blue-700 text-white py-4 px-8 rounded-full font-semibold text-lg hover:bg-blue-800 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               >
                 Check Availability
               </button>
               <a
                 href={telHref(phoneNumber)}
-                className="w-full sm:w-auto border-2 border-blue-700 text-blue-700 py-4 px-8 rounded-lg font-semibold text-lg hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                className="w-full sm:w-auto border-2 border-white text-white py-4 px-8 rounded-full font-semibold text-lg hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               >
                 Call {phoneNumber}
               </a>
             </div>
-            <p className="text-sm text-gray-500">*Price after $5/mo AutoPay & Paperless bill discount. Taxes & fees extra.</p>
+            <p className="text-sm text-gray-300">*Price after $5/mo AutoPay & Paperless bill discount. Taxes & fees extra.</p>
           </div>
         </section>
 

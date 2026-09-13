@@ -31,76 +31,89 @@ export default function Home() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative bg-gradient-to-b from-blue-50 to-white py-16 sm:py-24" aria-labelledby="hero-title">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-12 items-center lg:items-start">
+        <section className="relative overflow-hidden py-16 sm:py-24" aria-labelledby="hero-title">
+          <Image
+            src="/images/hero-family.jpg"
+            alt=""
+            fill
+            priority
+            className="object-cover object-[75%_30%]"
+            aria-hidden="true"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-gray-900/85 via-gray-900/60 to-gray-900/10" aria-hidden="true" />
+
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-12 items-start">
               {/* Left Content */}
               <div>
-                <p className="text-blue-700 font-semibold text-sm mb-4" role="status">Get a $200 Reward Card with purchase of an AT&T Fiber plan (300 Mbps or higher).</p>
-                <h1 id="hero-title" className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
+                <Image
+                  src="/images/att-fiber-logo-whtblue.png"
+                  alt="AT&T Fiber"
+                  width={170}
+                  height={36}
+                  className="h-6 w-auto mb-5"
+                />
+                <p className="text-blue-200 font-semibold text-sm mb-4" role="status">Get a $200 Reward Card with purchase of an AT&T Fiber plan (300 Mbps or higher).</p>
+                <h1 id="hero-title" className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
                   Get started with <br />
-                  <span className="text-blue-700">AT&T Fiber® 1 Gig</span>
+                  <span className="text-blue-300">AT&T Fiber® 1 Gig</span>
                 </h1>
                 <div className="flex items-baseline gap-2 mb-2" aria-label="Price">
-                  <span className="text-4xl sm:text-5xl font-bold text-gray-900">$50</span>
-                  <span className="text-gray-500">/mo*</span>
+                  <span className="text-4xl sm:text-5xl font-bold text-white">$50</span>
+                  <span className="text-gray-300">/mo*</span>
                 </div>
-                <p className="text-sm text-gray-600 mb-6">+ taxes & fees for 12 mos. w/ elig AutoPay & Paperless bill</p>
-                <p className="text-sm text-gray-600 mb-8">
+                <p className="text-sm text-gray-200 mb-6">+ taxes & fees for 12 mos. w/ elig AutoPay & Paperless bill</p>
+                <p className="text-sm text-gray-200 mb-8">
                   Price after discounts $30/mo for 12 mos new customers, and $10/mo AutoPay & Paperless bill. Discounts start w/in 3 bills.
                   <a
                     href="#modal-terms-1g"
-                    className="text-blue-700 font-medium hover:underline ml-1"
+                    className="text-blue-300 font-medium hover:underline ml-1"
                     onClick={(e) => { e.preventDefault(); setShowTermsModal("modal-terms-1g"); }}
                   >
                     See details
                   </a>
                 </p>
-
-                {/* Address Form */}
-                <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100" role="region" aria-label="Check availability">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Find the best plan for you</h3>
-                  <AddressCheckFlow
-                    idPrefix="hero"
-                    source="home-hero"
-                    submitLabel="Shop internet"
-                    initialData={checkedAddress}
-                    initialResult={checkedResult}
-                    onResult={handleAddressResult}
-                  />
-                </div>
               </div>
 
-              {/* Right Side - Reward Card & Fiber Logo */}
-              <div className="flex flex-col items-center gap-8">
-                <div className="inline-flex items-center gap-2 bg-blue-700 rounded-full px-4 py-2">
-                  <Image
-                    src="/images/att-fiber-logo-whtblue.png"
-                    alt="AT&T Fiber"
-                    width={170}
-                    height={36}
-                    className="h-5 w-auto"
-                  />
-                </div>
-                <Image
-                  src="/images/att-reward-card.png"
-                  alt="AT&T Reward Card"
-                  width={400}
-                  height={256}
-                  className="w-full max-w-md"
-                  priority
+              {/* Right Side - Address Form */}
+              <div className="bg-white rounded-xl shadow-xl p-6 border border-gray-100" role="region" aria-label="Check availability">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Find the best plan for you</h3>
+                <AddressCheckFlow
+                  idPrefix="hero"
+                  source="home-hero"
+                  submitLabel="Shop internet"
+                  initialData={checkedAddress}
+                  initialResult={checkedResult}
+                  onResult={handleAddressResult}
                 />
-                <div className="text-center">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Get a $250 AT&T Visa® Reward Card</h3>
-                  <p className="text-sm text-gray-600 mb-4">with purchase of AT&T Fiber.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Reward Card Promo Strip */}
+        <section className="py-10 bg-blue-50 border-b border-gray-200" aria-labelledby="reward-title">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-center sm:text-left">
+              <Image
+                src="/images/att-reward-card.png"
+                alt="AT&T Reward Card"
+                width={140}
+                height={90}
+                className="w-28 sm:w-32 flex-shrink-0"
+              />
+              <div>
+                <h2 id="reward-title" className="text-lg font-bold text-gray-900">Get a $250 AT&T Visa® Reward Card</h2>
+                <p className="text-sm text-gray-600">
+                  with purchase of AT&T Fiber.{" "}
                   <a
                     href="#modal-terms-250-visa"
-                    className="text-blue-700 text-sm font-medium hover:underline"
+                    className="text-blue-700 font-medium hover:underline"
                     onClick={(e) => { e.preventDefault(); setShowRewardModal("modal-terms-250-visa"); }}
                   >
                     See details.
                   </a>
-                </div>
+                </p>
               </div>
             </div>
           </div>
