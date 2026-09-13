@@ -69,6 +69,30 @@ export const plans: Plan[] = [
   },
 ];
 
+export interface Feature {
+  title: string;
+  desc: string;
+  icon: "fiber" | "contract" | "install" | "support";
+}
+
+export const features: Feature[] = [
+  { title: "100% Fiber Network", desc: "Symmetrical upload/download speeds with low latency, built for streaming, gaming, and working from home.", icon: "fiber" },
+  { title: "No Annual Contract", desc: "Sign up with confidence — no long-term commitment required on eligible plans.", icon: "contract" },
+  { title: "Free Professional Install", desc: "A certified technician sets up your All-Fi Hub and gets you online, at no extra cost.", icon: "install" },
+  { title: "24/7 Support", desc: "Questions after hours? Our team is available around the clock, every day of the year.", icon: "support" },
+];
+
+export interface Step {
+  title: string;
+  desc: string;
+}
+
+export const steps: Step[] = [
+  { title: "Check availability", desc: "Enter your address to see which AT&T Fiber plans are available at your home." },
+  { title: "Choose your plan", desc: "Compare speeds and pricing, then pick the plan that fits how your household uses the internet." },
+  { title: "Get connected", desc: "Schedule your free professional installation and start enjoying fiber-fast internet." },
+];
+
 export interface Faq {
   q: string;
   a: string;

@@ -7,13 +7,23 @@ import Footer from "@/components/Footer";
 import Modal from "@/components/Modal";
 import AddressCheckFlow from "@/components/AddressCheckFlow";
 import AvailabilityModal from "@/components/AvailabilityModal";
-import { plans, phoneNumber, businessPhone, businessHours, telHref, type Plan } from "@/lib/site-config";
+import { AddressFormData } from "@/components/AddressForm";
+import { AvailabilityResponse } from "@/lib/api";
+import { plans, features, steps, phoneNumber, businessPhone, businessHours, telHref, type Plan, type Feature } from "@/lib/site-config";
 
 export default function Home() {
   const [showBusinessModal, setShowBusinessModal] = useState(false);
   const [showFormModal, setShowFormModal] = useState(false);
   const [showTermsModal, setShowTermsModal] = useState<string | null>(null);
   const [showRewardModal, setShowRewardModal] = useState<string | null>(null);
+  // Shared across the hero form and the plan-card modal so a visitor who already
+  // checked their address once isn't asked to re-enter it on the same page.
+  const [checkedAddress, setCheckedAddress] = useState<AddressFormData | undefined>(undefined);
+  const [checkedResult, setCheckedResult] = useState<AvailabilityResponse | undefined>(undefined);
+  const handleAddressResult = (data: AddressFormData, result: AvailabilityResponse) => {
+    setCheckedAddress(data);
+    setCheckedResult(result);
+  };
 
   return (
     <div className="min-h-screen bg-white font-sans antialiased flex flex-col">
@@ -50,7 +60,14 @@ export default function Home() {
                 {/* Address Form */}
                 <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100" role="region" aria-label="Check availability">
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">Find the best plan for you</h3>
-                  <AddressCheckFlow idPrefix="hero" source="home-hero" submitLabel="Shop internet" />
+                  <AddressCheckFlow
+                    idPrefix="hero"
+                    source="home-hero"
+                    submitLabel="Shop internet"
+                    initialData={checkedAddress}
+                    initialResult={checkedResult}
+                    onResult={handleAddressResult}
+                  />
                 </div>
               </div>
 
@@ -89,6 +106,21 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Why AT&T Fiber Section */}
+        <section className="py-16 sm:py-20 bg-gray-50 border-y border-gray-200" aria-labelledby="why-title">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 id="why-title" className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">Why choose AT&T Fiber</h2>
+              <p className="text-gray-600 max-w-2xl mx-auto">A 100% fiber network built for how your household actually uses the internet.</p>
+            </div>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
+              {features.map((feature) => (
+                <FeatureCard key={feature.title} feature={feature} />
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Plans Section */}
         <section className="py-16 sm:py-24 bg-white" aria-labelledby="plans-title">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -111,6 +143,26 @@ export default function Home() {
             <div className="mt-12 text-xs text-gray-500 max-w-3xl mx-auto space-y-2" role="contentinfo">
               <p>† Speed based on wired connection. Actual speeds may vary. For 5GIG, single device wired speed maximum 4.7Gbps. For more info, go to www.att.com/speed101.</p>
               <p>* Limited time offer. Subject to change. New AT&T Fiber customers will receive a discount for 12 months off the monthly recurring charge for an AT&T Fiber plan ($15/mo w/300M or 500M; $32/mo w/1 Gig or higher). Pay full plan cost until discount starts w/in 3 bills. After 12 mos, prevailing rate for fiber plan applies.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* How It Works Section */}
+        <section className="py-16 sm:py-24 bg-gray-50 border-t border-gray-200" aria-labelledby="steps-title">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 id="steps-title" className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">Getting connected is easy</h2>
+            </div>
+            <div className="grid sm:grid-cols-3 gap-10">
+              {steps.map((step, i) => (
+                <div key={step.title} className="text-center sm:text-left">
+                  <div className="w-10 h-10 rounded-full bg-blue-700 text-white font-bold flex items-center justify-center mb-4 mx-auto sm:mx-0" aria-hidden="true">
+                    {i + 1}
+                  </div>
+                  <h3 className="font-semibold text-gray-900 mb-2">{step.title}</h3>
+                  <p className="text-sm text-gray-600">{step.desc}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -140,6 +192,9 @@ export default function Home() {
           title="Check For Deals"
           submitLabel="Shop Plans"
           showHelpText={false}
+          initialData={checkedAddress}
+          initialResult={checkedResult}
+          onResult={handleAddressResult}
           onClose={() => setShowFormModal(false)}
         />
       )}
@@ -179,9 +234,45 @@ export default function Home() {
   );
 }
 
+const featureIcons: Record<Feature["icon"], React.ReactNode> = {
+  fiber: (
+    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+    </svg>
+  ),
+  contract: (
+    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  ),
+  install: (
+    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+    </svg>
+  ),
+  support: (
+    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-1.414 1.414A9 9 0 105.636 18.364l1.414-1.414M12 8v4l2 2" />
+    </svg>
+  ),
+};
+
+function FeatureCard({ feature }: { feature: Feature }) {
+  return (
+    <div className="text-center">
+      <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-blue-50 flex items-center justify-center text-blue-700">
+        {featureIcons[feature.icon]}
+      </div>
+      <h3 className="font-semibold text-gray-900 mb-1">{feature.title}</h3>
+      <p className="text-sm text-gray-600">{feature.desc}</p>
+    </div>
+  );
+}
+
 function PlanCard({ plan, onCtaClick, onDetailsClick }: { plan: Plan; onCtaClick: () => void; onDetailsClick: (modal: string) => void }) {
   return (
-    <article className={`relative bg-white rounded-xl border ${plan.highlighted ? "border-blue-300 shadow-lg ring-2 ring-blue-200" : "border-gray-200 shadow-sm hover:shadow-md"} transition-shadow p-6 flex flex-col h-full`} role="listitem">
+    <article className={`relative bg-white rounded-xl border ${plan.highlighted ? "border-blue-300 shadow-lg ring-2 ring-blue-200" : "border-gray-200 shadow-sm hover:shadow-md"} transition-all hover:-translate-y-1 p-6 flex flex-col h-full`} role="listitem">
       {plan.badge && (
         <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-blue-700 text-white text-xs font-semibold rounded-full">
           {plan.badge}

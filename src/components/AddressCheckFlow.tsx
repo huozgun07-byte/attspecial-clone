@@ -19,6 +19,11 @@ interface AddressCheckFlowProps {
   showUnit?: boolean;
   showMoving?: boolean;
   showHelpText?: boolean;
+  /** If the visitor already checked an address elsewhere on this page, skip straight to that result instead of asking again. */
+  initialData?: AddressFormData;
+  initialResult?: AvailabilityResponse;
+  /** Called after a successful check so a parent page can reuse the address/result in other forms on the same page. */
+  onResult?: (data: AddressFormData, result: AvailabilityResponse) => void;
 }
 
 export default function AddressCheckFlow({
@@ -29,8 +34,14 @@ export default function AddressCheckFlow({
   showUnit = true,
   showMoving = true,
   showHelpText = true,
+  initialData,
+  initialResult,
+  onResult,
 }: AddressCheckFlowProps) {
-  const [state, setState] = useState<FlowState>({ status: "form" });
+  const [state, setState] = useState<FlowState>(() =>
+    initialResult ? { status: "result", result: initialResult } : { status: "form" }
+  );
+  const [checkedAddress, setCheckedAddress] = useState<AddressFormData | undefined>(initialData);
 
   const handleSubmit = async (data: AddressFormData) => {
     setState({ status: "submitting" });
@@ -42,7 +53,9 @@ export default function AddressCheckFlow({
         // The visitor already has their availability answer; don't block on lead delivery issues.
         console.error("Lead submission failed:", leadError);
       }
+      setCheckedAddress(data);
       setState({ status: "result", result });
+      onResult?.(data, result);
     } catch (err) {
       setState({
         status: "error",
@@ -55,6 +68,11 @@ export default function AddressCheckFlow({
     const { result } = state;
     return (
       <div className="space-y-4">
+        {checkedAddress?.street && (
+          <p className="text-xs text-gray-500">
+            Showing results for <span className="font-medium text-gray-700">{checkedAddress.street}{checkedAddress.zip ? `, ${checkedAddress.zip}` : ""}</span>.
+          </p>
+        )}
         <div
           className={`rounded-lg p-4 text-sm border ${
             result.available
