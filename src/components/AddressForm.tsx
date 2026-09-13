@@ -169,7 +169,7 @@ export default function AddressForm({
       <button
         type="submit"
         disabled={disabled}
-        className="w-full bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold text-base hover:bg-blue-800 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed"
+        className="w-full bg-blue-700 text-white py-3 px-6 rounded-full font-semibold text-base hover:bg-blue-800 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed"
       >
         {submitLabel}
       </button>

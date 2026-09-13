@@ -33,7 +33,7 @@ export default function Home() {
         {/* Hero Section */}
         <section className="relative bg-gradient-to-b from-blue-50 to-white py-16 sm:py-24" aria-labelledby="hero-title">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="grid lg:grid-cols-2 gap-12 items-center lg:items-start">
               {/* Left Content */}
               <div>
                 <p className="text-blue-700 font-semibold text-sm mb-4" role="status">Get a $200 Reward Card with purchase of an AT&T Fiber plan (300 Mbps or higher).</p>
@@ -200,26 +200,7 @@ export default function Home() {
       )}
 
       {showTermsModal && (
-        <Modal onClose={() => setShowTermsModal(null)} title={showTermsModal.includes("250") ? "Up to a $250 Reward Cards" : "$200 Reward Card"} large>
-          <div className="space-y-4 text-sm text-gray-600">
-            {showTermsModal.includes("250") ? (
-              <>
-                <p className="font-semibold">$250 REWARD CARD OFFER: Limited time offer, subject to change.</p>
-                <p>$250 AT&T Visa® Reward Card for purchase of any AT&T Fiber speeds. For new residential AT&T Fiber customers who purchase through attspecial.com. Redemption req'd. Employees and residents of select multi-dwelling units not eligible.</p>
-              </>
-            ) : (
-              <>
-                <p className="font-semibold">$200 REWARD CARD OFFER: Limited time offer, subject to change.</p>
-                <p>$200 AT&T Visa® Reward Card for purchase of an AT&T Fiber plan (300Mbps or higher). For new residential AT&T Fiber customers who order through attspecial.com or by calling the number on the site. Redemption req'd.</p>
-              </>
-            )}
-            <p className="text-xs text-gray-500">Card issued by The Bancorp Bank N.A., Member FDIC, pursuant to a license from Visa U.S.A. Inc.</p>
-          </div>
-        </Modal>
-      )}
-
-      {showRewardModal && (
-        <Modal onClose={() => setShowRewardModal(null)} title="Plan Details" large>
+        <Modal onClose={() => setShowTermsModal(null)} title="Pricing & Discount Details" large>
           <div className="space-y-4 text-sm text-gray-600">
             <p className="font-semibold">DISCOUNTED FIBER OFFER: Subj to change.</p>
             <p>New AT&T Fiber customers will receive a discount for 12 months off the monthly recurring charge for an AT&T Fiber plan ($15/mo w/300M or 500M; $32/mo w/1 Gig or higher). Pay full plan cost until discount starts w/in 3 bills. After 12 mos, prevailing rate for fiber plan applies.</p>
@@ -227,6 +208,16 @@ export default function Home() {
             <p>$10/mo if enrolled in Autopay & paperless billing w/ your bank account or the AT&T Points Plus® Card from Citi. Discount reduced to $5/mo when enrolled with a debit card. No discount if enrolled with any other credit card.</p>
             <p className="font-semibold">Taxes & Fees:</p>
             <p>Up to $99 installation fee may apply, plus tax where applicable. Monthly State Cost Recovery charge applies in NV, OH, TX.</p>
+          </div>
+        </Modal>
+      )}
+
+      {showRewardModal && (
+        <Modal onClose={() => setShowRewardModal(null)} title="$250 AT&T Visa® Reward Card" large>
+          <div className="space-y-4 text-sm text-gray-600">
+            <p className="font-semibold">$250 REWARD CARD OFFER: Limited time offer, subject to change.</p>
+            <p>$250 AT&T Visa® Reward Card for purchase of any AT&T Fiber speeds. For new residential AT&T Fiber customers who purchase through attspecial.com. Redemption req'd. Employees and residents of select multi-dwelling units not eligible.</p>
+            <p className="text-xs text-gray-500">Card issued by The Bancorp Bank N.A., Member FDIC, pursuant to a license from Visa U.S.A. Inc.</p>
           </div>
         </Modal>
       )}
@@ -272,41 +263,44 @@ function FeatureCard({ feature }: { feature: Feature }) {
 
 function PlanCard({ plan, onCtaClick, onDetailsClick }: { plan: Plan; onCtaClick: () => void; onDetailsClick: (modal: string) => void }) {
   return (
-    <article className={`relative bg-white rounded-xl border ${plan.highlighted ? "border-blue-300 shadow-lg ring-2 ring-blue-200" : "border-gray-200 shadow-sm hover:shadow-md"} transition-all hover:-translate-y-1 p-6 flex flex-col h-full`} role="listitem">
-      {plan.badge && (
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-blue-700 text-white text-xs font-semibold rounded-full">
-          {plan.badge}
+    <article className={`relative bg-white rounded-xl border overflow-hidden ${plan.highlighted ? "border-blue-300 shadow-lg ring-2 ring-blue-200" : "border-gray-200 shadow-sm hover:shadow-md"} transition-all hover:-translate-y-1 flex flex-col h-full`} role="listitem">
+      {/* Header bar uses AT&T's own "Fiber" wordmark cyan, matching attspecial.com's plan cards */}
+      <div className="bg-[#00A8E0] px-5 py-3 flex items-center justify-between gap-2">
+        <span className="text-white font-bold tracking-wide text-sm uppercase">{plan.name}</span>
+        {plan.badge && (
+          <span className="text-white text-[11px] font-semibold bg-white/20 px-2 py-0.5 rounded-full whitespace-nowrap">
+            {plan.badge}
+          </span>
+        )}
+      </div>
+      <div className="p-6 flex flex-col flex-1">
+        <p className="text-blue-700 font-semibold mb-4">AT&T Fiber</p>
+        <div className="mb-4">
+          <p className="text-2xl font-bold text-gray-900">{plan.speed}</p>
         </div>
-      )}
-      <div className="mb-4">
-        <h3 className="text-lg font-bold text-gray-900 mb-1">{plan.name}</h3>
-        <p className="text-blue-700 font-semibold">AT&T Fiber</p>
+        <div className="mb-4 flex items-baseline gap-1">
+          <span className="text-3xl font-bold text-gray-900">{plan.price}</span>
+          <span className="text-gray-500">/mo*</span>
+        </div>
+        <p className="text-xs text-gray-500 mb-4 flex-1">{plan.details}</p>
+        <a
+          href={`#${plan.modal}`}
+          className="text-blue-700 text-sm font-medium hover:underline block text-center mb-3"
+          onClick={(e) => { e.preventDefault(); onDetailsClick(plan.modal); }}
+        >
+          See details
+        </a>
+        <button
+          onClick={onCtaClick}
+          className={`w-full py-3 px-4 rounded-full font-semibold text-base transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+            plan.highlighted
+              ? "bg-blue-700 text-white hover:bg-blue-800"
+              : "bg-gray-100 text-gray-900 hover:bg-gray-200"
+          }`}
+        >
+          {plan.cta}
+        </button>
       </div>
-      <div className="mb-4">
-        <p className="text-2xl font-bold text-gray-900">{plan.speed}</p>
-      </div>
-      <div className="mb-4 flex items-baseline gap-1">
-        <span className="text-3xl font-bold text-gray-900">{plan.price}</span>
-        <span className="text-gray-500">/mo*</span>
-      </div>
-      <p className="text-xs text-gray-500 mb-4 flex-1">{plan.details}</p>
-      <a
-        href={`#${plan.modal}`}
-        className="text-blue-700 text-sm font-medium hover:underline block text-center mb-3"
-        onClick={(e) => { e.preventDefault(); onDetailsClick(plan.modal); }}
-      >
-        See details
-      </a>
-      <button
-        onClick={onCtaClick}
-        className={`w-full py-3 px-4 rounded-lg font-semibold text-base transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-          plan.highlighted
-            ? "bg-blue-700 text-white hover:bg-blue-800"
-            : "bg-gray-100 text-gray-900 hover:bg-gray-200"
-        }`}
-      >
-        {plan.cta}
-      </button>
     </article>
   );
 }
