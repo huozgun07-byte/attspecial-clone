@@ -5,6 +5,7 @@ import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AvailabilityModal from "@/components/AvailabilityModal";
+import { IconPhone } from "@/components/Icons";
 import { phoneNumber, telHref } from "@/lib/site-config";
 
 export default function WirelessPage() {
@@ -41,7 +42,9 @@ export default function WirelessPage() {
             <div className="grid md:grid-cols-3 gap-8" role="list">
               {["iPhone 15 Pro", "Samsung Galaxy S24", "Google Pixel 8"].map((phone, i) => (
                 <article key={i} className="bg-white border border-gray-200 rounded-xl p-6 text-center hover:shadow-lg transition-shadow" role="listitem">
-                  <div className="text-6xl mb-4" aria-hidden="true">📱</div>
+                  <div className="icon-badge" aria-hidden="true">
+                    <IconPhone />
+                  </div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">{phone}</h3>
                   <p className="text-gray-600 mb-4">From $0/mo with eligible trade-in</p>
                   <button className="w-full bg-blue-700 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">View Deals</button>

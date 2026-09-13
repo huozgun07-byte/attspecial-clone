@@ -2,24 +2,36 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Modal from "@/components/Modal";
-import { plans, features, steps, phoneNumber, businessPhone, businessHours, type Plan, type Feature, type Step } from "@/lib/site-config";
+import AddressCheckFlow from "@/components/AddressCheckFlow";
+import AvailabilityModal from "@/components/AvailabilityModal";
+import { AddressFormData } from "@/components/AddressForm";
+import { AvailabilityResponse } from "@/lib/api";
+import { IconFiber, IconContract, IconInstall, IconSupport } from "@/components/Icons";
+import { plans, features, steps, businessPhone, businessHours, type Plan, type Feature } from "@/lib/site-config";
 
-const featureIcons: Record<Feature["icon"], string> = {
-  fiber: "/images/icon-fiber.svg",
-  contract: "/images/icon-contract.svg",
-  install: "/images/icon-install.svg",
-  support: "/images/icon-support.svg",
+const featureIcons: Record<Feature["icon"], (props: { className?: string }) => React.ReactElement> = {
+  fiber: IconFiber,
+  contract: IconContract,
+  install: IconInstall,
+  support: IconSupport,
 };
 
 export default function Home() {
   const [showBusinessModal, setShowBusinessModal] = useState(false);
-  const [showFormModal, setShowFormModal] = useState(false);
   const [showTermsModal, setShowTermsModal] = useState<string | null>(null);
   const [showRewardModal, setShowRewardModal] = useState<string | null>(null);
+  // Shared across the hero form and the plan-card modal so a visitor who already
+  // checked their address once isn't asked to re-enter it on the same page.
+  const [checkedAddress, setCheckedAddress] = useState<AddressFormData | undefined>(undefined);
+  const [checkedResult, setCheckedResult] = useState<AvailabilityResponse | undefined>(undefined);
+  const [showFormModal, setShowFormModal] = useState(false);
+  const handleAddressResult = (data: AddressFormData, result: AvailabilityResponse) => {
+    setCheckedAddress(data);
+    setCheckedResult(result);
+  };
 
   return (
     <div className="min-h-screen bg-white font-sans antialiased flex flex-col">
@@ -29,7 +41,7 @@ export default function Home() {
         {/* Hero Section */}
         <section className="relative overflow-hidden att-section" aria-labelledby="hero-title">
           <Image
-            src="/images/hero-family.svg"
+            src="/images/hero-family.jpg"
             alt=""
             fill
             priority
@@ -43,7 +55,7 @@ export default function Home() {
               {/* Left Content */}
               <div>
                 <Image
-                  src="/images/att-fiber-logo-whtblue.svg"
+                  src="/images/att-fiber-logo-whtblue.png"
                   alt="AT&T Fiber"
                   width={170}
                   height={36}
@@ -78,52 +90,14 @@ export default function Home() {
               {/* Right Side - Address Form */}
               <div className="bg-white rounded-xl shadow-xl p-6 border border-att-gray-100" role="region" aria-label="Check availability">
                 <h3 className="text-lg font-semibold text-att-gray-900 mb-4">Find the best plan for you</h3>
-                <form onSubmit={(e) => { e.preventDefault(); setShowFormModal(true); }} className="space-y-4" noValidate>
-                  <div>
-                    <label htmlFor="street" className="label-text">Street Address*</label>
-                    <input
-                      type="text"
-                      id="street"
-                      placeholder="35 Magnolia RD"
-                      className="input-field"
-                      required
-                      autoComplete="street-address"
-                    />
-                    <p className="helper-text">Please provide a street address (e.g. 35 Magnolia RD).</p>
-                  </div>
-                  <div>
-                    <label htmlFor="unit" className="label-text">Apt/Unit</label>
-                    <input
-                      type="text"
-                      id="unit"
-                      placeholder="Apt, Suite, Unit (optional)"
-                      className="input-field"
-                      autoComplete="address-line2"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="zip" className="label-text">Zip Code*</label>
-                    <input
-                      type="text"
-                      id="zip"
-                      placeholder="23225"
-                      className="input-field"
-                      required
-                      autoComplete="postal-code"
-                    />
-                    <p className="helper-text">Please provide a valid zip code (e.g. 23225).</p>
-                  </div>
-                  <label className="flex items-center gap-2 text-sm text-att-gray-600">
-                    <input type="checkbox" className="rounded border-att-gray-300 text-att-blue focus:ring-att-cyan" defaultChecked />
-                    I'm moving to this address
-                  </label>
-                  <button
-                    type="submit"
-                    className="btn-primary w-full"
-                  >
-                    Shop internet
-                  </button>
-                </form>
+                <AddressCheckFlow
+                  idPrefix="hero"
+                  source="home-hero"
+                  submitLabel="Shop internet"
+                  initialData={checkedAddress}
+                  initialResult={checkedResult}
+                  onResult={handleAddressResult}
+                />
               </div>
             </div>
           </div>
@@ -134,7 +108,7 @@ export default function Home() {
           <div className="att-container">
             <div className="flex flex-col sm:flex-row items-center justify-center gap-8 text-center sm:text-left">
               <Image
-                src="/images/att-reward-card.svg"
+                src="/images/att-reward-card.png"
                 alt="AT&T Reward Card"
                 width={140}
                 height={90}
@@ -243,27 +217,14 @@ export default function Home() {
       )}
 
       {showFormModal && (
-        <Modal onClose={() => setShowFormModal(false)} title="Check For Deals">
-          <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); setShowFormModal(false); }}>
-            <div>
-              <label htmlFor="modal-street" className="label-text">Street Address*</label>
-              <input type="text" id="modal-street" placeholder="35 Magnolia RD" className="input-field" required autoComplete="street-address" />
-            </div>
-            <div>
-              <label htmlFor="modal-unit" className="label-text">Apt/Unit</label>
-              <input type="text" id="modal-unit" placeholder="Apt, Suite, Unit (optional)" className="input-field" autoComplete="address-line2" />
-            </div>
-            <div>
-              <label htmlFor="modal-zip" className="label-text">Zip Code*</label>
-              <input type="text" id="modal-zip" placeholder="23225" className="input-field" required autoComplete="postal-code" />
-            </div>
-            <label className="flex items-center gap-2 text-sm text-att-gray-600">
-              <input type="checkbox" className="rounded border-att-gray-300 text-att-blue focus:ring-att-cyan" defaultChecked />
-              I'm moving to this address
-            </label>
-            <button type="submit" className="btn-primary w-full">Shop Plans</button>
-          </form>
-        </Modal>
+        <AvailabilityModal
+          source="home-plan-card"
+          submitLabel="Shop internet"
+          initialData={checkedAddress}
+          initialResult={checkedResult}
+          onResult={handleAddressResult}
+          onClose={() => setShowFormModal(false)}
+        />
       )}
 
       {showTermsModal && (
@@ -283,7 +244,7 @@ export default function Home() {
         <Modal onClose={() => setShowRewardModal(null)} title="$250 AT&T Visa® Reward Card" large>
           <div className="space-y-4 text-sm text-att-gray-600">
             <p className="font-semibold">$250 REWARD CARD OFFER: Limited time offer, subject to change.</p>
-            <p>$250 AT&T Visa® Reward Card for purchase of any AT&T Fiber speeds. For new residential AT&T Fiber customers who purchase through attspecial.com. Redemption req'd. Employees and residents of select multi-dwelling units not eligible.</p>
+            <p>$250 AT&T Visa® Reward Card for purchase of any AT&T Fiber speeds. For new residential AT&T Fiber customers who purchase through attspecial.com. Redemption req&apos;d. Employees and residents of select multi-dwelling units not eligible.</p>
             <p className="text-xs text-att-gray-500">Card issued by The Bancorp Bank N.A., Member FDIC, pursuant to a license from Visa U.S.A. Inc.</p>
           </div>
         </Modal>
@@ -293,17 +254,11 @@ export default function Home() {
 }
 
 function FeatureCard({ feature }: { feature: Feature }) {
+  const Icon = featureIcons[feature.icon];
   return (
     <div className="feature-card">
-      <div className="feature-icon">
-        <Image
-          src={featureIcons[feature.icon]}
-          alt=""
-          width={32}
-          height={32}
-          className="w-full h-full object-contain"
-          aria-hidden="true"
-        />
+      <div className="feature-icon" aria-hidden="true">
+        <Icon />
       </div>
       <h3 className="feature-title">{feature.title}</h3>
       <p className="feature-desc">{feature.desc}</p>

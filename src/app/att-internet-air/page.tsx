@@ -5,7 +5,14 @@ import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AvailabilityModal from "@/components/AvailabilityModal";
+import { IconBox, IconDocument, Icon5G } from "@/components/Icons";
 import { phoneNumber, telHref } from "@/lib/site-config";
+
+const airFeatures = [
+  { title: "Simple Setup", desc: "Plug in the All-Fi Hub and connect in minutes. No technician visit required.", Icon: IconBox },
+  { title: "No Annual Contract", desc: "Cancel anytime without early termination fees. Month-to-month flexibility.", Icon: IconDocument },
+  { title: "5G Network", desc: "Powered by AT&T's nationwide 5G network for reliable connectivity.", Icon: Icon5G },
+];
 
 export default function ATTInternetAirPage() {
   const [showFormModal, setShowFormModal] = useState(false);
@@ -58,13 +65,11 @@ export default function ATTInternetAirPage() {
               <h2 id="features-title" className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Why choose AT&T Internet Air?</h2>
             </div>
             <div className="grid md:grid-cols-3 gap-8">
-              {[
-                { title: "Simple Setup", desc: "Plug in the All-Fi Hub and connect in minutes. No technician visit required.", icon: "📦" },
-                { title: "No Annual Contract", desc: "Cancel anytime without early termination fees. Month-to-month flexibility.", icon: "📄" },
-                { title: "5G Network", desc: "Powered by AT&T's nationwide 5G network for reliable connectivity.", icon: "📶" },
-              ].map((feature, i) => (
-                <div key={i} className="text-center p-6">
-                  <div className="text-4xl mb-4" aria-hidden="true">{feature.icon}</div>
+              {airFeatures.map((feature) => (
+                <div key={feature.title} className="text-center p-6">
+                  <div className="icon-badge" aria-hidden="true">
+                    <feature.Icon />
+                  </div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
                   <p className="text-gray-600">{feature.desc}</p>
                 </div>
