@@ -150,7 +150,11 @@ export default function Home() {
               <p className="att-lead max-w-2xl mx-auto">
                 Four speeds, from 300 Mbps up to 5 GIG. Every plan is symmetrical, unlimited,
                 and month to month on eligible terms — the prices below already include the
-                new-customer and AutoPay discounts.
+                new-customer and AutoPay discounts. Ordering from a specific metro?{" "}
+                <Link href="/att-fiber" className="text-att-navy font-bold underline underline-offset-2">
+                  See AT&amp;T Fiber by city
+                </Link>
+                .
               </p>
             </div>
 
