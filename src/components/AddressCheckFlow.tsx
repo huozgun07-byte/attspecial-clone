@@ -3,6 +3,7 @@
 import { useState } from "react";
 import AddressForm, { AddressFormData, AddressFormLabels, defaultAddressFormLabels } from "./AddressForm";
 import { checkAvailability, submitLead, AvailabilityResponse, ApiError } from "@/lib/api";
+import { trackLead } from "@/lib/tracking";
 
 type FlowState =
   | { status: "form" }
@@ -55,6 +56,8 @@ export default function AddressCheckFlow({
       }
       setCheckedAddress(data);
       setState({ status: "result", result });
+      // Conversion signal for Meta / TikTok / Google ad campaigns.
+      trackLead({ source, available: result.available, zip: data.zip });
       onResult?.(data, result);
     } catch (err) {
       setState({

@@ -1,50 +1,23 @@
 import { MetadataRoute } from "next";
+import { siteUrl } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://attspecial.com";
+  const lastModified = new Date();
 
-  return [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/att-internet-air`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/wireless`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/business`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/espanol`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/faq`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/privacy`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.5,
-    },
+  const routes: Array<{ path: string; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"]; priority: number }> = [
+    { path: "", changeFrequency: "daily", priority: 1 },
+    { path: "/att-internet-air", changeFrequency: "weekly", priority: 0.8 },
+    { path: "/wireless", changeFrequency: "weekly", priority: 0.8 },
+    { path: "/business", changeFrequency: "weekly", priority: 0.8 },
+    { path: "/espanol", changeFrequency: "monthly", priority: 0.7 },
+    { path: "/faq", changeFrequency: "monthly", priority: 0.7 },
+    { path: "/privacy", changeFrequency: "yearly", priority: 0.3 },
   ];
+
+  return routes.map(({ path, changeFrequency, priority }) => ({
+    url: `${siteUrl}${path}`,
+    lastModified,
+    changeFrequency,
+    priority,
+  }));
 }

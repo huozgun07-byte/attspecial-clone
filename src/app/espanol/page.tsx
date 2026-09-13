@@ -18,7 +18,7 @@ export default function EspanolPage() {
   const [showFormModal, setShowFormModal] = useState(false);
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div lang="es-US" className="min-h-screen bg-white flex flex-col">
       <Header />
 
       <main className="flex-1">

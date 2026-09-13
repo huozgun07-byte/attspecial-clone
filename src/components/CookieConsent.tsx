@@ -15,6 +15,7 @@ export default function CookieConsent() {
 
   const accept = () => {
     localStorage.setItem("cookie-consent", "accepted");
+    window.dispatchEvent(new Event("cookie-consent-changed"));
     setShow(false);
     // Initialize analytics here
     if (typeof window !== "undefined" && (window as any).gtag) {
@@ -24,6 +25,7 @@ export default function CookieConsent() {
 
   const decline = () => {
     localStorage.setItem("cookie-consent", "declined");
+    window.dispatchEvent(new Event("cookie-consent-changed"));
     setShow(false);
   };
 

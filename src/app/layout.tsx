@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Analytics from "@/components/Analytics";
+import MarketingPixels from "@/components/MarketingPixels";
 import CookieConsent from "@/components/CookieConsent";
+import { siteUrl, siteName, defaultDescription, organizationSchema, fiberOffersSchema } from "@/lib/seo";
 import "./globals.css";
 
 const inter = Inter({
@@ -14,45 +16,53 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
-    default: "Internet - AT&T Preferred Dealer",
+    default: "AT&T Fiber Internet from $35/mo | AT&T Preferred Dealer",
     template: "%s | AT&T Preferred Dealer",
   },
-  description: "Get AT&T Fiber Internet with speeds up to 5 GIG. Starting at $35/mo. Free professional installation. $250 Reward Card offer. Check availability in your area.",
-  keywords: ["AT&T Fiber", "Internet", "High Speed Internet", "Fiber Optic", "AT&T Dealer", "Fiber Internet", "Gigabit Internet"],
-  authors: [{ name: "AT&T Preferred Dealer" }],
-  creator: "AT&T Preferred Dealer",
-  publisher: "AT&T Preferred Dealer",
-  formatDetection: {
-    telephone: true,
-  },
-  metadataBase: new URL("https://attspecial.com"),
+  description: defaultDescription,
+  keywords: [
+    "AT&T Fiber",
+    "AT&T internet",
+    "fiber internet",
+    "gigabit internet",
+    "AT&T Preferred Dealer",
+    "AT&T Internet Air",
+    "AT&T wireless plans",
+    "internet deals",
+    "check internet availability",
+  ],
+  applicationName: siteName,
+  authors: [{ name: siteName }],
+  creator: siteName,
+  publisher: siteName,
+  category: "Telecommunications",
+  formatDetection: { telephone: true },
   alternates: {
     canonical: "/",
-    languages: {
-      "en-US": "/",
-      "es-US": "/espanol",
-    },
+    languages: { "en-US": "/", "es-US": "/espanol" },
   },
   openGraph: {
-    title: "Internet - AT&T Preferred Dealer",
-    description: "Get AT&T Fiber Internet with speeds up to 5 GIG. Starting at $35/mo.",
+    title: "AT&T Fiber Internet from $35/mo | AT&T Preferred Dealer",
+    description: defaultDescription,
+    url: siteUrl,
+    siteName,
     type: "website",
     locale: "en_US",
-    siteName: "AT&T Preferred Dealer",
     images: [
       {
         url: "/images/og-image.png",
         width: 1200,
         height: 630,
-        alt: "AT&T Fiber - High Speed Internet",
+        alt: "AT&T Fiber — 1 Gig internet for $50/mo",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Internet - AT&T Preferred Dealer",
-    description: "Get AT&T Fiber Internet with speeds up to 5 GIG. Starting at $35/mo.",
+    title: "AT&T Fiber Internet from $35/mo | AT&T Preferred Dealer",
+    description: defaultDescription,
     images: ["/images/og-image.png"],
   },
   robots: {
@@ -74,30 +84,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://attspecial.com" />
         <link rel="preload" as="image" href="/images/att-preferred-dealer.png" />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebSite",
-              name: "AT&T Preferred Dealer",
-              url: "https://attspecial.com",
-              potentialAction: {
-                "@type": "SearchAction",
-                target: {
-                  "@type": "EntryPoint",
-                  urlTemplate: "https://attspecial.com/?q={search_term_string}",
-                },
-                "query-input": "required name=search_term_string",
-              },
-            }),
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema()) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(fiberOffersSchema()) }}
         />
       </head>
       <body className="font-sans min-h-screen flex flex-col bg-white">
         <Analytics />
+        <MarketingPixels />
         <CookieConsent />
         {children}
       </body>
