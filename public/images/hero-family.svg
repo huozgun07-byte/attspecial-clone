@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <defs>
+    <linearGradient id="heroBg" x1="0" y1="0" x2="1920" y2="1080" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0D0D1A"/>
+      <stop offset="50%" stop-color="#1A1A2E"/>
+      <stop offset="100%" stop-color="#0D0D1A"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="20%" cy="30%" r="40%" fx="20%" fy="30%">
+      <stop offset="0%" stop-color="#0067B5" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#0067B5" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="80%" cy="70%" r="35%" fx="80%" fy="70%">
+      <stop offset="0%" stop-color="#00A8E0" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#00A8E0" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#heroBg)"/>
+  <ellipse cx="384" cy="324" rx="500" ry="300" fill="url(#glow1)"/>
+  <ellipse cx="1536" cy="756" rx="400" ry="250" fill="url(#glow2)"/>
+  <!-- Subtle grid pattern -->
+  <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+    <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#0067B5" stroke-width="0.3" opacity="0.05"/>
+  </pattern>
+  <rect width="1920" height="1080" fill="url(#grid)"/>
+</svg>

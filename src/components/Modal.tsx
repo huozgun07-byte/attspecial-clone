@@ -14,18 +14,18 @@ export default function Modal({ children, onClose, title, large = false }: Modal
     <div className="fixed inset-0 z-50 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="modal-title">
       <div className="flex min-h-full items-center justify-center p-4">
         <div
-          className="fixed inset-0 bg-black/50 transition-opacity"
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
           onClick={onClose}
           aria-hidden="true"
         />
         <div
-          className={`relative w-full max-w-md ${large ? "max-w-2xl" : ""} bg-white rounded-xl shadow-xl transform transition-all`}
+          className={`relative w-full ${large ? "max-w-2xl" : "max-w-md"} bg-white rounded-2xl shadow-2xl transform transition-all`}
         >
-          <div className="flex items-center justify-between p-4 border-b border-gray-200">
-            <h3 id="modal-title" className="text-lg font-semibold text-gray-900">{title}</h3>
+          <div className="flex items-center justify-between p-4 border-b border-att-gray-200">
+            <h3 id="modal-title" className="text-lg font-semibold text-att-gray-900">{title}</h3>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg p-1"
+              className="p-1 text-att-gray-400 hover:text-att-gray-600 rounded-lg hover:bg-att-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-att-cyan"
               aria-label="Close modal"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">

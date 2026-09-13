@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 60" width="280" height="60" fill="none">
+  <defs>
+    <linearGradient id="globeGrad" x1="0" y1="0" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0067B5"/>
+      <stop offset="100%" stop-color="#004B87"/>
+    </linearGradient>
+    <linearGradient id="fiberText" x1="0" y1="0" x2="0" y2="60" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fff"/>
+      <stop offset="100%" stop-color="#E8F4FD"/>
+    </linearGradient>
+  </defs>
+  <!-- AT&T Globe -->
+  <circle cx="30" cy="30" r="24" fill="url(#globeGrad)"/>
+  <path d="M14 30c0-8.837 7.163-16 16-16s16 7.163 16 16-7.163 16-16 16S14 38.837 14 30" fill="none" stroke="#fff" stroke-width="2"/>
+  <path d="M30 6v48" stroke="#fff" stroke-width="2"/>
+  <ellipse cx="30" cy="30" rx="15" ry="5" fill="none" stroke="#fff" stroke-width="1" opacity="0.4"/>
+  <!-- Text -->
+  <text x="68" y="38" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="28" font-weight="700" fill="url(#fiberText)">AT&T Fiber</text>
+  <text x="68" y="52" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="500" fill="#fff" opacity="0.8">® 1 Gig</text>
+</svg>

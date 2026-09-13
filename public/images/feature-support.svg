@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none">
+  <defs>
+    <linearGradient id="headsetTop" x1="0" y1="0" x2="0" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0067B5"/>
+      <stop offset="100%" stop-color="#004B87"/>
+    </linearGradient>
+    <linearGradient id="headsetEar" x1="0" y1="0" x2="0" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#00A8E0"/>
+      <stop offset="100%" stop-color="#0067B5"/>
+    </linearGradient>
+    <linearGradient id="micGrad" x1="0" y1="0" x2="0" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1A1A2E"/>
+      <stop offset="100%" stop-color="#0D0D1A"/>
+    </linearGradient>
+    <linearGradient id="clockFace" x1="0" y1="0" x2="0" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#F0F5FA"/>
+    </linearGradient>
+    <linearGradient id="pulseGrad" x1="0" y1="0" x2="0" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#00A8E0"/>
+      <stop offset="100%" stop-color="#0067B5" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="headsetShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#0067B5" flood-opacity="0.15"/>
+    </filter>
+    <filter id="pulseGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Headband -->
+  <path d="M14 18C14 10 20 4 28 4S42 10 42 18" 
+        stroke="url(#headsetTop)" stroke-width="5" fill="none" stroke-linecap="round" filter="url(#headsetShadow)"/>
+  
+  <!-- Headband inner highlight -->
+  <path d="M18 18C18 13 23 8 28 8S38 13 38 18" 
+        stroke="#FFFFFF" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.3"/>
+  
+  <!-- Left ear cup -->
+  <g transform="translate(10, 16)" filter="url(#headsetShadow)">
+    <circle cx="0" cy="0" r="12" fill="url(#headsetEar)"/>
+    <circle cx="0" cy="0" r="12" fill="none" stroke="#FFFFFF" stroke-width="0.5" opacity="0.2"/>
+    <circle cx="0" cy="0" r="7" fill="url(#micGrad)"/>
+    <circle cx="0" cy="0" r="7" fill="none" stroke="#2A2A4A" stroke-width="0.5"/>
+    <!-- Speaker grille -->
+    <g stroke="#2A2A4A" stroke-width="0.5" stroke-linecap="round" opacity="0.6">
+      <line x1="-5" y1="-3" x2="5" y2="-3"/>
+      <line x1="-5" y1="0" x2="5" y2="0"/>
+      <line x1="-5" y1="3" x2="5" y2="3"/>
+    </g>
+    <!-- Center dot -->
+    <circle cx="0" cy="0" r="2" fill="#1A1A2E"/>
+  </g>
+  
+  <!-- Right ear cup -->
+  <g transform="translate(54, 16)" filter="url(#headsetShadow)">
+    <circle cx="0" cy="0" r="12" fill="url(#headsetEar)"/>
+    <circle cx="0" cy="0" r="12" fill="none" stroke="#FFFFFF" stroke-width="0.5" opacity="0.2"/>
+    <circle cx="0" cy="0" r="7" fill="url(#micGrad)"/>
+    <circle cx="0" cy="0" r="7" fill="none" stroke="#2A2A4A" stroke-width="0.5"/>
+    <!-- Speaker grille -->
+    <g stroke="#2A2A4A" stroke-width="0.5" stroke-linecap="round" opacity="0.6">
+      <line x1="-5" y1="-3" x2="5" y2="-3"/>
+      <line x1="-5" y1="0" x2="5" y2="0"/>
+      <line x1="-5" y1="3" x2="5" y2="3"/>
+    </g>
+    <circle cx="0" cy="0" r="2" fill="#1A1A2E"/>
+  </g>
+  
+  <!-- Microphone boom -->
+  <path d="M42 16Q48 14 52 10" 
+        stroke="url(#headsetTop)" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.9"/>
+  
+  <!-- Microphone -->
+  <ellipse cx="52" cy="8" rx="4" ry="6" fill="url(#micGrad)" stroke="#2A2A4A" stroke-width="0.5"/>
+  <ellipse cx="52" cy="8" rx="2.5" ry="3.5" fill="#00A8E0" opacity="0.2"/>
+  <!-- Mic active indicator -->
+  <circle cx="52" cy="12" r="1.5" fill="#00E676">
+    <animate attributeName="opacity" values="1;0.4;1" dur="1s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Clock/24-7 badge -->
+  <g transform="translate(32, 48)">
+    <!-- Clock face -->
+    <circle cx="0" cy="0" r="16" fill="url(#clockFace)" stroke="#E8EFF5" stroke-width="1.5" filter="url(#headsetShadow)"/>
+    
+    <!-- Clock ticks -->
+    <g stroke="#0067B5" stroke-width="1.5" stroke-linecap="round">
+      <line x1="0" y1="-12" x2="0" y2="-10"/>
+      <line x1="0" y1="10" x2="0" y2="12"/>
+      <line x1="-12" y1="0" x2="-10" y2="0"/>
+      <line x1="10" y1="0" x2="12" y2="0"/>
+    </g>
+    <g stroke="#0067B5" stroke-width="1" stroke-linecap="round" opacity="0.6">
+      <line x1="-8.5" y1="-8.5" x2="-7" y2="-7"/>
+      <line x1="7" y1="-8.5" x2="8.5" y2="-7"/>
+      <line x1="-8.5" y1="8.5" x2="-7" y2="7"/>
+      <line x1="7" y1="8.5" x2="8.5" y2="7"/>
+    </g>
+    
+    <!-- Clock hands - 24/7 -->
+    <line x1="0" y1="0" x2="0" y2="-9" stroke="#0067B5" stroke-width="2" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="7" y2="0" stroke="#00A8E0" stroke-width="1.5" stroke-linecap="round"/>
+    
+    <!-- Center dot -->
+    <circle cx="0" cy="0" r="2.5" fill="#0067B5"/>
+    
+    <!-- 24/7 text -->
+    <text x="0" y="24" text-anchor="middle" font-family="system-ui, sans-serif" font-size="8" font-weight="700" fill="#0067B5" letter-spacing="0.5">24/7</text>
+  </g>
+  
+  <!-- Pulse rings around headset (active connection) -->
+  <g filter="url(#pulseGlow)" opacity="0.4">
+    <circle cx="32" cy="18" r="28" stroke="url(#pulseGrad)" stroke-width="2" fill="none">
+      <animate attributeName="r" values="20;35" dur="2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.4;0" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="32" cy="18" r="28" stroke="url(#pulseGrad)" stroke-width="2" fill="none">
+      <animate attributeName="r" values="20;35" dur="2s" repeatCount="indefinite" begin="1s"/>
+      <animate attributeName="opacity" values="0.4;0" dur="2s" repeatCount="indefinite" begin="1s"/>
+    </circle>
+  </g>
+</svg>

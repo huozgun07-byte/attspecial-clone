@@ -1,27 +1,167 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --color-att-blue: #0067B5;
   --color-att-dark-blue: #004B87;
   --color-att-light-blue: #E8F4FD;
+  --color-att-cyan: #00A8E0;
   --color-att-gold: #FFBF00;
+  --color-att-dark: #1A1A2E;
+  --color-att-gray-50: #F9FAFB;
+  --color-att-gray-100: #F3F4F6;
+  --color-att-gray-200: #E5E7EB;
+  --color-att-gray-300: #D1D5DB;
+  --color-att-gray-400: #9CA3AF;
+  --color-att-gray-500: #6B7280;
+  --color-att-gray-600: #4B5563;
+  --color-att-gray-700: #374151;
+  --color-att-gray-800: #1F2937;
+  --color-att-gray-900: #111827;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
+  
   body {
-    @apply text-gray-900 antialiased;
+    @apply text-att-gray-900 antialiased bg-white;
   }
+  
   * {
-    @apply border-gray-200;
+    @apply border-att-gray-200;
   }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight text-att-gray-900;
+  }
+  
+  h1 { @apply text-4xl sm:text-5xl lg:text-6xl leading-[1.1]; }
+  h2 { @apply text-3xl sm:text-4xl leading-[1.2]; }
+  h3 { @apply text-2xl sm:text-3xl leading-[1.25]; }
+  h4 { @apply text-xl sm:text-2xl leading-[1.3]; }
+  
+  a { @apply transition-colors duration-150; }
+  
+  *:focus-visible {
+    @apply outline-none ring-2 ring-att-cyan ring-offset-2;
+  }
+  
+  ::selection { @apply bg-att-cyan/20 text-att-dark-blue; }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .text-balance { text-wrap: balance; }
+  
+  .att-gradient-text {
+    @apply bg-gradient-to-r from-att-blue via-att-cyan to-att-blue bg-clip-text text-transparent;
+  }
+  
+  .att-container { @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8; }
+  .att-section { @apply py-16 sm:py-20 lg:py-24; }
+  
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold text-white
+    bg-att-blue rounded-full transition-all duration-200
+    hover:bg-att-dark-blue hover:shadow-lg hover:shadow-att-blue/25
+    focus:ring-2 focus:ring-att-cyan focus:ring-offset-2;
+  }
+  
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold text-att-gray-900
+    bg-att-gray-100 rounded-full transition-all duration-200
+    hover:bg-att-gray-200
+    focus:ring-2 focus:ring-att-gray-400 focus:ring-offset-2;
+  }
+  
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold text-att-blue
+    border-2 border-att-blue rounded-full transition-all duration-200
+    hover:bg-att-blue hover:text-white
+    focus:ring-2 focus:ring-att-cyan focus:ring-offset-2;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3.5 text-base text-att-gray-900
+    bg-white border border-att-gray-300 rounded-lg
+    placeholder:text-att-gray-400
+    transition-all duration-150
+    focus:border-att-cyan focus:ring-2 focus:ring-att-cyan/20 focus:outline-none;
+  }
+  
+  .label-text {
+    @apply block mb-1.5 text-sm font-medium text-att-gray-700;
+  }
+  
+  .helper-text {
+    @apply mt-1 text-xs text-att-gray-500;
+  }
+  
+  .plan-card {
+    @apply bg-white rounded-xl border border-att-gray-200 overflow-hidden
+    transition-all duration-300 hover:shadow-xl;
+  }
+  
+  .plan-card-highlighted {
+    @apply border-att-cyan/50 ring-2 ring-att-cyan/20 shadow-lg;
+  }
+  
+  .plan-header {
+    @apply bg-att-cyan px-5 py-3 flex items-center justify-between gap-2;
+  }
+  
+  .plan-badge {
+    @apply text-white text-[11px] font-semibold bg-white/20 px-2 py-0.5 rounded-full whitespace-nowrap;
+  }
+  
+  .plan-body { @apply p-6 flex flex-col flex-1; }
+  .plan-label { @apply text-att-cyan font-semibold mb-4; }
+  .plan-speed { @apply text-2xl font-bold text-att-gray-900 mb-4; }
+  .plan-price { @apply flex items-baseline gap-1 mb-4; }
+  .plan-price-amount { @apply text-3xl font-bold text-att-gray-900; }
+  .plan-price-period { @apply text-att-gray-500; }
+  .plan-details { @apply text-xs text-att-gray-500 mb-4 flex-1 leading-relaxed; }
+  .plan-link { @apply text-att-blue text-sm font-medium hover:underline block text-center mb-3; }
+  .plan-cta {
+    @apply w-full py-3 px-4 rounded-full font-semibold text-base transition-all duration-200
+    focus:ring-2 focus:ring-att-cyan focus:ring-offset-2;
+  }
+  .plan-cta-primary {
+    @apply bg-att-blue text-white hover:bg-att-dark-blue hover:shadow-lg hover:shadow-att-blue/25;
+  }
+  .plan-cta-secondary {
+    @apply bg-att-gray-100 text-att-gray-900 hover:bg-att-gray-200;
+  }
+  
+  .feature-card { @apply text-center; }
+  .feature-icon { @apply w-12 h-12 mx-auto mb-4; }
+  .feature-title { @apply font-semibold text-att-gray-900 mb-1.5 text-base; }
+  .feature-desc { @apply text-sm text-att-gray-600 leading-relaxed; }
+  
+  .step-number {
+    @apply w-10 h-10 rounded-full bg-att-blue text-white font-bold flex items-center justify-center mx-auto mb-4;
+  }
+  .step-title { @apply font-semibold text-att-gray-900 mb-2; }
+  .step-desc { @apply text-sm text-att-gray-600; }
+  
+  .hero-overlay {
+    @apply absolute inset-0 bg-gradient-to-r from-att-gray-900/85 via-att-gray-900/60 to-att-gray-900/10;
   }
 }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print */
+@media print { .no-print { display: none !important; } }
