@@ -16,6 +16,7 @@ export function telHref(phone: string): string {
 
 export const navItems = [
   { label: "Internet", href: "/" },
+  { label: "Why Fiber", href: "/why-fiber" },
   { label: "AT&T Internet Air", href: "/att-internet-air" },
   { label: "Wireless Phone", href: "/wireless" },
   { label: "Business", href: "/business" },
@@ -26,11 +27,19 @@ export interface Plan {
   name: string;
   speed: string;
   price: string;
+  /** Prevailing rate once the 12-month new-customer discount ends. */
+  regularPrice: string;
   details: string;
   cta: string;
   modal: string;
   badge?: string;
   highlighted?: boolean;
+  /** Rough guide to how many devices can be active at once on this tier. */
+  devices: string;
+  /** One line on the household this tier is sized for. */
+  bestFor: string;
+  /** How the upload speed compares with cable at a similar download tier. */
+  uploadVsCable?: string;
 }
 
 export const plans: Plan[] = [
@@ -38,42 +47,57 @@ export const plans: Plan[] = [
     name: "Basic",
     speed: "300 Mbps",
     price: "$35",
+    regularPrice: "$60",
     details:
       "Room for a couple of 4K streams, video calls and everyday browsing at once. Reflects $15/mo off for 12 mos for new customers plus the $10/mo AutoPay & Paperless bill discount.",
     cta: "Shop internet",
     modal: "modal-terms-300",
     badge: "Best Value",
+    devices: "Around 12 devices online at once",
+    bestFor: "Streaming, video calls and homework in a small household",
+    uploadVsCable: "15X faster uploads than cable",
   },
   {
     name: "Home",
     speed: "500 Mbps",
-    price: "$40",
+    price: "$50",
+    regularPrice: "$75",
     details:
       "A step up for households that upload as much as they download — cloud backups, large file shares and several people online together. Reflects $15/mo off for 12 mos for new customers plus $10/mo AutoPay & Paperless bill.",
     cta: "Shop internet",
     modal: "modal-terms-500",
     badge: "Popular",
+    devices: "Around 13 devices online at once",
+    bestFor: "Several people streaming, uploading and working at the same time",
+    uploadVsCable: "20X faster uploads than cable",
   },
   {
     name: "Smart Home",
     speed: "1 GIG",
     price: "$50",
+    regularPrice: "$90",
     details:
       "Our most-ordered plan: gigabit speed for smart-home devices, gaming and working from home without anyone slowing anyone else down. Ltd. avail/areas. Reflects $30/mo off for 12 mos for new customers plus $10/mo AutoPay & Paperless bill.",
     cta: "Shop internet",
     modal: "modal-terms-1g",
     badge: "Recommended",
     highlighted: true,
+    devices: "Around 14 devices online at once",
+    bestFor: "Competitive gaming, 4K binge-watching and a house full of smart devices",
+    uploadVsCable: "25X faster uploads than cable",
   },
   {
     name: "Elite",
     speed: "5 GIG",
     price: "$95",
+    regularPrice: "$135",
     details:
       "The top tier, for home studios, self-hosted servers and anyone moving very large files daily. Ltd avail/areas. Reflects $30/mo off for 12 mos for new customers plus $10/mo AutoPay & Paperless bill.",
     cta: "Shop internet",
     modal: "modal-terms-5g",
     badge: "Ultimate",
+    devices: "Effectively no practical device limit at home",
+    bestFor: "Home studios, creators moving huge files and self-hosted servers",
   },
 ];
 
@@ -114,7 +138,7 @@ export interface Step {
 export const steps: Step[] = [
   {
     title: "Check your address",
-    desc: "Fiber is built street by street, so availability is decided address by address. Enter yours and we'll tell you exactly which plans reach your home.",
+    desc: "Fiber is built street by street, so availability is decided address by address. Give us your ZIP and a few quick answers, and a specialist confirms exactly which plans reach your home.",
   },
   {
     title: "Pick a speed you'll actually use",
@@ -138,7 +162,7 @@ export const faqs: Faq[] = [
   },
   {
     q: "How do I find out if AT&T Fiber reaches my address?",
-    a: "Enter your street address and ZIP code in the availability form on this page. Fiber is built out block by block, so two homes on the same street can get different answers — checking the exact address is the only reliable way to know.",
+    a: "Start with your ZIP code using the check button on this page — it takes about thirty seconds and we only ask for your street address when a specialist calls. Fiber is built out block by block, so two homes on the same street can get different answers, which is why the exact address is confirmed with you rather than guessed.",
   },
   {
     q: "What equipment comes with the service?",
@@ -183,6 +207,26 @@ export const faqs: Faq[] = [
   {
     q: "I'm moving. Can I take the service with me?",
     a: "Usually yes — service can be transferred, though the plans available depend on what is built at the new address. Check the new address before moving day so there are no surprises, and we'll line the install up with your move date.",
+  },
+  {
+    q: "How many devices can one plan handle?",
+    a: "As a rough guide, 300 Mbps comfortably keeps about a dozen devices going at once, 500 Mbps a little more, and 1 GIG around fourteen with heavy use like 4K streaming and gaming mixed in. What actually matters is how many of them are doing something demanding at the same moment — twenty idle smart bulbs cost you nothing, two simultaneous 4K uploads do.",
+  },
+  {
+    q: "Do I need to buy my own router?",
+    a: "No. The AT&T Wi-Fi gateway that comes with Fiber service is a modem and router in one, and it is included rather than billed as a monthly equipment rental. If your home is large or awkwardly shaped, AT&T Wi-Fi extenders can be added to spread coverage; they are sold separately.",
+  },
+  {
+    q: "What is AT&T ActiveArmor?",
+    a: "It is the security layer built into AT&T internet service. Working at the network and gateway level, it helps block known malicious traffic before it reaches your laptops, phones and smart-home devices. It guards against threats that are already known rather than everything that exists, it is managed through the Smart Home Manager app, and the protections need to be switched on there.",
+  },
+  {
+    q: "Why are fiber upload speeds so much higher than cable?",
+    a: "Cable networks were designed around downloading, so they reserve only a thin slice of capacity for the traffic going the other way. Fiber has no such imbalance: on AT&T Fiber your upload speed matches your download speed. In practice that is the difference between a video call that holds steady and one that breaks up while someone else backs up their phone.",
+  },
+  {
+    q: "Is fiber more reliable in bad weather?",
+    a: "Fiber carries light through glass rather than electricity through copper, so it is unaffected by electromagnetic interference, nearby radio transmitters and electrical surges from lightning. The cable itself is also not a fire risk the way an energised copper line can be. No connection is immune to a pole coming down, but fiber removes most of the everyday causes of noise and dropouts.",
   },
   {
     q: "What does ordering through an AT&T Preferred Dealer change?",

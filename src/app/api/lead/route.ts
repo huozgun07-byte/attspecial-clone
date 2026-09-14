@@ -13,7 +13,7 @@ const FROM_EMAIL = process.env.LEAD_FROM_EMAIL || "AT&T Fiber Leads <onboarding@
 const GOOGLE_SHEET_WEBHOOK_URL = process.env.GOOGLE_SHEET_WEBHOOK_URL;
 
 interface Lead {
-  street: string;
+  street?: string;
   unit?: string;
   zip: string;
   moving?: boolean;
@@ -23,6 +23,37 @@ interface Lead {
   available?: boolean;
   timestamp: string;
   ip: string;
+  /**
+   * "partial" arrives as soon as the wizard's address step is done, so an
+   * abandoned wizard still leaves a usable address. "complete" arrives once
+   * contact details are in and supersedes the partial for the same address.
+   */
+  stage?: "partial" | "complete";
+  firstName?: string;
+  lastName?: string;
+  service?: string;
+  customerType?: string;
+  timeline?: string;
+  callTime?: string;
+}
+
+/** Human-readable labels for the wizard's coded answers. */
+const ANSWER_LABELS: Record<string, string> = {
+  internet: "Internet",
+  wireless: "Wireless",
+  bundle: "Internet + wireless",
+  unsure: "Not sure yet",
+  new: "New AT&T customer",
+  existing: "Existing AT&T customer",
+  asap: "As soon as possible",
+  week: "Within a week",
+  month: "Within a month",
+  researching: "Just comparing options",
+};
+
+function label(value?: string): string {
+  if (!value) return "-";
+  return ANSWER_LABELS[value] || value;
 }
 
 async function sendLeadEmail(lead: Lead) {
@@ -31,20 +62,39 @@ async function sendLeadEmail(lead: Lead) {
     return;
   }
   try {
+    // A partial lead is an address captured before the visitor gave contact
+    // details — worth chasing, but it should never look like a finished one in
+    // the inbox.
+    const prefix =
+      lead.stage === "partial"
+        ? "Address only (no contact yet)"
+        : lead.phone
+          ? "CALLABLE LEAD"
+          : "New lead";
+
+    const name = [lead.firstName, lead.lastName].filter(Boolean).join(" ");
+
     await resend.emails.send({
       from: FROM_EMAIL,
       to: NOTIFY_EMAIL,
-      subject: `New lead: ${lead.street}, ${lead.zip}`,
+      subject: `${prefix}: ${lead.street ? `${lead.street}, ` : ""}${lead.zip}`,
       text: [
-        `New lead from: ${lead.source}`,
+        `${prefix} from: ${lead.source}`,
         "",
-        `Street: ${lead.street}`,
+        `Name: ${name || "-"}`,
+        `Phone: ${lead.phone || "-"}`,
+        `Best time to call: ${lead.callTime || "-"}`,
+        `Email: ${lead.email || "-"}`,
+        "",
+        `Street: ${lead.street || "- (ask on the call)"}`,
         `Unit: ${lead.unit || "-"}`,
         `Zip: ${lead.zip}`,
         `Moving to this address: ${lead.moving ? "Yes" : "No"}`,
         `Availability check result: ${lead.available === undefined ? "Not checked" : lead.available ? "Available" : "Not available"}`,
-        `Phone: ${lead.phone || "-"}`,
-        `Email: ${lead.email || "-"}`,
+        "",
+        `Looking for: ${label(lead.service)}`,
+        `Customer status: ${label(lead.customerType)}`,
+        `Needs service: ${label(lead.timeline)}`,
         "",
         `Time: ${lead.timestamp}`,
         `IP: ${lead.ip}`,
@@ -82,13 +132,32 @@ async function appendToGoogleSheet(lead: Lead) {
 export async function POST(request: NextRequest) {
   try {
     const ip = getClientIp(request);
-    const { allowed } = rateLimit(`lead:${ip}`, 5, 10 * 60 * 1000);
+    // The wizard files two records per completed journey (partial + complete),
+    // so the allowance has to cover a visitor checking a couple of addresses.
+    const { allowed } = rateLimit(`lead:${ip}`, 10, 10 * 60 * 1000);
     if (!allowed) {
       return NextResponse.json({ error: "Too many requests. Please try again in a few minutes." }, { status: 429 });
     }
 
     const body = await request.json();
-    const { street, unit, zip, moving, source, phone, email, website, available } = body;
+    const {
+      street,
+      unit,
+      zip,
+      moving,
+      source,
+      phone,
+      email,
+      website,
+      available,
+      stage,
+      firstName,
+      lastName,
+      service,
+      customerType,
+      timeline,
+      callTime,
+    } = body;
 
     // Honeypot: real visitors never fill this hidden field in. Pretend success
     // so the bot doesn't learn its submission was caught, but skip notifying/
@@ -103,9 +172,12 @@ export async function POST(request: NextRequest) {
     }
 
     // Validation
-    if (!street || !zip) {
+    // A ZIP on its own is a workable lead — the wizard deliberately does not
+    // ask for a street address, and a partial record with a ZIP plus the
+    // qualifying answers is far better than nothing.
+    if (!zip || String(zip).replace(/\D/g, "").length !== 5) {
       return NextResponse.json(
-        { error: "Street address and zip code are required" },
+        { error: "A valid 5-digit ZIP code is required" },
         { status: 400 }
       );
     }
@@ -122,6 +194,13 @@ export async function POST(request: NextRequest) {
       available,
       timestamp: new Date().toISOString(),
       ip,
+      stage: stage === "partial" || stage === "complete" ? stage : undefined,
+      firstName,
+      lastName,
+      service,
+      customerType,
+      timeline,
+      callTime,
     };
 
     console.log("New lead:", lead);

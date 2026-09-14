@@ -35,6 +35,7 @@ export default function Footer() {
               <li><Link href="/wireless" className="hover:text-white">Wireless Phone</Link></li>
               <li><Link href="/business" className="hover:text-white">Business</Link></li>
               <li><Link href="/att-fiber" className="hover:text-white">Fiber by city</Link></li>
+              <li><Link href="/why-fiber" className="hover:text-white">Why AT&amp;T Fiber</Link></li>
             </ul>
           </div>
 

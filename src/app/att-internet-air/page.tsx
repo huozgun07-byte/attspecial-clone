@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import AvailabilityModal from "@/components/AvailabilityModal";
+import { useWizard } from "@/components/WizardProvider";
 import HeroPanel from "@/components/HeroPanel";
 import { IconBox, IconDocument, Icon5G } from "@/components/Icons";
 import { phoneNumber, telHref } from "@/lib/site-config";
@@ -35,7 +34,7 @@ const included = [
 ];
 
 export default function ATTInternetAirPage() {
-  const [showFormModal, setShowFormModal] = useState(false);
+  const { openWizard } = useWizard();
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -52,7 +51,7 @@ export default function ATTInternetAirPage() {
             $55/mo with AutoPay, and you plug it in yourself.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <button onClick={() => setShowFormModal(true)} className="btn-on-dark">
+            <button onClick={() => openWizard({ source: "att-internet-air" })} className="btn-on-dark">
               Check availability
             </button>
             <a href={telHref(phoneNumber)} className="btn-outline-white">
@@ -108,7 +107,7 @@ export default function ATTInternetAirPage() {
                   </li>
                 ))}
               </ul>
-              <button onClick={() => setShowFormModal(true)} className="btn-primary w-full">
+              <button onClick={() => openWizard({ source: "att-internet-air" })} className="btn-primary w-full">
                 Check availability
               </button>
               <p className="att-fine text-att-gray-500 text-center mt-4">
@@ -126,7 +125,7 @@ export default function ATTInternetAirPage() {
               Coverage depends on the 5G signal at your specific address. Give us the address and
               we&apos;ll check both Internet Air and Fiber, then tell you which one you should actually take.
             </p>
-            <button onClick={() => setShowFormModal(true)} className="btn-primary">
+            <button onClick={() => openWizard({ source: "att-internet-air" })} className="btn-primary">
               Check my address
             </button>
           </div>
@@ -135,15 +134,6 @@ export default function ATTInternetAirPage() {
 
       <Footer />
 
-      {showFormModal && (
-        <AvailabilityModal
-          source="att-internet-air"
-          title="Check For Deals"
-          submitLabel="Shop Plans"
-          showHelpText={false}
-          onClose={() => setShowFormModal(false)}
-        />
-      )}
     </div>
   );
 }

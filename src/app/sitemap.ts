@@ -8,6 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const routes: Array<{ path: string; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"]; priority: number }> = [
     { path: "", changeFrequency: "daily", priority: 1 },
     { path: "/att-fiber", changeFrequency: "weekly", priority: 0.9 },
+    { path: "/why-fiber", changeFrequency: "monthly", priority: 0.8 },
     { path: "/att-internet-air", changeFrequency: "weekly", priority: 0.8 },
     { path: "/wireless", changeFrequency: "weekly", priority: 0.8 },
     { path: "/business", changeFrequency: "weekly", priority: 0.8 },

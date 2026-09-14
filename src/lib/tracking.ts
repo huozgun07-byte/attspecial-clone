@@ -51,6 +51,63 @@ export function trackLead(params: { source: string; available?: boolean; zip?: s
   }
 }
 
+/**
+ * Fires on every step transition in the availability wizard, so the ad
+ * platforms show where people drop out rather than just whether they finished.
+ */
+export function trackWizardStep(step: number, stepName: string) {
+  const w = win();
+  if (!w) return;
+
+  try {
+    w.fbq?.("trackCustom", "WizardStep", { step, step_name: stepName });
+  } catch {
+    /* pixel not loaded */
+  }
+
+  try {
+    w.ttq?.track("ClickButton", { content_name: `wizard-step-${step}-${stepName}` });
+  } catch {
+    /* pixel not loaded */
+  }
+
+  try {
+    w.gtag?.("event", "wizard_step", { step, step_name: stepName });
+  } catch {
+    /* analytics not loaded */
+  }
+}
+
+/**
+ * Fires when the wizard's contact step is submitted — the point at which we
+ * have a phone number and the lead is actually callable.
+ */
+export function trackQualifiedLead(params: { source: string; available?: boolean; zip?: string }) {
+  const w = win();
+  if (!w) return;
+
+  try {
+    w.fbq?.("track", "CompleteRegistration", {
+      content_name: params.source,
+      content_category: params.available ? "available" : "unavailable",
+    });
+  } catch {
+    /* pixel not loaded */
+  }
+
+  try {
+    w.ttq?.track("CompleteRegistration", { content_name: params.source });
+  } catch {
+    /* pixel not loaded */
+  }
+
+  try {
+    w.gtag?.("event", "qualified_lead", { source: params.source, available: params.available });
+  } catch {
+    /* analytics not loaded */
+  }
+}
+
 /** Fires when a visitor taps a phone number. */
 export function trackCall(phone: string) {
   const w = win();

@@ -502,6 +502,37 @@ export const cities: City[] = [
   },
 ];
 
+/**
+ * Cities that have their own hero photo at /images/cities/<slug>.jpg.
+ *
+ * Photos are from Pexels (Pexels License: free for commercial use, no
+ * attribution required), cropped to 1568x745 to match the shared hero.
+ *
+ * Wichita, Jackson MS and Little Rock are deliberately absent: stock coverage
+ * for them turned up nothing that actually reads as the city, and a photo that
+ * is plainly somewhere else is worse than the shared hero.
+ */
+const CITY_HERO_SLUGS = new Set([
+  "atlanta-ga", "austin-tx", "baton-rouge-la", "birmingham-al", "charlotte-nc",
+  "chicago-il", "cleveland-oh", "columbus-oh", "dallas-tx", "detroit-mi",
+  "fort-worth-tx", "houston-tx", "indianapolis-in", "jacksonville-fl",
+  "kansas-city-mo", "las-vegas-nv", "los-angeles-ca", "louisville-ky",
+  "memphis-tn", "miami-fl", "milwaukee-wi", "nashville-tn", "new-orleans-la",
+  "oklahoma-city-ok", "orlando-fl", "raleigh-nc", "sacramento-ca",
+  "san-antonio-tx", "san-diego-ca", "san-francisco-ca", "san-jose-ca",
+  "st-louis-mo", "tulsa-ok",
+]);
+
+/** Hero image for a city page, falling back to the shared hero photo. */
+export function cityHeroImage(slug: string): string {
+  return CITY_HERO_SLUGS.has(slug) ? `/images/cities/${slug}.jpg` : "/images/hero-family.jpg";
+}
+
+/** True when the hero is a cityscape, which wants a different crop focus. */
+export function hasCityHero(slug: string): boolean {
+  return CITY_HERO_SLUGS.has(slug);
+}
+
 export const citiesBySlug = new Map(cities.map((c) => [c.slug, c]));
 
 /** Cities grouped by state name, alphabetically — used by the hub page. */

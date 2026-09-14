@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
       plans: isAvailable
         ? [
             { name: "Basic", speed: "300 Mbps", price: 35 },
-            { name: "Home", speed: "500 Mbps", price: 40 },
+            { name: "Home", speed: "500 Mbps", price: 50 },
             { name: "Smart Home", speed: "1 GIG", price: 50 },
             { name: "Elite", speed: "5 GIG", price: 95 },
           ]

@@ -1,10 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import AvailabilityModal from "@/components/AvailabilityModal";
-import { espanolAddressFormLabels } from "@/components/AddressForm";
+import { useWizard } from "@/components/WizardProvider";
 import { IconFiber, Icon5G, IconPhone } from "@/components/Icons";
 import { phoneNumber, telHref } from "@/lib/site-config";
 
@@ -27,7 +25,7 @@ const servicios = [
 ];
 
 export default function EspanolPage() {
-  const [showFormModal, setShowFormModal] = useState(false);
+  const { openWizard } = useWizard();
 
   return (
     <div lang="es-US" className="min-h-screen bg-white flex flex-col">
@@ -43,8 +41,8 @@ export default function EspanolPage() {
               agendamos la instalación. Atención en español las 24 horas, todos los días.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button onClick={() => setShowFormModal(true)} className="btn-primary">
-                Ver ofertas
+              <button onClick={() => openWizard({ source: "espanol", lang: "es" })} className="btn-primary">
+                Verificar disponibilidad
               </button>
               <a href={telHref(phoneNumber)} className="btn-outline">
                 Llame al {phoneNumber}
@@ -67,8 +65,8 @@ export default function EspanolPage() {
                     </div>
                     <h3 className="feature-title mb-2">{servicio.title}</h3>
                     <p className="text-att-gray-600 text-sm mb-6 flex-1">{servicio.desc}</p>
-                    <button onClick={() => setShowFormModal(true)} className="btn-secondary w-full">
-                      Más info
+                    <button onClick={() => openWizard({ source: "espanol-servicio", lang: "es" })} className="btn-secondary w-full">
+                      Verificar disponibilidad
                     </button>
                   </div>
                 </article>
@@ -80,18 +78,6 @@ export default function EspanolPage() {
 
       <Footer />
 
-      {showFormModal && (
-        <AvailabilityModal
-          source="espanol"
-          title="Verificar Disponibilidad"
-          submitLabel="Ver Planes"
-          labels={espanolAddressFormLabels}
-          showUnit={false}
-          showMoving={false}
-          showHelpText={false}
-          onClose={() => setShowFormModal(false)}
-        />
-      )}
     </div>
   );
 }

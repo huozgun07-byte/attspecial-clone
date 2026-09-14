@@ -6,11 +6,10 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Modal from "@/components/Modal";
-import AddressCheckFlow from "@/components/AddressCheckFlow";
-import AvailabilityModal from "@/components/AvailabilityModal";
+import AvailabilityCard from "@/components/AvailabilityCard";
+import TrustStrip from "@/components/TrustStrip";
 import HeroSwoosh from "@/components/HeroSwoosh";
-import { AddressFormData } from "@/components/AddressForm";
-import { AvailabilityResponse } from "@/lib/api";
+import { useWizard } from "@/components/WizardProvider";
 import { IconFiber, IconContract, IconInstall, IconSupport } from "@/components/Icons";
 import { plans, features, steps, faqs, businessPhone, businessHours, type Plan, type Feature } from "@/lib/site-config";
 
@@ -25,15 +24,9 @@ export default function Home() {
   const [showBusinessModal, setShowBusinessModal] = useState(false);
   const [showTermsModal, setShowTermsModal] = useState<string | null>(null);
   const [showRewardModal, setShowRewardModal] = useState<string | null>(null);
-  // Shared across the hero form and the plan-card modal so a visitor who already
-  // checked their address once isn't asked to re-enter it on the same page.
-  const [checkedAddress, setCheckedAddress] = useState<AddressFormData | undefined>(undefined);
-  const [checkedResult, setCheckedResult] = useState<AvailabilityResponse | undefined>(undefined);
-  const [showFormModal, setShowFormModal] = useState(false);
-  const handleAddressResult = (data: AddressFormData, result: AvailabilityResponse) => {
-    setCheckedAddress(data);
-    setCheckedResult(result);
-  };
+  // Every "check availability" surface on the page opens the same step-by-step
+  // wizard, which is mounted once at the app root.
+  const { openWizard } = useWizard();
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -96,18 +89,12 @@ export default function Home() {
               </div>
 
               {/* Right — availability card */}
-              <div className="att-hero-card" role="region" aria-label="Check availability">
-                <h2 className="att-h3 mb-4">Check availability at your address</h2>
-                <AddressCheckFlow
-                  idPrefix="hero"
-                  source="home-hero"
-                  submitLabel="Shop internet"
-                  showHelpText={false}
-                  initialData={checkedAddress}
-                  initialResult={checkedResult}
-                  onResult={handleAddressResult}
-                />
-              </div>
+              <AvailabilityCard
+                className="att-hero-card"
+                title="Check availability at your address"
+                source="home-hero"
+                cta="Check my address"
+              />
             </div>
           </div>
         </section>
@@ -163,15 +150,18 @@ export default function Home() {
                 <PlanCard
                   key={plan.name}
                   plan={plan}
-                  onCtaClick={() => setShowFormModal(true)}
+                  onCtaClick={() => openWizard({ source: "home-plan-card" })}
                   onDetailsClick={(modal) => setShowTermsModal(modal)}
                 />
               ))}
             </div>
 
+            <TrustStrip className="mt-10" />
+
             <div className="mt-10 att-fine text-att-gray-500 max-w-3xl mx-auto space-y-2" role="contentinfo">
+              <p>‡ Upload speed comparison against Xfinity, Spectrum and Cox cable service at comparable download tiers with uploads of 10, 20 and 35 Mbps. Speeds vary and are not guaranteed. See www.att.com/speed101.</p>
               <p>† Speed based on wired connection. Actual speeds may vary. For 5GIG, single device wired speed maximum 4.7Gbps. For more info, go to www.att.com/speed101.</p>
-              <p>* Limited time offer. Subject to change. New AT&amp;T Fiber customers will receive a discount for 12 months off the monthly recurring charge for an AT&amp;T Fiber plan ($15/mo w/300M or 500M; $32/mo w/1 Gig or higher). Pay full plan cost until discount starts w/in 3 bills. After 12 mos, prevailing rate for fiber plan applies.</p>
+              <p>* Limited time offer. Subject to change. New AT&amp;T Fiber customers will receive a discount for 12 months off the monthly recurring charge for an AT&amp;T Fiber plan ($15/mo w/300M or 500M; $30/mo w/1 Gig or higher). Pay full plan cost until discount starts w/in 3 bills. After 12 mos, prevailing rate for fiber plan applies.</p>
             </div>
           </div>
         </section>
@@ -190,6 +180,37 @@ export default function Home() {
               {features.map((feature) => (
                 <FeatureCard key={feature.title} feature={feature} />
               ))}
+            </div>
+
+            <div className="mt-12 bg-white rounded-att border border-att-gray-200 p-6 sm:p-8 max-w-4xl mx-auto">
+              <div className="grid sm:grid-cols-3 gap-6 sm:gap-8">
+                <div>
+                  <h3 className="font-bold text-att-ink text-[17px] mb-2">Light, not electricity</h3>
+                  <p className="att-fine text-att-gray-600">
+                    Fiber carries laser light through glass instead of current through copper, so
+                    interference, lightning and distance stop mattering the way they do on cable.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="font-bold text-att-ink text-[17px] mb-2">The gateway is included</h3>
+                  <p className="att-fine text-att-gray-600">
+                    One box is your modem and your Wi-Fi 6 router, and it comes with the service
+                    rather than as a monthly equipment rental.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="font-bold text-att-ink text-[17px] mb-2">ActiveArmor is built in</h3>
+                  <p className="att-fine text-att-gray-600">
+                    Known threats are filtered at the network level, which covers the smart-home
+                    devices you can&apos;t install security software on.
+                  </p>
+                </div>
+              </div>
+              <p className="mt-6">
+                <Link href="/why-fiber" className="text-att-navy font-bold underline underline-offset-2">
+                  Read how fiber actually differs from cable
+                </Link>
+              </p>
             </div>
           </div>
         </section>
@@ -301,22 +322,11 @@ export default function Home() {
         </Modal>
       )}
 
-      {showFormModal && (
-        <AvailabilityModal
-          source="home-plan-card"
-          submitLabel="Shop internet"
-          initialData={checkedAddress}
-          initialResult={checkedResult}
-          onResult={handleAddressResult}
-          onClose={() => setShowFormModal(false)}
-        />
-      )}
-
       {showTermsModal && (
         <Modal onClose={() => setShowTermsModal(null)} title="Pricing & Discount Details" large>
           <div className="space-y-4 text-sm text-att-gray-600">
             <p className="font-bold text-att-ink">DISCOUNTED FIBER OFFER: Subj to change.</p>
-            <p>New AT&amp;T Fiber customers will receive a discount for 12 months off the monthly recurring charge for an AT&amp;T Fiber plan ($15/mo w/300M or 500M; $32/mo w/1 Gig or higher). Pay full plan cost until discount starts w/in 3 bills. After 12 mos, prevailing rate for fiber plan applies.</p>
+            <p>New AT&amp;T Fiber customers will receive a discount for 12 months off the monthly recurring charge for an AT&amp;T Fiber plan ($15/mo w/300M or 500M; $30/mo w/1 Gig or higher). Pay full plan cost until discount starts w/in 3 bills. After 12 mos, prevailing rate for fiber plan applies.</p>
             <p className="font-bold text-att-ink">Autopay &amp; Paperless Bill Discount:</p>
             <p>$10/mo if enrolled in Autopay &amp; paperless billing w/ your bank account or the AT&amp;T Points Plus® Card from Citi. Discount reduced to $5/mo when enrolled with a debit card. No discount if enrolled with any other credit card.</p>
             <p className="font-bold text-att-ink">Taxes &amp; Fees:</p>
@@ -365,6 +375,16 @@ function PlanCard({ plan, onCtaClick, onDetailsClick }: { plan: Plan; onCtaClick
           <span className="plan-price-amount">{plan.price}</span>
           <span className="plan-price-period">/mo*</span>
         </div>
+        <p className="att-fine text-att-gray-500 mb-3">
+          Reg. {plan.regularPrice}/mo after 12 mos.
+        </p>
+        <ul className="mb-3 space-y-1.5" role="list">
+          <li className="att-fine text-att-ink font-medium">{plan.devices}</li>
+          <li className="att-fine text-att-gray-600">{plan.bestFor}</li>
+          {plan.uploadVsCable && (
+            <li className="att-fine text-att-navy font-bold">{plan.uploadVsCable}‡</li>
+          )}
+        </ul>
         <p className="plan-details">{plan.details}</p>
         <a
           href={`#${plan.modal}`}

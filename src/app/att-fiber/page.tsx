@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import AddressCheckFlow from "@/components/AddressCheckFlow";
+import AvailabilityCard from "@/components/AvailabilityCard";
 import { cities, citiesByState } from "@/lib/cities";
 import { phoneNumber, telHref } from "@/lib/site-config";
 import { siteUrl, pageMetadata } from "@/lib/seo";
@@ -78,10 +78,12 @@ export default function AttFiberHubPage() {
                 </p>
               </div>
 
-              <div className="bg-white rounded-2xl p-6 border border-att-gray-200">
-                <h2 className="att-h3 mb-4">Check any address</h2>
-                <AddressCheckFlow idPrefix="hub" source="att-fiber-hub" submitLabel="Check availability" showHelpText={false} />
-              </div>
+              <AvailabilityCard
+                className="bg-white rounded-2xl p-6 border border-att-gray-200"
+                title="Check any address"
+                source="att-fiber-hub"
+                cta="Check availability"
+              />
             </div>
           </div>
         </section>

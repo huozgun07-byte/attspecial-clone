@@ -5,8 +5,10 @@ import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import HeroSwoosh from "@/components/HeroSwoosh";
-import AddressCheckFlow from "@/components/AddressCheckFlow";
-import { cities, citiesBySlug } from "@/lib/cities";
+import AvailabilityCard from "@/components/AvailabilityCard";
+import WizardButton from "@/components/WizardButton";
+import TrustStrip from "@/components/TrustStrip";
+import { cities, citiesBySlug, cityHeroImage, hasCityHero } from "@/lib/cities";
 import { plans, phoneNumber, telHref, faqs } from "@/lib/site-config";
 import { siteUrl, pageMetadata } from "@/lib/seo";
 
@@ -50,7 +52,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
   const cityFaqs = [
     {
       q: `Is AT&T Fiber available everywhere in ${city.city}?`,
-      a: `Not yet. Across ${city.metro} the network is built block by block, so availability is decided at the address level — two homes on the same street can get different answers. The check on this page looks at the address record rather than a ZIP-level estimate.`,
+      a: `Not yet. Across ${city.metro} the network is built block by block, so availability is decided at the address level — two homes on the same street can get different answers. Start with your ZIP here and a specialist checks the exact address with you on the call, rather than guessing from a ZIP-level estimate.`,
     },
     {
       q: `How long does an AT&T Fiber install take in ${city.city}?`,
@@ -127,12 +129,12 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         <section className="att-container pt-4 pb-10 sm:pt-5 sm:pb-12" aria-labelledby="hero-title">
           <div className="att-hero-shell">
             <Image
-              src="/images/hero-family.jpg"
+              src={cityHeroImage(city.slug)}
               alt=""
               fill
               priority
               sizes="(max-width: 1296px) 100vw, 1296px"
-              className="object-cover object-[68%_center]"
+              className={`object-cover ${hasCityHero(city.slug) ? "object-center" : "object-[68%_center]"}`}
               aria-hidden="true"
             />
             <div className="att-hero-scrim" aria-hidden="true" />
@@ -151,15 +153,13 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                 </p>
               </div>
 
-              <div className="att-hero-card" id="check" role="region" aria-label={`Check availability in ${city.city}`}>
-                <h2 className="att-h3 mb-4">Check your {city.city} address</h2>
-                <AddressCheckFlow
-                  idPrefix={`city-${city.slug}`}
-                  source={`city-${city.slug}`}
-                  submitLabel="Check availability"
-                  showHelpText={false}
-                />
-              </div>
+              <AvailabilityCard
+                className="att-hero-card"
+                title={`Check your ${city.city} address`}
+                subtitle={`A few quick questions, starting with your ZIP. A specialist then confirms which AT&T plans reach your ${city.city} address.`}
+                source={`city-${city.slug}`}
+                cta="Check availability"
+              />
             </div>
           </div>
         </section>
@@ -196,14 +196,23 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                       <span className="plan-price-amount">{plan.price}</span>
                       <span className="plan-price-period">/mo*</span>
                     </div>
+                    <ul className="mb-3 space-y-1.5" role="list">
+                      <li className="att-fine text-att-ink font-medium">{plan.devices}</li>
+                      <li className="att-fine text-att-gray-600">{plan.bestFor}</li>
+                    </ul>
                     <p className="plan-details">{plan.details}</p>
-                    <a href="#check" className={`w-full ${plan.highlighted ? "btn-primary" : "btn-secondary"}`}>
+                    <WizardButton
+                      source={`city-${city.slug}-plan`}
+                      className={`w-full ${plan.highlighted ? "btn-primary" : "btn-secondary"}`}
+                    >
                       {plan.cta}
-                    </a>
+                    </WizardButton>
                   </div>
                 </article>
               ))}
             </div>
+
+            <TrustStrip className="mt-10" />
 
             <p className="mt-10 att-fine text-att-gray-500 max-w-3xl mx-auto">
               * Limited time offer, subject to change. Prices shown include the new-customer

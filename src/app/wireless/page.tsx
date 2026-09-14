@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import AvailabilityModal from "@/components/AvailabilityModal";
+import { useWizard } from "@/components/WizardProvider";
 import HeroPanel from "@/components/HeroPanel";
 import { IconPhone } from "@/components/Icons";
 import { phoneNumber, telHref } from "@/lib/site-config";
@@ -11,7 +10,7 @@ import { phoneNumber, telHref } from "@/lib/site-config";
 const phones = ["iPhone 15 Pro", "Samsung Galaxy S24", "Google Pixel 8"];
 
 export default function WirelessPage() {
-  const [showFormModal, setShowFormModal] = useState(false);
+  const { openWizard } = useWizard();
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -28,7 +27,7 @@ export default function WirelessPage() {
             bundled with your internet if you want a single bill.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <button onClick={() => setShowFormModal(true)} className="btn-on-dark">
+            <button onClick={() => openWizard({ source: "wireless" })} className="btn-on-dark">
               Shop phones
             </button>
             <a href={telHref(phoneNumber)} className="btn-outline-white">
@@ -53,7 +52,7 @@ export default function WirelessPage() {
                     <p className="text-att-gray-600 text-sm mb-6 flex-1">
                       From $0/mo with an eligible trade-in and unlimited plan
                     </p>
-                    <button onClick={() => setShowFormModal(true)} className="btn-secondary w-full">
+                    <button onClick={() => openWizard({ source: "wireless" })} className="btn-secondary w-full">
                       View deals
                     </button>
                   </div>
@@ -83,17 +82,6 @@ export default function WirelessPage() {
 
       <Footer />
 
-      {showFormModal && (
-        <AvailabilityModal
-          source="wireless"
-          title="Check For Deals"
-          submitLabel="Shop Plans"
-          showUnit={false}
-          showMoving={false}
-          showHelpText={false}
-          onClose={() => setShowFormModal(false)}
-        />
-      )}
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import Analytics from "@/components/Analytics";
 import MarketingPixels from "@/components/MarketingPixels";
 import CookieConsent from "@/components/CookieConsent";
+import WizardProvider from "@/components/WizardProvider";
 import { siteUrl, siteName, defaultDescription, organizationSchema, fiberOffersSchema } from "@/lib/seo";
 import "./globals.css";
 
@@ -98,7 +99,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Analytics />
         <MarketingPixels />
         <CookieConsent />
-        {children}
+        {/* Single availability wizard for the whole site; any page opens it
+            through WizardButton / useWizard. */}
+        <WizardProvider>{children}</WizardProvider>
       </body>
     </html>
   );
