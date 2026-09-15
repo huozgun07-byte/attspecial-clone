@@ -525,7 +525,7 @@ const CITY_HERO_SLUGS = new Set([
 
 /** Hero image for a city page, falling back to the shared hero photo. */
 export function cityHeroImage(slug: string): string {
-  return CITY_HERO_SLUGS.has(slug) ? `/images/cities/${slug}.jpg` : "/images/hero-family.jpg";
+  return CITY_HERO_SLUGS.has(slug) ? `/images/cities/${slug}.jpg` : "/images/hero-family-2.jpg";
 }
 
 /** True when the hero is a cityscape, which wants a different crop focus. */

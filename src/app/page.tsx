@@ -37,7 +37,7 @@ export default function Home() {
         <section className="att-container pt-5 pb-10 sm:pt-7 sm:pb-12" aria-labelledby="hero-title">
           <div className="att-hero-shell">
             <Image
-              src="/images/hero-family.jpg"
+              src="/images/hero-family-2.jpg"
               alt=""
               fill
               priority

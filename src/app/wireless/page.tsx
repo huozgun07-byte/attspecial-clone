@@ -17,7 +17,7 @@ export default function WirelessPage() {
       <Header />
 
       <main className="flex-1">
-        <HeroPanel image="/images/hero-wireless.jpg" imagePosition="object-[62%_center]">
+        <HeroPanel image="/images/hero-wireless-2.jpg" imagePosition="object-[62%_center]">
           <p className="att-eyebrow text-att-sky mb-3">AT&amp;T Wireless</p>
           <h1 id="hero-title" className="att-display mb-5">
             AT&amp;T wireless plans and phone deals
