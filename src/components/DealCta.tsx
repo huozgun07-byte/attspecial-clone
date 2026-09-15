@@ -18,6 +18,8 @@ interface DealCtaProps {
   moreLabel?: string;
   /** Use the white button pair on dark bands. */
   onDark?: boolean;
+  /** Smaller pills for tiles and narrow columns. */
+  small?: boolean;
   className?: string;
 }
 
@@ -27,12 +29,15 @@ export default function DealCta({
   callLabel = "Call for this deal",
   moreLabel = "Get more info",
   onDark = false,
+  small = false,
   className = "",
 }: DealCtaProps) {
-  const more = onDark ? "btn-outline-white" : "btn-outline";
+  const sz = small ? " !px-4 !py-2.5 !text-sm" : "";
+  const more = (onDark ? "btn-outline-white" : "btn-outline") + sz;
+  const call = (onDark ? "btn-on-dark" : "btn-primary") + sz;
   return (
-    <div className={`flex flex-col sm:flex-row flex-wrap gap-3 ${className}`}>
-      <a href={telHref(phoneNumber)} onClick={() => trackCall(phoneNumber)} className={onDark ? "btn-on-dark" : "btn-primary"}>
+    <div className={`flex ${small ? "flex-row" : "flex-col sm:flex-row"} flex-wrap gap-3 ${className}`}>
+      <a href={telHref(phoneNumber)} onClick={() => trackCall(phoneNumber)} className={call}>
         {callLabel}
       </a>
       {href ? (

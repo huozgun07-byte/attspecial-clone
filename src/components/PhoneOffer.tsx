@@ -3,25 +3,30 @@
 import { useState } from "react";
 import Modal from "./Modal";
 import DealCta from "./DealCta";
+import DealTile from "./DealTile";
 import { phoneOffers } from "@/lib/site-config";
 
 /**
- * A verified phone offer as a card, with its terms behind "Get more info".
- * The terms are two sentences, so a modal rather than a /deals page.
+ * A verified phone offer with its terms behind "Get more info". The terms are
+ * two sentences, so a modal rather than a /deals page. `compact` renders the
+ * offer-strip tile; the default is the full card used on /wireless.
  */
-export default function PhoneOffer({ offer, className = "" }: { offer: (typeof phoneOffers)[number]; className?: string }) {
+export default function PhoneOffer({ offer, compact = false, className = "" }: { offer: (typeof phoneOffers)[number]; compact?: boolean; className?: string }) {
   const [open, setOpen] = useState(false);
+  const fine = "Req. trade-in of iPhone 14 or higher (excl. 16e) & eligible plan. Limited time offer, subject to change.";
   return (
     <>
-      <div className={`surface-card p-6 sm:p-10 flex flex-col ${className}`}>
-        <p className="att-eyebrow text-att-navy mb-3">Phone deal</p>
-        <h2 className="att-h2 mb-3">{offer.headline}</h2>
-        <p className="att-lead mb-6 flex-1">{offer.sub}</p>
-        <DealCta onMoreInfo={() => setOpen(true)} />
-        <p className="att-fine text-att-gray-500 mt-5">
-          Req. trade-in of iPhone 14 or higher (excl. 16e) &amp; eligible plan. Limited time offer, subject to change.
-        </p>
-      </div>
+      {compact ? (
+        <DealTile eyebrow="Phone deal" title={offer.headline} sub={offer.sub} onMoreInfo={() => setOpen(true)} />
+      ) : (
+        <div className={`surface-card p-6 sm:p-10 flex flex-col ${className}`}>
+          <p className="att-eyebrow text-att-navy mb-3">Phone deal</p>
+          <h2 className="att-h2 mb-3">{offer.headline}</h2>
+          <p className="att-lead mb-6 flex-1">{offer.sub}</p>
+          <DealCta onMoreInfo={() => setOpen(true)} />
+          <p className="att-fine text-att-gray-500 mt-5">{fine}</p>
+        </div>
+      )}
 
       {open && (
         <Modal onClose={() => setOpen(false)} title={offer.headline} large>

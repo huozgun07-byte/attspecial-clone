@@ -11,17 +11,17 @@ export default function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 bg-white/85 backdrop-blur-md">
+    <header className="sticky top-0 z-50 bg-white">
       {/* Row 1 — logo + call block (attspecial.com / att.com: all white, no colored bar) */}
       <div className="att-container">
-        <div className="flex items-center justify-between gap-4 pt-4 pb-3 sm:pt-5">
+        <div className="flex items-center justify-between gap-4 pt-3 pb-2 sm:pt-4">
           <Link href="/" className="flex-shrink-0" aria-label="AT&T Preferred Dealer - Home">
             <Image
               src="/images/att-preferred-dealer.png"
               alt="AT&T Preferred Dealer"
               width={240}
               height={100}
-              className="h-12 w-auto sm:h-14"
+              className="h-10 w-auto sm:h-12"
               priority
             />
           </Link>
@@ -42,7 +42,7 @@ export default function Header() {
       {/* Row 2 — navigation */}
       <div className="att-container">
         <div className="flex items-center justify-between border-t border-att-gray-200 sm:border-t-0">
-          <nav className="hidden md:flex items-center gap-9 py-3" aria-label="Main navigation">
+          <nav className="hidden md:flex items-center gap-9 py-2.5" aria-label="Main navigation">
             {navItems
               .filter((item) => item.href !== "/espanol")
               .map((item) => (
@@ -80,7 +80,7 @@ export default function Header() {
 
           <Link
             href={pathname === "/espanol" ? "/" : "/espanol"}
-            className="py-3 text-[15px] font-medium text-att-ink hover:text-att-navy"
+            className="py-2.5 text-[15px] font-medium text-att-ink hover:text-att-navy"
           >
             {pathname === "/espanol" ? "ENGLISH" : "ESPAÑOL"}
           </Link>
