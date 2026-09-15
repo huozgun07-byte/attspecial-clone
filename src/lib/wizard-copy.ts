@@ -24,6 +24,10 @@ export interface WizardCopy {
   next: string;
   close: string;
   secure: string;
+  /** Replaces the "Step N of N" label on the final question. */
+  lastStep: string;
+  /** Rotating lines shown during the short "scan" beat after the ZIP. */
+  scan: { lines: string[] };
 
   service: { question: string; help: string; choices: WizardChoice[] };
   customer: { question: string; help: string; choices: WizardChoice[] };
@@ -44,6 +48,8 @@ export interface WizardCopy {
     placeholder: string;
     skip: string;
     error: string;
+    /** Heading once a ZIP is known. Never claims service at the address. */
+    questionNearZip: (zip: string, fromPrice: string) => string;
   };
 
   contact: {
@@ -60,6 +66,8 @@ export interface WizardCopy {
     submitting: string;
     errorFirstName: string;
     errorPhone: string;
+    /** Heading overrides keyed by the visitor's earlier answers. */
+    personalized: { timeline: Record<string, string>; customerType: Record<string, string> };
   };
 
   result: {
@@ -72,6 +80,9 @@ export interface WizardCopy {
     thanks: string;
   };
 
+  /** One-time prompt when the visitor tries to close after entering a ZIP. */
+  exit: { title: string; help: string; callMe: string; leave: string };
+
   genericError: string;
 }
 
@@ -83,6 +94,8 @@ export const wizardCopyEn: WizardCopy = {
   next: "Next",
   close: "Close",
   secure: "Safe, secure and confidential. We never sell your information.",
+  lastStep: "Last step",
+  scan: { lines: ["Locating {zip}…", "Checking fiber build-out…", "Matching plans…"] },
 
   service: {
     question: "What are you looking for?",
@@ -131,6 +144,8 @@ export const wizardCopyEn: WizardCopy = {
     placeholder: "you@example.com",
     skip: "Skip this step",
     error: "That email address doesn't look right.",
+    questionNearZip: (zip, fromPrice) =>
+      `Plans from ${fromPrice}/mo are offered near ${zip} — a specialist confirms your exact address. Where should we send the summary?`,
   },
 
   contact: {
@@ -153,6 +168,16 @@ export const wizardCopyEn: WizardCopy = {
     submitting: "Sending…",
     errorFirstName: "Please tell us your first name.",
     errorPhone: "Please enter a 10-digit phone number.",
+    personalized: {
+      timeline: {
+        asap: "Last step — we'll call within the hour. Who are we calling?",
+        week: "Last step — we'll schedule installation this week. Who are we calling?",
+        month: "Last step — we'll lock in today's price for your move-in. Who are we calling?",
+      },
+      customerType: {
+        existing: "Last step — we'll check upgrade pricing on your account. Who are we calling?",
+      },
+    },
   },
 
   result: {
@@ -166,6 +191,13 @@ export const wizardCopyEn: WizardCopy = {
       "A specialist will call to confirm exactly which plans reach your address and lock in your offer. Want it sorted now? Call us and skip the wait.",
   },
 
+  exit: {
+    title: "Your ZIP is saved — want us to call you?",
+    help: "Leave a number and a specialist calls to confirm plans for your address. No obligation.",
+    callMe: "Call me",
+    leave: "Leave anyway",
+  },
+
   genericError: "Something went wrong. Please try again, or call us and we'll take your details over the phone.",
 };
 
@@ -177,6 +209,8 @@ export const wizardCopyEs: WizardCopy = {
   next: "Siguiente",
   close: "Cerrar",
   secure: "Seguro y confidencial. Nunca vendemos tu información.",
+  lastStep: "Último paso",
+  scan: { lines: ["Ubicando {zip}…", "Revisando cobertura de fibra…", "Buscando planes…"] },
 
   service: {
     question: "¿Qué estás buscando?",
@@ -225,6 +259,8 @@ export const wizardCopyEs: WizardCopy = {
     placeholder: "tu@ejemplo.com",
     skip: "Omitir este paso",
     error: "Ese correo electrónico no parece válido.",
+    questionNearZip: (zip, fromPrice) =>
+      `Hay planes desde ${fromPrice}/mes cerca de ${zip} — un especialista confirma tu dirección exacta. ¿A dónde te enviamos el resumen?`,
   },
 
   contact: {
@@ -247,6 +283,16 @@ export const wizardCopyEs: WizardCopy = {
     submitting: "Enviando…",
     errorFirstName: "Por favor escribe tu nombre.",
     errorPhone: "Por favor escribe un teléfono de 10 dígitos.",
+    personalized: {
+      timeline: {
+        asap: "Último paso — te llamamos dentro de una hora. ¿A quién llamamos?",
+        week: "Último paso — agendamos la instalación esta semana. ¿A quién llamamos?",
+        month: "Último paso — aseguramos el precio de hoy para tu mudanza. ¿A quién llamamos?",
+      },
+      customerType: {
+        existing: "Último paso — revisamos precios de mejora en tu cuenta. ¿A quién llamamos?",
+      },
+    },
   },
 
   result: {
@@ -260,5 +306,24 @@ export const wizardCopyEs: WizardCopy = {
       "Un especialista te llamará para confirmar qué planes llegan a tu dirección y asegurar tu oferta. ¿Lo quieres resolver ya? Llámanos y evita la espera.",
   },
 
+  exit: {
+    title: "Tu código postal quedó guardado — ¿te llamamos?",
+    help: "Déjanos un número y un especialista te llama para confirmar planes en tu dirección. Sin compromiso.",
+    callMe: "Llámenme",
+    leave: "Salir de todos modos",
+  },
+
   genericError: "Algo salió mal. Inténtalo de nuevo o llámanos y tomamos tus datos por teléfono.",
 };
+
+/** Final-step heading, personalised by the earliest answer that has an override. */
+export function contactQuestion(
+  copy: WizardCopy,
+  answers: { timeline: string; customerType: string }
+): string {
+  return (
+    copy.contact.personalized.timeline[answers.timeline] ??
+    copy.contact.personalized.customerType[answers.customerType] ??
+    copy.contact.question
+  );
+}
