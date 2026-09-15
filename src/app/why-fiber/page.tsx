@@ -123,30 +123,29 @@ export default function WhyFiberPage() {
             aria-labelledby={`${section.id}-title`}
           >
             <div className="att-container">
-              <div className="max-w-2xl mx-auto text-center mb-10">
-                <span className="icon-badge mb-4" aria-hidden="true">
-                  <Icon />
-                </span>
-                <h2 id={`${section.id}-title`} className="att-h2 mb-3">{section.title}</h2>
-                <p className="att-lead">{section.lead}</p>
-              </div>
+              <div className="grid lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] gap-8 lg:gap-16 items-start">
+                <div className="lg:sticky lg:top-40">
+                  <span className="inline-flex w-9 h-9 rounded-lg bg-att-light-blue text-att-navy items-center justify-center mb-4 [&>svg]:w-5 [&>svg]:h-5" aria-hidden="true">
+                    <Icon />
+                  </span>
+                  <h2 id={`${section.id}-title`} className="att-h2 mb-3">{section.title}</h2>
+                  <p className="att-lead">{section.lead}</p>
+                </div>
 
-              {/* One card per point; the column count matches the point count so no card sits alone. */}
-              <div className={`grid sm:grid-cols-2 gap-5 ${section.points.length === 3 ? "lg:grid-cols-3" : "lg:grid-cols-4"}`}>
-                {section.points.map((point) => (
-                  <div
-                    key={point.title}
-                    className="surface-card p-6"
-                  >
-                    <h3 className="font-bold text-att-ink text-base mb-2">{point.title}</h3>
-                    <p className="text-att-gray-600 text-sm leading-relaxed">{point.desc}</p>
+                <div>
+                  <div className="grid sm:grid-cols-2 gap-5">
+                    {section.points.map((point) => (
+                      <div key={point.title} className="surface-card p-6">
+                        <h3 className="font-bold text-att-ink text-base mb-2">{point.title}</h3>
+                        <p className="text-att-gray-600 text-sm leading-relaxed">{point.desc}</p>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                  {section.footnote && (
+                    <p className="att-fine text-att-gray-500 mt-5">{section.footnote}</p>
+                  )}
+                </div>
               </div>
-
-              {section.footnote && (
-                <p className="att-fine text-att-gray-500 mt-6 max-w-3xl mx-auto text-center">{section.footnote}</p>
-              )}
             </div>
           </section>
         ))}

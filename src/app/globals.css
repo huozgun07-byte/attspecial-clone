@@ -224,6 +224,18 @@
   .feature-title { @apply font-bold text-att-ink mb-1.5; font-size: 1.0625rem; }
   .feature-desc { @apply text-att-gray-600 text-sm; line-height: 1.5; }
 
+  /* ---- Vertical timeline (dark band) ---- */
+  .timeline { @apply relative space-y-8 pl-12; }
+  .timeline::before {
+    content: ""; @apply absolute left-[15px] top-2 bottom-2 w-px;
+    background: linear-gradient(to bottom, rgba(0,160,225,.9), rgba(0,160,225,.15));
+  }
+  .timeline-item { @apply relative; }
+  .timeline-dot {
+    @apply absolute -left-12 top-0 w-8 h-8 rounded-full bg-att-sky text-att-dark font-bold text-sm flex items-center justify-center;
+    box-shadow: 0 0 0 4px #0B1B2B;
+  }
+
   .step-number {
     @apply w-11 h-11 rounded-full bg-att-navy text-white font-bold flex items-center justify-center mb-4;
     font-size: 1.125rem;

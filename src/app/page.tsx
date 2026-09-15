@@ -10,6 +10,7 @@ import AvailabilityCard from "@/components/AvailabilityCard";
 import TrustStrip from "@/components/TrustStrip";
 import HeroSwoosh from "@/components/HeroSwoosh";
 import { useWizard } from "@/components/WizardProvider";
+import WizardButton from "@/components/WizardButton";
 import { IconFiber, IconContract, IconInstall, IconSupport } from "@/components/Icons";
 import { plans, features, steps, faqs, businessPhone, businessHours, type Plan, type Feature } from "@/lib/site-config";
 
@@ -169,20 +170,28 @@ export default function Home() {
         {/* ---------------- Why AT&T Fiber ---------------- */}
         <section className="reveal att-section bg-att-gray-100" aria-labelledby="why-title">
           <div className="att-container">
-            <div className="text-center mb-10 sm:mb-12">
-              <h2 id="why-title" className="att-h2 mb-3">What you get with AT&amp;T Fiber</h2>
-              <p className="att-lead max-w-2xl mx-auto">
-                A 100% fiber network behaves differently from cable, and the differences are
-                the ones you notice on a work call or a Saturday night.
-              </p>
-            </div>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
-              {features.map((feature) => (
-                <FeatureCard key={feature.title} feature={feature} />
-              ))}
+            <div className="grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-10 lg:gap-16 items-start">
+              <div className="lg:sticky lg:top-40">
+                <p className="att-eyebrow text-att-navy mb-3">Why fiber</p>
+                <h2 id="why-title" className="att-h2 mb-4">What you get with AT&amp;T Fiber</h2>
+                <p className="att-lead">
+                  A 100% fiber network behaves differently from cable, and the differences are
+                  the ones you notice on a work call or a Saturday night.
+                </p>
+                <p className="mt-6">
+                  <Link href="/why-fiber" className="text-att-navy font-bold underline underline-offset-2">
+                    Read how fiber actually differs from cable
+                  </Link>
+                </p>
+              </div>
+              <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-8" role="list">
+                {features.map((feature) => (
+                  <FeatureCard key={feature.title} feature={feature} />
+                ))}
+              </ul>
             </div>
 
-            <div className="mt-12 bg-white rounded-att border border-att-gray-200 p-6 sm:p-8 max-w-4xl mx-auto">
+            <div className="mt-12 lg:mt-16 border-t border-att-gray-200 pt-10">
               <div className="grid sm:grid-cols-3 gap-6 sm:gap-8">
                 <div>
                   <h3 className="font-bold text-att-ink text-base mb-2">Light, not electricity</h3>
@@ -206,32 +215,38 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-              <p className="mt-6">
-                <Link href="/why-fiber" className="text-att-navy font-bold underline underline-offset-2">
-                  Read how fiber actually differs from cable
-                </Link>
-              </p>
             </div>
           </div>
         </section>
 
         {/* ---------------- How it works ---------------- */}
-        <section className="reveal att-section bg-white" aria-labelledby="steps-title">
+        <section className="reveal att-section bg-att-dark text-white" aria-labelledby="steps-title">
           <div className="att-container">
-            <div className="text-center mb-10 sm:mb-12">
-              <h2 id="steps-title" className="att-h2 mb-3">How ordering works</h2>
-              <p className="att-lead max-w-2xl mx-auto">
-                Three steps, one phone call if you'd rather talk to someone.
-              </p>
-            </div>
-            <div className="grid sm:grid-cols-3 gap-8 sm:gap-10">
-              {steps.map((step, i) => (
-                <div key={step.title} className="surface-card p-6">
-                  <div className="step-number" aria-hidden="true">{i + 1}</div>
-                  <h3 className="step-title">{step.title}</h3>
-                  <p className="step-desc">{step.desc}</p>
+            <div className="grid lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] gap-10 lg:gap-16">
+              <div>
+                <p className="att-eyebrow text-att-sky mb-3">After you order</p>
+                <h2 id="steps-title" className="att-h2 mb-4" style={{ color: "#fff" }}>
+                  What happens next
+                </h2>
+                <p className="text-white/75 text-[1.0625rem] leading-relaxed">
+                  Four things, in this order. Nothing here needs you to chase anyone.
+                </p>
+                <div className="mt-8">
+                  <WizardButton source="home-steps" className="btn-on-dark">
+                    Start with your ZIP
+                  </WizardButton>
                 </div>
-              ))}
+              </div>
+              <ol className="timeline" role="list">
+                {steps.map((step, i) => (
+                  <li key={step.title} className="timeline-item">
+                    <span className="timeline-dot" aria-hidden="true">{i + 1}</span>
+                    <p className="att-fine font-bold uppercase tracking-wide text-att-sky mb-1">{step.when}</p>
+                    <h3 className="font-bold text-white text-lg mb-1.5">{step.title}</h3>
+                    <p className="text-white/75 text-sm leading-relaxed">{step.desc}</p>
+                  </li>
+                ))}
+              </ol>
             </div>
           </div>
         </section>
@@ -351,13 +366,15 @@ export default function Home() {
 function FeatureCard({ feature }: { feature: Feature }) {
   const Icon = featureIcons[feature.icon];
   return (
-    <div className="feature-card">
-      <div className="feature-icon" aria-hidden="true">
+    <li className="flex gap-4">
+      <span className="shrink-0 mt-0.5 w-9 h-9 rounded-lg bg-white border border-att-gray-200 text-att-navy flex items-center justify-center [&>svg]:w-5 [&>svg]:h-5" aria-hidden="true">
         <Icon />
+      </span>
+      <div>
+        <h3 className="feature-title">{feature.title}</h3>
+        <p className="feature-desc">{feature.desc}</p>
       </div>
-      <h3 className="feature-title">{feature.title}</h3>
-      <p className="feature-desc">{feature.desc}</p>
-    </div>
+    </li>
   );
 }
 

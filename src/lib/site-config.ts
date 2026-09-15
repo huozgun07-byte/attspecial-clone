@@ -131,22 +131,33 @@ export const features: Feature[] = [
 ];
 
 export interface Step {
+  /** Short timing label, e.g. "Install day". */
+  when: string;
   title: string;
   desc: string;
 }
 
+/** What happens after the visitor gives us a ZIP, in order, with the timing we can stand behind. */
 export const steps: Step[] = [
   {
-    title: "Check your address",
-    desc: "Fiber is built street by street, so availability is decided address by address. Give us your ZIP and a few quick answers, and a specialist confirms exactly which plans reach your home.",
+    when: "Within minutes",
+    title: "A specialist calls you back",
+    desc: "They confirm your street address against the fiber map and tell you which plans reach it. If fiber isn't built there yet, they'll say so and quote Internet Air instead.",
   },
   {
-    title: "Pick a speed you'll actually use",
-    desc: "More speed only helps if your household needs it. Tell us how many people and devices are online and we'll point you at the right tier, not the priciest one.",
+    when: "Same call",
+    title: "Pick a plan, pick a slot",
+    desc: "You choose the speed and an installation window. The order goes in while you're on the phone; AT&T emails the confirmation and order number right after.",
   },
   {
-    title: "Book the install",
-    desc: "Choose an appointment window that suits you. Most Fiber installs finish in a single visit, and you're online before the technician leaves.",
+    when: "Install day",
+    title: "The technician does the work",
+    desc: "They call before arriving, run the fiber to the house, set up the Wi-Fi gateway and check speeds with you. Most installs finish the same visit.",
+  },
+  {
+    when: "First bill",
+    title: "Discounts show up",
+    desc: "The new-customer and AutoPay & Paperless discounts start within the first three bills. Your Reward Card notice follows by email once the service is active.",
   },
 ];
 
