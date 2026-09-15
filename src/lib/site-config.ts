@@ -115,6 +115,18 @@ export const plans: Plan[] = [
 export const bundleFootnote =
   "‡ Bundle price for new residential customers who purchase AT&T Fiber and an eligible AT&T unlimited postpaid wireless plan under the same name and address: $15/mo off 300M or 500M, $20/mo off 1 GIG, $25/mo off 5 GIG for 12 months. Discount starts within 3 bills and is applied before the AutoPay & Paperless discount. Must maintain eligible wireless service. Services billed separately.";
 
+/** att.com/bundles (Sept 2026): "$420 savings for new customers based on combined discounts of $35/mo on 5-GIG internet w/ elig wireless svc and elig. AutoPay & paperless bill." */
+export const bundleSavingsNote =
+  "Save up to $420/year: for new customers, based on combined discounts of $35/mo on 5 GIG with eligible wireless service and AutoPay & Paperless bill. Limited availability/areas.";
+
+/** att.com/wireless/switch-and-save (Sept 2026). */
+export const switcherOffer = {
+  headline: "Get up to $800/line to break your contract",
+  sub: "Switch to any plan and we'll pay off your phone balance or early termination fee.",
+  terms:
+    "Up to $800 per line on up to 10 lines, paid as a Visa Reward Card, for new AT&T wireless customers who port a number from an eligible carrier (Cricket and other AT&T brands excluded) with a phone balance or ETF. Upload your most recent bill showing the payoff amount at att.com/switcherpayoff within 60 days of activation; account must be active and in good standing for 60 days. Card arrives 8–10 weeks after that and expires 6 months after issuance. Card amount equals the balance owed and will not exceed $800 per line.",
+};
+
 export interface WirelessPlan {
   name: string;
   /** Per line per month with 4 lines, AutoPay & Paperless bill. att.com/plans/wireless (Sept 2026). */

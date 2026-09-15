@@ -12,7 +12,7 @@ import HeroSwoosh from "@/components/HeroSwoosh";
 import { useWizard } from "@/components/WizardProvider";
 import WizardButton from "@/components/WizardButton";
 import { IconFiber, IconContract, IconInstall, IconSupport } from "@/components/Icons";
-import { plans, features, steps, faqs, businessPhone, businessHours, bundleFootnote, type Plan, type Feature } from "@/lib/site-config";
+import { plans, features, steps, faqs, businessPhone, businessHours, bundleFootnote, bundleSavingsNote, type Plan, type Feature } from "@/lib/site-config";
 
 const featureIcons: Record<Feature["icon"], (props: React.SVGProps<SVGSVGElement>) => React.ReactElement> = {
   fiber: IconFiber,
@@ -123,7 +123,7 @@ export default function Home() {
                 className={`col-start-1 row-start-1 transition-opacity duration-700 ease-in-out ${slide === 1 ? "opacity-100" : "opacity-0 pointer-events-none"}`}
                 aria-hidden={slide !== 1}
               >
-                <p className="att-eyebrow text-att-sky mb-4">Fiber + wireless bundle</p>
+                <p className="att-eyebrow text-att-sky mb-4">Fiber + wireless bundle · Save up to $420/year</p>
                 <p className="att-display mb-5">
                   1 GIG Fiber for <span className="whitespace-nowrap">$30/mo</span> <br className="hidden sm:block" />
                   with an unlimited wireless plan
@@ -439,6 +439,7 @@ export default function Home() {
           <div className="space-y-4 text-sm text-att-gray-600">
             <p className="font-bold text-att-ink">1 GIG FOR $30/MO WITH AN AT&amp;T UNLIMITED WIRELESS PLAN: Limited time offer, subject to change.</p>
             <p>{bundleFootnote.replace(/^‡ /, "")}</p>
+            <p>{bundleSavingsNote}</p>
             <p>Reflects the $30/mo new-customer discount for 12 months, the $10/mo AutoPay &amp; Paperless bill discount and the $20/mo wireless bundle discount on the $90/mo 1 GIG rate. Taxes &amp; fees extra. After 12 months, prevailing rate applies.</p>
             <p>$200 AT&amp;T Visa® Reward Card for new residential AT&amp;T Fiber customers who order through this site. Redemption required within 75 days of the reward notice. Card issued by The Bancorp Bank N.A., Member FDIC, pursuant to a license from Visa U.S.A. Inc.</p>
           </div>

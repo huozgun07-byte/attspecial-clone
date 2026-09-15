@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import { useWizard } from "@/components/WizardProvider";
 import HeroPanel from "@/components/HeroPanel";
 import { IconPhone } from "@/components/Icons";
-import { phoneNumber, telHref, wirelessPlans, wirelessFootnote } from "@/lib/site-config";
+import { phoneNumber, telHref, wirelessPlans, wirelessFootnote, switcherOffer } from "@/lib/site-config";
 
 const phones = ["iPhone 15 Pro", "Samsung Galaxy S24", "Google Pixel 8"];
 
@@ -35,6 +35,25 @@ export default function WirelessPage() {
             </a>
           </div>
         </HeroPanel>
+
+        <section className="reveal att-container pt-2 pb-4" aria-labelledby="switch-title">
+          <div className="rounded-att bg-att-light-blue p-6 sm:p-10 grid lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] gap-6 lg:gap-12 items-center">
+            <div>
+              <p className="att-eyebrow text-att-navy mb-3">Switching from another carrier?</p>
+              <h2 id="switch-title" className="att-h2 mb-3">{switcherOffer.headline}</h2>
+              <p className="att-lead mb-5">{switcherOffer.sub}</p>
+              <div className="flex flex-wrap gap-3">
+                <button onClick={() => openWizard({ source: "wireless-switch" })} className="btn-primary">
+                  Start my switch
+                </button>
+                <a href={telHref(phoneNumber)} className="btn-outline">
+                  Call {phoneNumber}
+                </a>
+              </div>
+            </div>
+            <p className="att-fine text-att-gray-600 lg:border-l lg:border-att-navy/15 lg:pl-8">{switcherOffer.terms}</p>
+          </div>
+        </section>
 
         <section className="reveal att-section bg-white border-b border-att-gray-200" aria-labelledby="wplans-title">
           <div className="att-container">
