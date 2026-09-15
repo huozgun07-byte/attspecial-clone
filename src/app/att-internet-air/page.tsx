@@ -64,7 +64,7 @@ export default function ATTInternetAirPage() {
         </HeroPanel>
 
         {/* Features */}
-        <section className="att-section bg-white" aria-labelledby="features-title">
+        <section className="reveal att-section bg-white" aria-labelledby="features-title">
           <div className="att-container">
             <div className="text-center mb-10 sm:mb-12">
               <h2 id="features-title" className="att-h2">What AT&amp;T Internet Air is good at</h2>
@@ -84,7 +84,7 @@ export default function ATTInternetAirPage() {
         </section>
 
         {/* Pricing */}
-        <section className="att-section bg-att-gray-100" aria-labelledby="pricing-title">
+        <section className="reveal att-section bg-att-gray-100" aria-labelledby="pricing-title">
           <div className="att-container">
             <div className="text-center mb-10 sm:mb-12">
               <h2 id="pricing-title" className="att-h2">One plan, one price</h2>
@@ -118,7 +118,7 @@ export default function ATTInternetAirPage() {
         </section>
 
         {/* Coverage */}
-        <section className="att-section bg-white" aria-labelledby="coverage-title">
+        <section className="reveal att-section bg-white" aria-labelledby="coverage-title">
           <div className="att-container text-center">
             <h2 id="coverage-title" className="att-h2 mb-3">Is it available where you live?</h2>
             <p className="att-lead mb-8 max-w-2xl mx-auto">

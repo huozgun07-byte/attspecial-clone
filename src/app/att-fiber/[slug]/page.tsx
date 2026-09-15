@@ -165,7 +165,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         </section>
 
         {/* Plans */}
-        <section className="att-section bg-white border-t border-att-gray-200" aria-labelledby="plans-title">
+        <section className="reveal att-section bg-white border-t border-att-gray-200" aria-labelledby="plans-title">
           <div className="att-container">
             <div className="text-center mb-10 sm:mb-12">
               <h2 id="plans-title" className="att-h2 mb-3">
@@ -224,7 +224,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         </section>
 
         {/* Areas covered */}
-        <section className="att-section bg-att-gray-100" aria-labelledby="areas-title">
+        <section className="reveal att-section bg-att-gray-100" aria-labelledby="areas-title">
           <div className="att-container">
             <div className="max-w-3xl">
               <h2 id="areas-title" className="att-h2 mb-3">
@@ -250,7 +250,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         </section>
 
         {/* Local ordering notes */}
-        <section className="att-section bg-white" aria-labelledby="local-title">
+        <section className="reveal att-section bg-white" aria-labelledby="local-title">
           <div className="att-container grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
             <div>
               <h2 id="local-title" className="att-h2 mb-4">
@@ -290,7 +290,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
         {/* Nearby cities */}
         {nearby.length > 0 && (
-          <section className="att-section bg-att-gray-100 border-t border-att-gray-200" aria-labelledby="nearby-title">
+          <section className="reveal att-section bg-att-gray-100 border-t border-att-gray-200" aria-labelledby="nearby-title">
             <div className="att-container">
               <h2 id="nearby-title" className="att-h2 mb-8">Nearby cities</h2>
               <div className="grid sm:grid-cols-3 gap-6">
@@ -315,7 +315,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         )}
 
         {/* Shared FAQ teaser */}
-        <section className="att-section bg-white" aria-labelledby="general-faq-title">
+        <section className="reveal att-section bg-white" aria-labelledby="general-faq-title">
           <div className="att-container max-w-4xl">
             <h2 id="general-faq-title" className="att-h2 mb-8 text-center">Before you order</h2>
             <dl className="divide-y divide-att-gray-200 border-y border-att-gray-200">

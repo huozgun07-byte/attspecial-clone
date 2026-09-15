@@ -36,7 +36,7 @@ export default function WirelessPage() {
           </div>
         </HeroPanel>
 
-        <section className="att-section bg-white" aria-labelledby="phones-title">
+        <section className="reveal att-section bg-white" aria-labelledby="phones-title">
           <div className="att-container">
             <div className="text-center mb-10 sm:mb-12">
               <h2 id="phones-title" className="att-h2">Phones people order most</h2>
@@ -66,7 +66,7 @@ export default function WirelessPage() {
           </div>
         </section>
 
-        <section className="att-section bg-att-gray-100" aria-labelledby="wireless-cta-title">
+        <section className="reveal att-section bg-att-gray-100" aria-labelledby="wireless-cta-title">
           <div className="att-container text-center">
             <h2 id="wireless-cta-title" className="att-h2 mb-3">Not sure how many lines you need?</h2>
             <p className="att-lead mb-8 max-w-2xl mx-auto">

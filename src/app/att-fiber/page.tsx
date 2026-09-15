@@ -88,7 +88,7 @@ export default function AttFiberHubPage() {
           </div>
         </section>
 
-        <section className="att-section bg-white" aria-labelledby="cities-title">
+        <section className="reveal att-section bg-white" aria-labelledby="cities-title">
           <div className="att-container">
             <h2 id="cities-title" className="att-h2 mb-3">Cities we cover</h2>
             <p className="att-lead mb-10 max-w-2xl">
@@ -118,7 +118,7 @@ export default function AttFiberHubPage() {
           </div>
         </section>
 
-        <section className="att-section bg-att-gray-100 border-t border-att-gray-200" aria-labelledby="footprint-title">
+        <section className="reveal att-section bg-att-gray-100 border-t border-att-gray-200" aria-labelledby="footprint-title">
           <div className="att-container max-w-3xl">
             <h2 id="footprint-title" className="att-h2 mb-4">Where AT&amp;T Fiber is sold</h2>
             <p className="text-att-gray-700 text-lg leading-relaxed mb-4">

@@ -98,7 +98,7 @@ export default function WhyFiberPage() {
         </section>
 
         {/* Upload comparison */}
-        <section className="att-section bg-att-gray-100 border-y border-att-gray-200" aria-labelledby="upload-title">
+        <section className="reveal att-section bg-att-gray-100 border-y border-att-gray-200" aria-labelledby="upload-title">
           <div className="att-container">
             <div className="max-w-2xl mb-8">
               <h2 id="upload-title" className="att-h2 mb-3">{uploadComparison.title}</h2>
@@ -153,7 +153,7 @@ export default function WhyFiberPage() {
         ))}
 
         {/* Sizing a plan */}
-        <section className="att-section bg-white" aria-labelledby="sizing-title">
+        <section className="reveal att-section bg-white" aria-labelledby="sizing-title">
           <div className="att-container">
             <div className="max-w-2xl mb-8">
               <h2 id="sizing-title" className="att-h2 mb-3">How much speed does your house actually need?</h2>
@@ -201,7 +201,7 @@ export default function WhyFiberPage() {
         </section>
 
         {/* FAQ */}
-        <section className="att-section bg-att-gray-100 border-t border-att-gray-200" aria-labelledby="why-faq-title">
+        <section className="reveal att-section bg-att-gray-100 border-t border-att-gray-200" aria-labelledby="why-faq-title">
           <div className="att-container max-w-3xl">
             <h2 id="why-faq-title" className="att-h2 mb-8">Questions people ask before ordering</h2>
             <div className="space-y-6">
@@ -227,7 +227,7 @@ export default function WhyFiberPage() {
         </section>
 
         {/* Closing CTA */}
-        <section className="att-section bg-att-dark" aria-labelledby="why-cta-title">
+        <section className="reveal att-section bg-att-dark" aria-labelledby="why-cta-title">
           <div className="att-container text-center max-w-2xl">
             <h2 id="why-cta-title" className="att-h2 text-white mb-3">
               See which of these you can actually get

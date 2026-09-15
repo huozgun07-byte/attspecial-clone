@@ -100,7 +100,7 @@ export default function Home() {
         </section>
 
         {/* ---------------- Reward card ---------------- */}
-        <section className="att-container pb-14 sm:pb-16" aria-labelledby="reward-title">
+        <section className="reveal att-container pb-14 sm:pb-16" aria-labelledby="reward-title">
           <div className="surface-card p-6 sm:p-10">
             <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
               <Image
@@ -130,7 +130,7 @@ export default function Home() {
         </section>
 
         {/* ---------------- Plans ---------------- */}
-        <section className="att-section bg-white border-t border-att-gray-200" aria-labelledby="plans-title">
+        <section className="reveal att-section bg-white border-t border-att-gray-200" aria-labelledby="plans-title">
           <div className="att-container">
             <div className="text-center mb-10 sm:mb-12">
               <h2 id="plans-title" className="att-h2 mb-3">AT&amp;T Fiber plans and pricing</h2>
@@ -167,7 +167,7 @@ export default function Home() {
         </section>
 
         {/* ---------------- Why AT&T Fiber ---------------- */}
-        <section className="att-section bg-att-gray-100" aria-labelledby="why-title">
+        <section className="reveal att-section bg-att-gray-100" aria-labelledby="why-title">
           <div className="att-container">
             <div className="text-center mb-10 sm:mb-12">
               <h2 id="why-title" className="att-h2 mb-3">What you get with AT&amp;T Fiber</h2>
@@ -216,7 +216,7 @@ export default function Home() {
         </section>
 
         {/* ---------------- How it works ---------------- */}
-        <section className="att-section bg-white" aria-labelledby="steps-title">
+        <section className="reveal att-section bg-white" aria-labelledby="steps-title">
           <div className="att-container">
             <div className="text-center mb-10 sm:mb-12">
               <h2 id="steps-title" className="att-h2 mb-3">How ordering works</h2>
@@ -237,7 +237,7 @@ export default function Home() {
         </section>
 
         {/* ---------------- Fiber vs Internet Air ---------------- */}
-        <section className="att-section bg-att-gray-100 border-t border-att-gray-200" aria-labelledby="compare-title">
+        <section className="reveal att-section bg-att-gray-100 border-t border-att-gray-200" aria-labelledby="compare-title">
           <div className="att-container">
             <div className="text-center mb-10 sm:mb-12">
               <h2 id="compare-title" className="att-h2 mb-3">
@@ -282,7 +282,7 @@ export default function Home() {
         </section>
 
         {/* ---------------- FAQ preview ---------------- */}
-        <section className="att-section bg-white" aria-labelledby="faq-preview-title">
+        <section className="reveal att-section bg-white" aria-labelledby="faq-preview-title">
           <div className="att-container max-w-4xl">
             <div className="text-center mb-10">
               <h2 id="faq-preview-title" className="att-h2 mb-3">Before you order</h2>
