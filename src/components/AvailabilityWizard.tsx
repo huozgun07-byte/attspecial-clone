@@ -133,12 +133,19 @@ export default function AvailabilityWizard({
   const [dir, setDir] = useState<"fwd" | "back">("fwd");
   const [exitPrompt, setExitPrompt] = useState(false);
   const exitShownRef = useRef(false);
+  const [closing, setClosing] = useState(false);
 
   const dialogRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const openerRef = useRef<HTMLElement | null>(null);
   /** Set once the partial lead has gone out, so it is never filed twice. */
   const partialSentRef = useRef(saved?.partialSent ?? false);
+
+  /** Plays the exit animation, then lets the provider unmount us. */
+  const close = useCallback(() => {
+    setClosing(true);
+    window.setTimeout(onClose, 180);
+  }, [onClose]);
 
   // First close attempt after a ZIP gets one ask for a number; the second closes.
   const requestClose = useCallback(() => {
@@ -149,8 +156,8 @@ export default function AvailabilityWizard({
       setExitPrompt(true);
       return;
     }
-    onClose();
-  }, [answers.zip, answers.phone, done, onClose]);
+    close();
+  }, [answers.zip, answers.phone, done, close]);
 
   const step: StepId = STEP_IDS[stepIndex];
   const questionNumber = STEP_IDS.slice(0, stepIndex + 1).filter((s) => s !== "scan").length;
@@ -358,14 +365,14 @@ export default function AvailabilityWizard({
       onKeyDown={handleKeyDown}
     >
       <div
-        className="overlay-in fixed inset-0 bg-att-ink/60 backdrop-blur-[2px]"
+        className={`${closing ? "overlay-out" : "overlay-in"} fixed inset-0 bg-att-ink/60 backdrop-blur-[2px]`}
         onClick={requestClose}
         aria-hidden="true"
       />
 
       <div
         ref={dialogRef}
-        className="panel-in relative w-full sm:max-w-[580px] bg-white sm:rounded-[20px] shadow-2xl flex flex-col max-h-[100dvh] sm:max-h-[94vh] h-[100dvh] sm:h-auto overflow-hidden"
+        className={`${closing ? "panel-out" : "panel-in"} relative w-full sm:max-w-[580px] bg-white sm:rounded-[20px] shadow-2xl flex flex-col max-h-[100dvh] sm:max-h-[94vh] h-[100dvh] sm:h-auto overflow-hidden`}
       >
         {/* Header: segmented progress + close */}
         <div className="px-5 sm:px-8 pt-5 sm:pt-6 pb-4">
@@ -433,7 +440,7 @@ export default function AvailabilityWizard({
                 </button>
                 <button
                   type="button"
-                  onClick={onClose}
+                  onClick={close}
                   className="text-sm font-bold text-att-navy underline underline-offset-2 hover:text-att-navy-dark focus:outline-none focus:ring-2 focus:ring-att-cyan rounded"
                 >
                   {copy.exit.leave}
