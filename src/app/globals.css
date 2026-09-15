@@ -274,3 +274,11 @@
 }
 .tick-draw { stroke-dasharray: 24; stroke-dashoffset: 24; animation: draw .45s .15s ease-out forwards; }
 .pulse-ring { animation: pulse-ring 1.2s ease-out infinite; }
+
+/* ---- Page + overlay entrances ---- */
+@keyframes page-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes panel-in { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: none; } }
+.page-in { animation: page-in .25s ease-out both; }
+.overlay-in { animation: fade-in .2s ease-out both; }
+.panel-in { animation: panel-in .22s cubic-bezier(.2,.7,.2,1) both; }

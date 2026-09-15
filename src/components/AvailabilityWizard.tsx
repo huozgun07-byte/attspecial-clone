@@ -356,14 +356,14 @@ export default function AvailabilityWizard({
       onKeyDown={handleKeyDown}
     >
       <div
-        className="fixed inset-0 bg-att-ink/60 backdrop-blur-[2px]"
+        className="overlay-in fixed inset-0 bg-att-ink/60 backdrop-blur-[2px]"
         onClick={requestClose}
         aria-hidden="true"
       />
 
       <div
         ref={dialogRef}
-        className="relative w-full sm:max-w-[580px] bg-white sm:rounded-[20px] shadow-2xl flex flex-col max-h-[100dvh] sm:max-h-[94vh] h-[100dvh] sm:h-auto overflow-hidden"
+        className="panel-in relative w-full sm:max-w-[580px] bg-white sm:rounded-[20px] shadow-2xl flex flex-col max-h-[100dvh] sm:max-h-[94vh] h-[100dvh] sm:h-auto overflow-hidden"
       >
         {/* Header: segmented progress + close */}
         <div className="px-5 sm:px-8 pt-5 sm:pt-6 pb-4">

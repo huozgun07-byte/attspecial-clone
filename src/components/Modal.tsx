@@ -14,12 +14,12 @@ export default function Modal({ children, onClose, title, large = false }: Modal
     <div className="fixed inset-0 z-50 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="modal-title">
       <div className="flex min-h-full items-center justify-center p-4">
         <div
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
+          className="overlay-in fixed inset-0 bg-black/50 backdrop-blur-sm"
           onClick={onClose}
           aria-hidden="true"
         />
         <div
-          className={`relative w-full ${large ? "max-w-2xl" : "max-w-md"} bg-white rounded-2xl shadow-2xl transform transition-all`}
+          className={`panel-in relative w-full ${large ? "max-w-2xl" : "max-w-md"} bg-white rounded-2xl shadow-2xl`}
         >
           <div className="flex items-center justify-between p-4 border-b border-att-gray-200">
             <h3 id="modal-title" className="text-lg font-semibold text-att-gray-900">{title}</h3>
