@@ -133,13 +133,102 @@ export interface WirelessPlan {
   price: string;
   regularPrice: string;
   tagline: string;
+  /** Verified against att.com/plans/wireless on 15 Sep 2026. Only listed features go here. */
+  features: string[];
 }
 
 export const wirelessPlans: WirelessPlan[] = [
-  { name: "Value 2.0", price: "$30", regularPrice: "$40", tagline: "Unlimited talk, text and data on AT&T 5G at the lowest per-line price." },
-  { name: "Extra 2.0", price: "$40", regularPrice: "$50", tagline: "More high-speed data and hotspot for people who use their phone all day." },
-  { name: "Premium 2.0", price: "$50", regularPrice: "$60", tagline: "Everything in Extra 2.0 with more of what heavy users need to stay connected." },
-  { name: "Elite 2.0", price: "$70", regularPrice: "$80", tagline: "AT&T's best plan: all the perks of Premium 2.0 plus more." },
+  {
+    name: "Value 2.0", price: "$30", regularPrice: "$40",
+    tagline: "Unlimited talk, text and data on AT&T 5G at the lowest per-line price.",
+    features: [
+      "Unlimited talk, text and data in and between the U.S., Canada and Mexico",
+      "3GB of hotspot data per line per month",
+      "AT&T ActiveArmor® mobile security",
+    ],
+  },
+  {
+    name: "Extra 2.0", price: "$40", regularPrice: "$50",
+    tagline: "More high-speed data and hotspot for people who use their phone all day.",
+    features: [
+      "Everything in Value 2.0",
+      "100GB of high-speed data per line per month",
+      "50GB of hotspot data per line per month",
+    ],
+  },
+  {
+    name: "Premium 2.0", price: "$50", regularPrice: "$60",
+    tagline: "Everything in Extra 2.0 with more of what heavy users need to stay connected.",
+    features: [
+      "Unlimited high-speed data that can't slow down based on how much you use",
+      "100GB of hotspot data per line per month",
+      "High-speed data, talk and text in 20 Latin American countries at no extra cost",
+      "AT&T ActiveArmor® mobile security",
+    ],
+  },
+  {
+    name: "Elite 2.0", price: "$70", regularPrice: "$80",
+    tagline: "AT&T's best plan: all the perks of Premium 2.0 plus more.",
+    features: [
+      "Everything in Premium 2.0",
+      "250GB of hotspot data per line per month",
+      "Unlimited international talk and text plus 20GB of data per month in 210+ destinations",
+      "Monthly smartwatch or tablet access included per line",
+    ],
+  },
+];
+
+/** att.com/dapbbfacts — AT&T's Broadband Facts labels, looked up by address. */
+export const broadbandFactsUrl = "https://www.att.com/dapbbfacts/";
+
+/** The three homepage entry points; each maps to a wizard `service` answer. */
+export const serviceChoices = [
+  { value: "internet", label: "Internet packages", hint: "AT&T Fiber from $35/mo, or Internet Air" },
+  { value: "wireless", label: "Wireless plans", hint: "Unlimited lines from $30/mo per line" },
+  { value: "bundle", label: "Internet & wireless bundle", hint: "1 Gig for $30/mo — save up to $420/year" },
+] as const;
+
+/**
+ * AT&T Guarantee. Source: att.com/why-att/guarantee (fetched 15 Sep 2026).
+ * Wording below quotes or closely paraphrases that page; do not add promises
+ * it doesn't make.
+ */
+export const guarantee = {
+  headline: "Introducing the AT&T Guarantee℠",
+  sub: "The first and only guarantee that covers both wireless and fiber networks — at no extra charge. All guaranteed, or AT&T will make it right.",
+  sourceUrl: "https://www.att.com/why-att/guarantee/",
+  items: [
+    {
+      title: "Connectivity",
+      desc: "If an AT&T Fiber or Internet Air network interruption lasts 20 minutes or more, you're credited for a full day of service. Wireless: 60 minutes or more from a single incident affecting 8 or more towers.",
+    },
+    {
+      title: "Service",
+      desc: "Speak to an expert within 5 minutes or schedule a callback at a time you choose. Same or next-day fiber technician appointment availability.",
+    },
+    {
+      title: "Deals",
+      desc: "The best deals on smartphones don't require the most expensive plan.",
+    },
+  ],
+  terms:
+    "Credit for fiber or Internet Air downtime lasting 20 minutes or more, or for wireless downtime lasting 60 minutes or more caused by a single incident impacting 8 or more towers. AT&T identifies qualifying lines and notifies the account holder by SMS or email; bill credits are applied within 1–2 billing cycles and equal one day of the service's monthly rate (excluding taxes, fees, device payments and add-ons). Eligibility is determined by AT&T in its sole discretion. Full details at att.com/why-att/guarantee.",
+};
+
+/**
+ * Phone offers change often. Source: att.com/buy/phones/apple-iphone-18-pro
+ * (fetched 15 Sep 2026). Re-verify before each deploy that touches this block.
+ */
+export const phoneOffers = [
+  {
+    slug: "iphone-18-pro",
+    device: "iPhone 18 Pro",
+    headline: "iPhone 18 Pro for $0",
+    sub: "with eligible iPhone trade-in. Any condition.",
+    terms:
+      "Requires trade-in of iPhone 14 or higher (excludes iPhone 16e) in any condition and an eligible unlimited plan. Up to $1,200 in bill credits over 36 months; credits may vary by trade-in and plan combination and may be less. Limited time offer, subject to change. Other terms apply.",
+    sourceUrl: "https://www.att.com/buy/phones/apple-iphone-18-pro.html",
+  },
 ];
 
 export const wirelessFootnote =
