@@ -49,6 +49,7 @@ interface Answers {
   lastName: string;
   phone: string;
   callTime: string;
+  callDay: string;
   /** Honeypot — real visitors leave this blank. */
   website: string;
 }
@@ -63,6 +64,7 @@ const emptyAnswers: Answers = {
   lastName: "",
   phone: "",
   callTime: "Any time",
+  callDay: "Any day",
   website: "",
 };
 
@@ -296,7 +298,7 @@ export default function AvailabilityWizard({
         service: answers.service,
         customerType: answers.customerType,
         timeline: answers.timeline,
-        callTime: answers.callTime,
+        callTime: `${answers.callDay}, ${answers.callTime}`,
       });
       trackQualifiedLead({ source, zip: answers.zip });
       save(null);
@@ -589,19 +591,35 @@ export default function AvailabilityWizard({
                         disabled={busy}
                       />
                     </div>
-                    <div>
-                      <label htmlFor="wizard-calltime" className="label-text">{copy.contact.callTime}</label>
-                      <select
-                        id="wizard-calltime"
-                        className="input-field"
-                        value={answers.callTime}
-                        onChange={(e) => set("callTime", e.target.value)}
-                        disabled={busy}
-                      >
-                        {copy.contact.callTimeChoices.map((c) => (
-                          <option key={c.value} value={c.value}>{c.label}</option>
-                        ))}
-                      </select>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label htmlFor="wizard-callday" className="label-text">{copy.contact.callDay}</label>
+                        <select
+                          id="wizard-callday"
+                          className="input-field"
+                          value={answers.callDay}
+                          onChange={(e) => set("callDay", e.target.value)}
+                          disabled={busy}
+                        >
+                          {copy.contact.callDayChoices.map((c) => (
+                            <option key={c.value} value={c.value}>{c.label}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <div>
+                        <label htmlFor="wizard-calltime" className="label-text">{copy.contact.callTime}</label>
+                        <select
+                          id="wizard-calltime"
+                          className="input-field"
+                          value={answers.callTime}
+                          onChange={(e) => set("callTime", e.target.value)}
+                          disabled={busy}
+                        >
+                          {copy.contact.callTimeChoices.map((c) => (
+                            <option key={c.value} value={c.value}>{c.label}</option>
+                          ))}
+                        </select>
+                      </div>
                     </div>
                     <p className="att-fine text-att-gray-500 bg-att-gray-100 rounded-xl p-3">
                       {copy.contact.consent}

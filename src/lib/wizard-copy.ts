@@ -61,6 +61,9 @@ export interface WizardCopy {
     phonePlaceholder: string;
     callTime: string;
     callTimeChoices: WizardChoice[];
+    /** Values are kept in English so the lead record reads the same in both languages. */
+    callDay: string;
+    callDayChoices: WizardChoice[];
     consent: string;
     submit: string;
     submitting: string;
@@ -161,6 +164,19 @@ export const wizardCopyEn: WizardCopy = {
       { value: "Morning", label: "Morning" },
       { value: "Afternoon", label: "Afternoon" },
       { value: "Evening", label: "Evening" },
+    ],
+    callDay: "Best day",
+    callDayChoices: [
+      { value: "Any day", label: "Any day" },
+      { value: "Today", label: "Today" },
+      { value: "Tomorrow", label: "Tomorrow" },
+      { value: "Monday", label: "Monday" },
+      { value: "Tuesday", label: "Tuesday" },
+      { value: "Wednesday", label: "Wednesday" },
+      { value: "Thursday", label: "Thursday" },
+      { value: "Friday", label: "Friday" },
+      { value: "Saturday", label: "Saturday" },
+      { value: "Sunday", label: "Sunday" },
     ],
     consent:
       "By continuing you agree that an AT&T Preferred Dealer specialist may call or text you about AT&T services at the number above. Consent isn't a condition of purchase. Message and data rates may apply.",
@@ -276,6 +292,19 @@ export const wizardCopyEs: WizardCopy = {
       { value: "Morning", label: "Por la mañana" },
       { value: "Afternoon", label: "Por la tarde" },
       { value: "Evening", label: "Por la noche" },
+    ],
+    callDay: "Mejor día",
+    callDayChoices: [
+      { value: "Any day", label: "Cualquier día" },
+      { value: "Today", label: "Hoy" },
+      { value: "Tomorrow", label: "Mañana" },
+      { value: "Monday", label: "Lunes" },
+      { value: "Tuesday", label: "Martes" },
+      { value: "Wednesday", label: "Miércoles" },
+      { value: "Thursday", label: "Jueves" },
+      { value: "Friday", label: "Viernes" },
+      { value: "Saturday", label: "Sábado" },
+      { value: "Sunday", label: "Domingo" },
     ],
     consent:
       "Al continuar aceptas que un especialista de un distribuidor preferido de AT&T te llame o envíe mensajes sobre servicios de AT&T al número indicado. El consentimiento no es condición de compra. Pueden aplicar tarifas de mensajes y datos.",
