@@ -237,7 +237,9 @@
   .reveal {
     animation: reveal-up linear both;
     animation-timeline: view();
-    animation-range: entry 0% entry 30%;
+    /* Pixel range, not percent: a tall section must not stay half-faded while the
+       visitor is already reading its top. */
+    animation-range: entry 0px entry 240px;
   }
 }
 
