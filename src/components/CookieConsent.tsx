@@ -33,7 +33,7 @@ export default function CookieConsent() {
 
   return (
     <div
-      className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-att-gray-200 shadow-lg animate-slide-up"
+      className="fixed bottom-[76px] lg:bottom-0 left-0 right-0 z-50 bg-white border-t border-att-gray-200 shadow-lg animate-slide-up"
       role="dialog"
       aria-label="Cookie consent"
       aria-describedby="cookie-desc"

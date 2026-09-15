@@ -77,12 +77,10 @@ export default function WhyFiberPage() {
         <HeroPanel image="/images/hero-why-fiber.jpg" imagePosition="object-[70%_center]">
               <p className="att-eyebrow text-att-sky mb-3">AT&amp;T Preferred Dealer</p>
               <h1 id="hero-title" className="att-display mb-5">Why AT&amp;T Fiber is different</h1>
-              <p className="text-white/85 text-lg mb-6">
-                Every provider advertises a download number, and at the same tier those numbers look
-                alike. The differences that show up in a real household are elsewhere: what the line
-                is physically made of, how fast data leaves your home, what hardware you have to pay
-                for, and what is filtering the traffic before it reaches your devices. This page
-                covers all four, without the sales gloss.
+              <p className="text-white/85 text-lg mb-6 max-w-xl">
+                At the same download tier every provider looks alike. What actually differs at home
+                is the line itself, upload speed, the hardware you pay for and what filters your
+                traffic — this page covers all four.
               </p>
               <div className="flex flex-wrap gap-3">
                 <WizardButton source="why-fiber-hero" className="btn-on-dark">
@@ -161,7 +159,20 @@ export default function WhyFiberPage() {
               </p>
             </div>
 
-            <div className="overflow-x-auto">
+            {/* Phones get one card per plan; the four-column table needs sm+ width. */}
+            <ul className="sm:hidden space-y-3" role="list">
+              {plans.map((plan) => (
+                <li key={plan.name} className="rounded-att border border-att-gray-200 bg-white p-4">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <span className="font-bold text-att-ink text-lg">{plan.speed}</span>
+                    <span className="font-bold text-att-ink">{plan.price}/mo</span>
+                  </div>
+                  <p className="text-sm text-att-gray-600 mt-1">{plan.devices}</p>
+                  <p className="text-sm text-att-gray-600">{plan.bestFor}</p>
+                </li>
+              ))}
+            </ul>
+            <div className="hidden sm:block overflow-x-auto">
               <table className="w-full min-w-[640px] text-left border-collapse">
                 <caption className="sr-only">AT&amp;T Fiber plans by household size and typical use</caption>
                 <thead>
@@ -226,7 +237,7 @@ export default function WhyFiberPage() {
         {/* Closing CTA */}
         <section className="reveal att-section bg-att-dark" aria-labelledby="why-cta-title">
           <div className="att-container text-center max-w-2xl">
-            <h2 id="why-cta-title" className="att-h2 text-white mb-3">
+            <h2 id="why-cta-title" className="att-display mb-3">
               See which of these you can actually get
             </h2>
             <p className="text-white/80 text-lg mb-7">
