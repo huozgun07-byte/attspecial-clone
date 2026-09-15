@@ -223,3 +223,22 @@
 
 /* Print */
 @media print { .no-print { display: none !important; } }
+
+/* ---- Wizard motion ---- */
+@keyframes wizard-in-fwd  { from { opacity: 0; transform: translateX(24px); }  to { opacity: 1; transform: none; } }
+@keyframes wizard-in-back { from { opacity: 0; transform: translateX(-24px); } to { opacity: 1; transform: none; } }
+@keyframes pop  { from { transform: scale(.4); opacity: 0; } 60% { transform: scale(1.15); } to { transform: scale(1); opacity: 1; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes pulse-ring { 0% { transform: scale(.8); opacity: .8; } 100% { transform: scale(1.6); opacity: 0; } }
+
+.wizard-step { animation: wizard-in-fwd .28s cubic-bezier(.2,.7,.2,1) both; }
+.wizard-step[data-dir="back"] { animation-name: wizard-in-back; }
+.animate-pop { animation: pop .25s cubic-bezier(.2,.7,.2,1) both; }
+.spinner {
+  width: 18px; height: 18px; border-radius: 9999px;
+  border: 2px solid currentColor; border-right-color: transparent;
+  animation: spin .7s linear infinite;
+}
+.tick-draw { stroke-dasharray: 24; stroke-dashoffset: 24; animation: draw .45s .15s ease-out forwards; }
+.pulse-ring { animation: pulse-ring 1.2s ease-out infinite; }

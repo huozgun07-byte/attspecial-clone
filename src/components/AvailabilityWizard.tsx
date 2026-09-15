@@ -124,6 +124,8 @@ export default function AvailabilityWizard({
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
+  /** Which way the next step slides in from. */
+  const [dir, setDir] = useState<"fwd" | "back">("fwd");
 
   const dialogRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -191,11 +193,13 @@ export default function AvailabilityWizard({
 
   const goBack = () => {
     setError(null);
+    setDir("back");
     setStepIndex((i) => Math.max(0, i - 1));
   };
 
   const advance = () => {
     setError(null);
+    setDir("fwd");
     setStepIndex((i) => Math.min(TOTAL_STEPS - 1, i + 1));
   };
 
@@ -350,7 +354,8 @@ export default function AvailabilityWizard({
           {done ? (
             <DonePanel copy={copy} zip={answers.zip} onRestart={restart} headingRef={headingRef} />
           ) : (
-            <>
+            // Keyed by step so the wrapper remounts and the slide-in replays.
+            <div key={step} data-dir={dir} className="wizard-step">
               {step === "service" && (
                 <TileStep
                   headingRef={headingRef}
@@ -514,7 +519,7 @@ export default function AvailabilityWizard({
               {error && (
                 <p className="mt-4 text-sm text-red-700 font-medium" role="alert">{error}</p>
               )}
-            </>
+            </div>
           )}
         </div>
 
@@ -544,7 +549,7 @@ export default function AvailabilityWizard({
                   className="btn-primary flex-1 disabled:opacity-60"
                   disabled={busy}
                 >
-                  {busy ? copy.contact.submitting : copy.contact.submit}
+                  {busy ? <><span className="spinner" aria-hidden="true" />{copy.contact.submitting}</> : copy.contact.submit}
                 </button>
               )}
             </div>
@@ -627,12 +632,22 @@ function TileStep({
               role="radio"
               aria-checked={selected}
               onClick={() => onChoose(choice.value)}
-              className={`text-center rounded-2xl border-2 px-3 py-5 transition-all focus:outline-none focus:ring-2 focus:ring-att-cyan focus:ring-offset-2 ${
+              className={`relative text-center rounded-2xl border-2 px-3 py-5 transition-all focus:outline-none focus:ring-2 focus:ring-att-cyan focus:ring-offset-2 ${
                 selected
                   ? "border-att-navy bg-att-light-blue"
                   : "border-att-gray-200 hover:border-att-navy hover:bg-att-gray-100"
               }`}
             >
+              {selected && (
+                <span
+                  className="animate-pop absolute top-2 right-2 w-5 h-5 rounded-full bg-att-navy text-white flex items-center justify-center"
+                  aria-hidden="true"
+                >
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                </span>
+              )}
               {Icon && (
                 <span
                   className={`mx-auto mb-3 flex w-12 h-12 items-center justify-center rounded-full ${
@@ -696,7 +711,7 @@ function ChoiceStep({
                 }`}
                 aria-hidden="true"
               >
-                {selected && <span className="w-2.5 h-2.5 rounded-full bg-att-navy" />}
+                {selected && <span className="animate-pop w-2.5 h-2.5 rounded-full bg-att-navy" />}
               </span>
               <span>
                 <span className="block font-bold text-att-ink">{choice.label}</span>
@@ -734,11 +749,11 @@ function DonePanel({
     <div className="pb-6">
       <div className="flex items-start gap-3 mb-4">
         <span
-          className="shrink-0 w-11 h-11 rounded-full flex items-center justify-center bg-att-light-blue text-att-navy"
+          className="animate-pop shrink-0 w-11 h-11 rounded-full flex items-center justify-center bg-att-light-blue text-att-navy"
           aria-hidden="true"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            <path className="tick-draw" strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         </span>
         <div>
