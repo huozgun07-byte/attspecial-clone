@@ -110,7 +110,7 @@ export default function WhyFiberPage() {
               ))}
             </div>
 
-            <p className="att-fine text-att-gray-500 mt-6 max-w-3xl">{uploadComparison.footnote}</p>
+            <p className="att-fine text-att-gray-500 mt-6 max-w-3xl mx-auto text-center">{uploadComparison.footnote}</p>
           </div>
         </section>
 
@@ -131,17 +131,21 @@ export default function WhyFiberPage() {
                 <p className="att-lead">{section.lead}</p>
               </div>
 
-              <div className="grid sm:grid-cols-2 gap-x-10 gap-y-8">
+              {/* One card per point; the column count matches the point count so no card sits alone. */}
+              <div className={`grid sm:grid-cols-2 gap-5 ${section.points.length === 3 ? "lg:grid-cols-3" : "lg:grid-cols-4"}`}>
                 {section.points.map((point) => (
-                  <div key={point.title}>
-                    <h3 className="font-bold text-att-ink text-[17px] mb-2">{point.title}</h3>
-                    <p className="text-att-gray-600 leading-relaxed">{point.desc}</p>
+                  <div
+                    key={point.title}
+                    className={index % 2 === 1 ? "bg-white rounded-att border border-att-gray-200 p-6" : "surface-card p-6"}
+                  >
+                    <h3 className="font-bold text-att-ink text-base mb-2">{point.title}</h3>
+                    <p className="text-att-gray-600 text-sm leading-relaxed">{point.desc}</p>
                   </div>
                 ))}
               </div>
 
               {section.footnote && (
-                <p className="att-fine text-att-gray-500 mt-8 max-w-3xl">{section.footnote}</p>
+                <p className="att-fine text-att-gray-500 mt-6 max-w-3xl mx-auto text-center">{section.footnote}</p>
               )}
             </div>
           </section>
@@ -153,9 +157,8 @@ export default function WhyFiberPage() {
             <div className="max-w-2xl mx-auto text-center mb-10">
               <h2 id="sizing-title" className="att-h2 mb-3">How much speed does your house actually need?</h2>
               <p className="att-lead">
-                Device counts are a rough guide, not a limit. What matters is how many devices are
-                doing something demanding at the same moment — a dozen idle smart bulbs cost you
-                nothing, two simultaneous 4K uploads do.
+                Device counts are a rough guide. What matters is how many devices do something
+                demanding at once — idle smart bulbs cost nothing, two 4K uploads do.
               </p>
             </div>
 
@@ -215,7 +218,7 @@ export default function WhyFiberPage() {
             <div className="space-y-6">
               {whyFiberFaqs.map((faq) => (
                 <div key={faq.q} className="bg-white rounded-att p-6 border border-att-gray-200">
-                  <h3 className="font-bold text-att-ink text-[17px] mb-2">{faq.q}</h3>
+                  <h3 className="font-bold text-att-ink text-base mb-2">{faq.q}</h3>
                   <p className="text-att-gray-600 leading-relaxed">{faq.a}</p>
                 </div>
               ))}

@@ -185,21 +185,21 @@ export default function Home() {
             <div className="mt-12 bg-white rounded-att border border-att-gray-200 p-6 sm:p-8 max-w-4xl mx-auto">
               <div className="grid sm:grid-cols-3 gap-6 sm:gap-8">
                 <div>
-                  <h3 className="font-bold text-att-ink text-[17px] mb-2">Light, not electricity</h3>
+                  <h3 className="font-bold text-att-ink text-base mb-2">Light, not electricity</h3>
                   <p className="att-fine text-att-gray-600">
                     Fiber carries laser light through glass instead of current through copper, so
                     interference, lightning and distance stop mattering the way they do on cable.
                   </p>
                 </div>
                 <div>
-                  <h3 className="font-bold text-att-ink text-[17px] mb-2">The gateway is included</h3>
+                  <h3 className="font-bold text-att-ink text-base mb-2">The gateway is included</h3>
                   <p className="att-fine text-att-gray-600">
                     One box is your modem and your Wi-Fi 6 router, and it comes with the service
                     rather than as a monthly equipment rental.
                   </p>
                 </div>
                 <div>
-                  <h3 className="font-bold text-att-ink text-[17px] mb-2">ActiveArmor is built in</h3>
+                  <h3 className="font-bold text-att-ink text-base mb-2">ActiveArmor is built in</h3>
                   <p className="att-fine text-att-gray-600">
                     Known threats are filtered at the network level, which covers the smart-home
                     devices you can&apos;t install security software on.

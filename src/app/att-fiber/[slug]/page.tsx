@@ -226,7 +226,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         {/* Areas covered */}
         <section className="reveal att-section bg-att-gray-100" aria-labelledby="areas-title">
           <div className="att-container">
-            <div className="max-w-3xl">
+            <div className="max-w-2xl mx-auto text-center">
               <h2 id="areas-title" className="att-h2 mb-3">
                 Areas we order for around {city.city}
               </h2>
@@ -236,7 +236,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                 and, where fiber isn&apos;t built, tell you what else is available.
               </p>
             </div>
-            <ul className="flex flex-wrap gap-3" role="list">
+            <ul className="flex flex-wrap justify-center gap-3" role="list">
               {city.neighborhoods.map((n) => (
                 <li
                   key={n}
@@ -292,7 +292,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         {nearby.length > 0 && (
           <section className="reveal att-section bg-att-gray-100 border-t border-att-gray-200" aria-labelledby="nearby-title">
             <div className="att-container">
-              <h2 id="nearby-title" className="att-h2 mb-8">Nearby cities</h2>
+              <h2 id="nearby-title" className="att-h2 mb-8 text-center">Nearby cities</h2>
               <div className="grid sm:grid-cols-3 gap-6">
                 {nearby.map((n) => (
                   <Link
@@ -305,7 +305,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                   </Link>
                 ))}
               </div>
-              <p className="mt-8">
+              <p className="mt-8 text-center">
                 <Link href="/att-fiber" className="text-att-navy font-bold underline underline-offset-2">
                   See all cities we cover
                 </Link>

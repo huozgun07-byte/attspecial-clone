@@ -103,8 +103,8 @@ export default function AttFiberHubPage() {
 
         <section className="reveal att-section bg-white" aria-labelledby="cities-title">
           <div className="att-container">
-            <h2 id="cities-title" className="att-h2 mb-3">Cities we cover</h2>
-            <p className="att-lead mb-10 max-w-2xl">
+            <h2 id="cities-title" className="att-h2 mb-3 text-center">Cities we cover</h2>
+            <p className="att-lead mb-10 max-w-2xl mx-auto text-center">
               Grouped by state. Every city page lists the neighborhoods we order in, the plans
               available in that market, and what tends to matter locally when the technician arrives.
             </p>

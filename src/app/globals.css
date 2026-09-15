@@ -60,8 +60,9 @@
 
   body {
     @apply bg-white text-att-ink antialiased;
-    font-size: 18px;
-    line-height: 1.45;
+    /* att.com body size; 18px read heavy in long sections. */
+    font-size: 16px;
+    line-height: 1.5;
   }
   /* Room for the sticky MobileCtaBar. */
   @media (max-width: 1023px) {
@@ -112,7 +113,7 @@
   .att-eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 9999px; background: var(--color-att-cyan); }
   /* Registered-trademark mark, sized like att.com's */
   .att-reg { font-size: 0.45em; vertical-align: super; line-height: 0; }
-  .att-lead { @apply text-att-gray-600; font-size: 1.125rem; line-height: 1.5; }
+  .att-lead { @apply text-att-gray-600; font-size: 1.0625rem; line-height: 1.55; }
   /* No colour here on purpose: fine print sits on both white and photography,
      so the colour is chosen at the call site (text-att-gray-500 / text-white/80). */
   .att-fine { font-size: 0.8125rem; line-height: 1.45; }

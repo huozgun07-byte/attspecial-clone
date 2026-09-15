@@ -21,23 +21,23 @@ export interface KnowledgeSection {
 export const fiberVsCable: KnowledgeSection = {
   id: "fiber-vs-cable",
   title: "How fiber is different from cable and copper",
-  lead: "Most American homes were wired for the telephone and then for television, and both of those networks move data as electricity down copper. Fiber does something else entirely, and almost everything people notice about AT&T Fiber traces back to that one difference.",
+  lead: "Cable and phone lines move data as electricity through copper. Fiber sends light through glass — and almost everything you notice about AT&T Fiber comes from that one difference.",
   points: [
     {
-      title: "Light through glass, not current through metal",
-      desc: "A fiber strand carries infrared laser pulses along a core of glass thinner than a hair. Copper carries electrical pulses, and electrical signals fade the further they travel — which is why a copper connection gets slower the further you live from the equipment serving you. Light does not weaken the same way over the distances involved in a neighbourhood.",
+      title: "Light, not electricity",
+      desc: "Laser pulses travel through a glass core thinner than a hair. Electrical signals fade with distance; light doesn't over a neighborhood.",
     },
     {
-      title: "Nothing electrical to interfere with",
-      desc: "Because there is no current in the line, fiber is unbothered by electromagnetic interference, by radio transmitters nearby, and by the surges that lightning pushes through copper networks. The cable also carries no fire risk of its own. Fewer things in the physical world can degrade the signal, so the connection behaves the same on a stormy night as on a calm one.",
+      title: "Nothing to interfere",
+      desc: "No current in the line means no interference from storms, nearby radio or power surges. A stormy night performs like a calm one.",
     },
     {
-      title: "Uploads that match downloads",
-      desc: "Cable networks were designed on the assumption that you would mostly be downloading, so only a narrow band is set aside for traffic heading out of your home. Fiber has no such split. On AT&T Fiber the upload speed matches the download speed, which is what keeps video calls steady, cloud backups quick and livestreams clean while the rest of the house is online.",
+      title: "Uploads match downloads",
+      desc: "Cable keeps a narrow lane for upload. Fiber has no split, so video calls, backups and livestreams stay smooth while the house is online.",
     },
     {
-      title: "Steady at the times you actually use it",
-      desc: "Evening slowdowns are a capacity problem, and fiber has capacity to spare. Speeds are quoted on a wired connection to the gateway, and that is where the difference is easiest to see.",
+      title: "Steady in the evening",
+      desc: "Peak-hour slowdowns are a capacity problem. Fiber has capacity to spare, so 8 p.m. feels like 8 a.m.",
     },
   ],
   footnote:
@@ -59,27 +59,23 @@ export const uploadComparison = {
 export const wifiGateway: KnowledgeSection = {
   id: "wifi-gateway",
   title: "Your AT&T Wi-Fi gateway",
-  lead: "One box arrives with Fiber service and it does two jobs at once. Understanding what it is saves you from buying equipment you do not need.",
+  lead: "One box does the job of modem and router — and it comes with the service.",
   points: [
     {
-      title: "Modem and router in a single unit",
-      desc: "The gateway terminates the fiber line coming into the house and broadcasts your Wi-Fi from the same device. There is no separate modem to rent and no second box to find a shelf for.",
+      title: "Modem and router in one",
+      desc: "The gateway ends the fiber line and broadcasts your Wi-Fi. No second box, nothing to find a shelf for.",
     },
     {
-      title: "Included, not a monthly equipment fee",
-      desc: "The gateway comes with Fiber service rather than appearing as an equipment rental line on the bill. Compare that with the monthly hardware charge most cable providers add.",
+      title: "No equipment fee",
+      desc: "Included with Fiber instead of showing up as a monthly rental line on the bill.",
     },
     {
-      title: "Wi-Fi 6 speeds where your devices support it",
-      desc: "The current gateways broadcast Wi-Fi 6, the standard that handles a crowded house better than anything before it. Getting the benefit requires devices that speak Wi-Fi 6 too, so an older laptop will connect happily but at older speeds.",
+      title: "Wi-Fi 6 inside",
+      desc: "Handles a crowded house better than older Wi-Fi. Your devices need Wi-Fi 6 too to get the full benefit.",
     },
     {
-      title: "Extenders for the awkward corners",
-      desc: "Large, long or thick-walled homes can add AT&T Wi-Fi extenders, which work with the gateway as a mesh so your phone hands off between them without dropping. Extenders are sold separately and are not needed in most homes.",
-    },
-    {
-      title: "Managed from the Smart Home Manager app",
-      desc: "The app is where you rename the network, see what is connected, pause a device, and switch the security features on. It is free with the service.",
+      title: "Extenders if you need them",
+      desc: "Large or thick-walled homes can add AT&T Wi-Fi extenders that mesh with the gateway. Most homes don't need them.",
     },
   ],
   footnote:
@@ -89,19 +85,19 @@ export const wifiGateway: KnowledgeSection = {
 export const activeArmor: KnowledgeSection = {
   id: "activearmor",
   title: "AT&T ActiveArmor internet security",
-  lead: "Security that sits in the network rather than on each device, so it also covers the things you cannot install software on — the thermostat, the doorbell camera, the TV.",
+  lead: "Security in the network, not on each device — so it also covers the thermostat, the doorbell camera and the TV.",
   points: [
     {
-      title: "Filtering before the traffic reaches you",
-      desc: "ActiveArmor inspects traffic at the network and gateway level and helps block known malicious activity from ever arriving at your devices.",
+      title: "Blocks threats upstream",
+      desc: "Inspects traffic at the network and gateway and helps stop known malicious activity before it reaches your devices.",
     },
     {
-      title: "Covers the devices antivirus software cannot",
-      desc: "Smart-home hardware rarely accepts a security app. Because this works upstream of the gateway, those devices are covered by the same protection as your laptop.",
+      title: "Covers what antivirus can't",
+      desc: "Smart-home hardware can't run a security app. Protection upstream of the gateway covers those devices too.",
     },
     {
       title: "Switched on in Smart Home Manager",
-      desc: "The protections are managed in the app, and the security features need to be enabled there. It is worth doing on day one rather than after something goes wrong.",
+      desc: "Managed in the free app — rename the network, pause a device, enable the security features. Worth doing on day one.",
     },
   ],
   footnote:
