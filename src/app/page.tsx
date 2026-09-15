@@ -123,11 +123,17 @@ export default function Home() {
                 className={`col-start-1 row-start-1 transition-opacity duration-700 ease-in-out ${slide === 1 ? "opacity-100" : "opacity-0 pointer-events-none"}`}
                 aria-hidden={slide !== 1}
               >
-                <p className="att-eyebrow text-att-sky mb-4">Fiber + wireless bundle · Save up to $420/year</p>
-                <p className="att-display mb-5">
-                  1 GIG Fiber for <span className="whitespace-nowrap">$30/mo</span> <br className="hidden sm:block" />
-                  with an unlimited wireless plan
+                {/* Brand lockup, drawn as text so both halves match exactly. */}
+                <p className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-5 text-white font-bold text-xl sm:text-2xl tracking-tight" aria-label="AT&T Fiber plus AT&T Wireless">
+                  <span>AT&amp;T <span className="text-att-sky font-normal">fiber</span></span>
+                  <span className="text-att-sky text-2xl leading-none" aria-hidden="true">+</span>
+                  <span>AT&amp;T <span className="text-att-sky font-normal">wireless</span></span>
                 </p>
+                <p className="att-display mb-2" style={{ fontSize: "clamp(1.9rem, 3.4vw, 2.6rem)" }}>
+                  Get America&apos;s fastest 1 Gig internet<sup className="att-reg">1</sup> for{" "}
+                  <span className="whitespace-nowrap">$30/mo.</span> for 12 mos.*
+                </p>
+                <p className="text-white/90 text-lg mb-4">when you bundle with an unlimited wireless plan. Save up to $420/year.</p>
                 <div className="inline-flex items-center gap-3 bg-white/12 border border-white/25 rounded-full pl-2 pr-5 py-2 mb-4">
                   <Image
                     src="/images/att-reward-card.png"
@@ -143,7 +149,7 @@ export default function Home() {
                 </div>
                 <div className="text-white/85 max-w-xl space-y-0.5 att-fine">
                   <p>
-                    For 12 mos. w/ elig. AT&amp;T unlimited wireless, AutoPay &amp; Paperless bill. Reward Card redemption req&apos;d. Ltd. avail/areas.{" "}
+                    *Price after discounts: new customers only. $20/mo w/ elig. wireless svc, $30/mo for 12 mos for new customers, and $10/mo AutoPay &amp; Paperless bill. Discounts start w/in 3 bills. Ltd. avail/areas. Reward Card redemption req&apos;d.{" "}
                     <a
                       href="#modal-terms-bundle"
                       className="font-bold underline underline-offset-2 text-white hover:text-att-sky"
@@ -440,6 +446,7 @@ export default function Home() {
             <p className="font-bold text-att-ink">1 GIG FOR $30/MO WITH AN AT&amp;T UNLIMITED WIRELESS PLAN: Limited time offer, subject to change.</p>
             <p>{bundleFootnote.replace(/^‡ /, "")}</p>
             <p>{bundleSavingsNote}</p>
+            <p>¹ Best &amp; fastest internet: AT&amp;T Fiber, based on analysis by Ookla® of Speedtest Intelligence® data, 2H 2025. Ookla trademarks used under license and reprinted with permission. Limited availability in select areas.</p>
             <p>Reflects the $30/mo new-customer discount for 12 months, the $10/mo AutoPay &amp; Paperless bill discount and the $20/mo wireless bundle discount on the $90/mo 1 GIG rate. Taxes &amp; fees extra. After 12 months, prevailing rate applies.</p>
             <p>$200 AT&amp;T Visa® Reward Card for new residential AT&amp;T Fiber customers who order through this site. Redemption required within 75 days of the reward notice. Card issued by The Bancorp Bank N.A., Member FDIC, pursuant to a license from Visa U.S.A. Inc.</p>
           </div>
