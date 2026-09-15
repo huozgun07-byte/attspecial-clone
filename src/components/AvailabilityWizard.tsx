@@ -116,7 +116,7 @@ export default function AvailabilityWizard({
 }: AvailabilityWizardProps) {
   // Restored from the tab's sessionStorage so close → reopen resumes. The
   // wizard only mounts on a click, never during SSR, so this is client-safe.
-  const saved = useRef(loadSaved()).current;
+  const [saved] = useState(loadSaved);
   const savedIndex = saved?.stepIndex ?? 0;
   const [stepIndex, setStepIndex] = useState(STEP_IDS[savedIndex] === "scan" ? savedIndex - 1 : savedIndex);
   const [answers, setAnswers] = useState<Answers>(() => ({
