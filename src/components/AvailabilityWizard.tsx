@@ -64,6 +64,23 @@ const emptyAnswers: Answers = {
   website: "",
 };
 
+const STORAGE_KEY = "att-wizard";
+interface Saved { answers: Answers; stepIndex: number; partialSent: boolean }
+
+// sessionStorage can throw (private mode, blocked storage) — treat as absent.
+function loadSaved(): Saved | null {
+  try {
+    const raw = sessionStorage.getItem(STORAGE_KEY);
+    return raw ? (JSON.parse(raw) as Saved) : null;
+  } catch { return null; }
+}
+function save(data: Saved | null) {
+  try {
+    if (data) sessionStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    else sessionStorage.removeItem(STORAGE_KEY);
+  } catch { /* ignore */ }
+}
+
 function digitsOnly(value: string): string {
   return value.replace(/\D/g, "");
 }
@@ -95,10 +112,14 @@ export default function AvailabilityWizard({
   copy = wizardCopyEn,
   initialZip,
 }: AvailabilityWizardProps) {
-  const [stepIndex, setStepIndex] = useState(0);
+  // Restored from the tab's sessionStorage so close → reopen resumes. The
+  // wizard only mounts on a click, never during SSR, so this is client-safe.
+  const saved = useRef(loadSaved()).current;
+  const [stepIndex, setStepIndex] = useState(saved?.stepIndex ?? 0);
   const [answers, setAnswers] = useState<Answers>(() => ({
     ...emptyAnswers,
-    zip: initialZip || "",
+    ...saved?.answers,
+    zip: initialZip || saved?.answers.zip || "",
   }));
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -108,7 +129,7 @@ export default function AvailabilityWizard({
   const headingRef = useRef<HTMLHeadingElement>(null);
   const openerRef = useRef<HTMLElement | null>(null);
   /** Set once the partial lead has gone out, so it is never filed twice. */
-  const partialSentRef = useRef(false);
+  const partialSentRef = useRef(saved?.partialSent ?? false);
 
   const step: StepId = STEP_IDS[stepIndex];
 
@@ -135,6 +156,10 @@ export default function AvailabilityWizard({
   useEffect(() => {
     if (!done) trackWizardStep(stepIndex + 1, step);
   }, [stepIndex, step, done]);
+
+  useEffect(() => {
+    if (!done) save({ answers, stepIndex, partialSent: partialSentRef.current });
+  }, [answers, stepIndex, done]);
 
   // Escape is bound at the document, not the dialog: focus can end up on the
   // body (for instance after the final step replaces the button that had it),
@@ -246,6 +271,7 @@ export default function AvailabilityWizard({
         callTime: answers.callTime,
       });
       trackQualifiedLead({ source, zip: answers.zip });
+      save(null);
       setDone(true);
     } catch (err) {
       setError(err instanceof ApiError ? err.message : copy.genericError);
@@ -255,6 +281,7 @@ export default function AvailabilityWizard({
   };
 
   const restart = () => {
+    save(null);
     partialSentRef.current = false;
     setAnswers({ ...emptyAnswers, zip: initialZip || "" });
     setDone(false);
