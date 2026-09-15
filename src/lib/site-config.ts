@@ -194,7 +194,7 @@ export const serviceChoices = [
  * it doesn't make.
  */
 export const guarantee = {
-  headline: "Introducing the AT&T Guarantee℠",
+  headline: "Introducing the AT&T Guarantee",
   sub: "The first and only guarantee that covers both wireless and fiber networks — at no extra charge. All guaranteed, or AT&T will make it right.",
   sourceUrl: "https://www.att.com/why-att/guarantee/",
   items: [

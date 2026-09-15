@@ -80,7 +80,7 @@ export const deals: Deal[] = [
   },
   {
     slug: "att-guarantee",
-    eyebrow: "AT&T Guarantee℠",
+    eyebrow: "AT&T Guarantee",
     title: "All guaranteed, or AT&T will make it right",
     summary: "The first and only guarantee that covers both wireless and fiber networks — at no extra charge, with nothing to sign up for.",
     description:
