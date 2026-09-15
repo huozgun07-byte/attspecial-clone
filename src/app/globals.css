@@ -291,7 +291,9 @@
 @keyframes panel-in { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: none; } }
 @keyframes fade-out { to { opacity: 0; } }
 @keyframes panel-out { to { opacity: 0; transform: translateY(8px) scale(.98); } }
-.page-in { animation: page-in .25s ease-out both; }
+/* No fill-mode on purpose: a retained transform would turn this wrapper into the
+   containing block for every position:fixed modal inside the page. */
+.page-in { animation: page-in .25s ease-out; }
 .overlay-out { animation: fade-out .18s ease-in both; }
 .panel-out { animation: panel-out .18s ease-in both; }
 .overlay-in { animation: fade-in .2s ease-out both; }
