@@ -160,10 +160,10 @@ export default function Home() {
                     );
                   })}
                 </div>
-                <p className="att-fine text-att-gray-500 mt-3">
-                  Rather talk to someone? Call{" "}
+                <p className="att-fine text-att-gray-500 mt-3 whitespace-nowrap">
+                  Prefer to talk? Call{" "}
                   <a href={telHref(phoneNumber)} className="text-att-navy font-bold underline underline-offset-2">{phoneNumber}</a>
-                  {" "}— open 24/7.
+                  {" "}(24/7)
                 </p>
               </div>
             </div>
