@@ -95,7 +95,7 @@ export default function WhyFiberPage() {
         {/* Upload comparison */}
         <section className="reveal att-section bg-att-gray-100 border-y border-att-gray-200" aria-labelledby="upload-title">
           <div className="att-container">
-            <div className="max-w-2xl mb-8">
+            <div className="max-w-2xl mx-auto text-center mb-10">
               <h2 id="upload-title" className="att-h2 mb-3">{uploadComparison.title}</h2>
               <p className="att-lead">{uploadComparison.lead}</p>
             </div>
@@ -123,7 +123,7 @@ export default function WhyFiberPage() {
             aria-labelledby={`${section.id}-title`}
           >
             <div className="att-container">
-              <div className="max-w-2xl mb-10">
+              <div className="max-w-2xl mx-auto text-center mb-10">
                 <span className="icon-badge mb-4" aria-hidden="true">
                   <Icon />
                 </span>
@@ -150,7 +150,7 @@ export default function WhyFiberPage() {
         {/* Sizing a plan */}
         <section className="reveal att-section bg-white" aria-labelledby="sizing-title">
           <div className="att-container">
-            <div className="max-w-2xl mb-8">
+            <div className="max-w-2xl mx-auto text-center mb-10">
               <h2 id="sizing-title" className="att-h2 mb-3">How much speed does your house actually need?</h2>
               <p className="att-lead">
                 Device counts are a rough guide, not a limit. What matters is how many devices are
@@ -211,7 +211,7 @@ export default function WhyFiberPage() {
         {/* FAQ */}
         <section className="reveal att-section bg-att-gray-100 border-t border-att-gray-200" aria-labelledby="why-faq-title">
           <div className="att-container max-w-3xl">
-            <h2 id="why-faq-title" className="att-h2 mb-8">Questions people ask before ordering</h2>
+            <h2 id="why-faq-title" className="att-h2 mb-8 text-center">Questions people ask before ordering</h2>
             <div className="space-y-6">
               {whyFiberFaqs.map((faq) => (
                 <div key={faq.q} className="bg-white rounded-att p-6 border border-att-gray-200">
