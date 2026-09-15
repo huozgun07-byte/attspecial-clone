@@ -63,6 +63,10 @@
     font-size: 18px;
     line-height: 1.45;
   }
+  /* Room for the sticky MobileCtaBar. */
+  @media (max-width: 1023px) {
+    body { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
+  }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-bold text-att-ink;

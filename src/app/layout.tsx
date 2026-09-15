@@ -4,6 +4,7 @@ import Analytics from "@/components/Analytics";
 import MarketingPixels from "@/components/MarketingPixels";
 import CookieConsent from "@/components/CookieConsent";
 import WizardProvider from "@/components/WizardProvider";
+import MobileCtaBar from "@/components/MobileCtaBar";
 import { siteUrl, siteName, defaultDescription, organizationSchema, fiberOffersSchema } from "@/lib/seo";
 import "./globals.css";
 
@@ -101,7 +102,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <CookieConsent />
         {/* Single availability wizard for the whole site; any page opens it
             through WizardButton / useWizard. */}
-        <WizardProvider>{children}</WizardProvider>
+        <WizardProvider>
+          {children}
+          <MobileCtaBar />
+        </WizardProvider>
       </body>
     </html>
   );
