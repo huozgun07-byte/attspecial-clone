@@ -201,8 +201,8 @@ export const faqs: Faq[] = [
     a: "Yes. Existing wireless and landline numbers can usually be ported to AT&T. Most transfers finish within 2 to 24 hours, and your current service keeps working until the port completes.",
   },
   {
-    q: "How does the $250 AT&T Visa® Reward Card work?",
-    a: "New residential AT&T Fiber customers who order through this site qualify for a $250 AT&T Visa® Reward Card. Redemption is required within 75 days of the redemption notice. The card is issued by The Bancorp Bank N.A., Member FDIC, pursuant to a license from Visa U.S.A. Inc. Limited time offer, subject to change.",
+    q: "How does the $200 AT&T Visa® Reward Card work?",
+    a: "New residential AT&T Fiber customers who order through this site qualify for a $200 AT&T Visa® Reward Card. Redemption is required within 75 days of the redemption notice. The card is issued by The Bancorp Bank N.A., Member FDIC, pursuant to a license from Visa U.S.A. Inc. Limited time offer, subject to change.",
   },
   {
     q: "I'm moving. Can I take the service with me?",

@@ -17,7 +17,7 @@ export const siteUrl = (
 export const siteName = "AT&T Preferred Dealer";
 
 export const defaultDescription =
-  "Order AT&T Fiber internet from an AT&T Preferred Dealer. Plans from $35/mo with speeds up to 5 GIG, free professional installation, and a $250 AT&T Visa Reward Card. Check availability at your address.";
+  "Order AT&T Fiber internet from an AT&T Preferred Dealer. Plans from $35/mo with speeds up to 5 GIG, free professional installation, and a $200 AT&T Visa Reward Card. Check availability at your address.";
 
 type PageMetaInput = {
   title: string;

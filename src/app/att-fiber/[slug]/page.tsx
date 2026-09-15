@@ -27,7 +27,7 @@ export async function generateMetadata({
 
   return pageMetadata({
     title: `AT&T Fiber in ${city.city}, ${city.state} — Plans & Availability`,
-    description: `Check AT&T Fiber availability at your ${city.city} address. Plans from $35/mo with speeds up to 5 GIG, unlimited data, free professional installation and a $250 Reward Card. Order 24/7 from an AT&T Preferred Dealer.`,
+    description: `Check AT&T Fiber availability at your ${city.city} address. Plans from $35/mo with speeds up to 5 GIG, unlimited data, free professional installation and a $200 Reward Card. Order 24/7 from an AT&T Preferred Dealer.`,
     path: `/att-fiber/${city.slug}`,
     keywords: [
       `AT&T Fiber ${city.city}`,

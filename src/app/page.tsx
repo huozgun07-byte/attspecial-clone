@@ -112,7 +112,7 @@ export default function Home() {
               />
               <div className="text-center md:text-left">
                 <h2 id="reward-title" className="att-h2 mb-3">
-                  Get a $250 AT&amp;T Visa<sup className="att-reg">®</sup> Reward Card
+                  Get a $200 AT&amp;T Visa<sup className="att-reg">®</sup> Reward Card
                 </h2>
                 <p className="att-lead mb-4">
                   with purchase of AT&amp;T Fiber. Redemption required.
@@ -336,10 +336,10 @@ export default function Home() {
       )}
 
       {showRewardModal && (
-        <Modal onClose={() => setShowRewardModal(null)} title="$250 AT&T Visa® Reward Card" large>
+        <Modal onClose={() => setShowRewardModal(null)} title="$200 AT&T Visa® Reward Card" large>
           <div className="space-y-4 text-sm text-att-gray-600">
-            <p className="font-bold text-att-ink">$250 REWARD CARD OFFER: Limited time offer, subject to change.</p>
-            <p>$250 AT&amp;T Visa® Reward Card for purchase of any AT&amp;T Fiber speeds. For new residential AT&amp;T Fiber customers who order through this site. Redemption req&apos;d. Employees and residents of select multi-dwelling units not eligible.</p>
+            <p className="font-bold text-att-ink">$200 REWARD CARD OFFER: Limited time offer, subject to change.</p>
+            <p>$200 AT&amp;T Visa® Reward Card for purchase of any AT&amp;T Fiber speeds. For new residential AT&amp;T Fiber customers who order through this site. Redemption req&apos;d. Employees and residents of select multi-dwelling units not eligible.</p>
             <p className="att-fine text-att-gray-500">Card issued by The Bancorp Bank N.A., Member FDIC, pursuant to a license from Visa U.S.A. Inc.</p>
           </div>
         </Modal>

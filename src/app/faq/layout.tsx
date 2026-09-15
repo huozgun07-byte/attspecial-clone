@@ -4,7 +4,7 @@ import { pageMetadata, faqSchema } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "AT&T Fiber FAQ — Speeds, Equipment & Installation",
   description:
-    "Answers to the most common AT&T Fiber questions: availability, equipment, data caps, AutoPay discounts, installation times, and the $250 Reward Card offer.",
+    "Answers to the most common AT&T Fiber questions: availability, equipment, data caps, AutoPay discounts, installation times, and the $200 Reward Card offer.",
   path: "/faq",
   image: "/images/og-image.png",
   locale: "en_US",
