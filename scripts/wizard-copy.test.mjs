@@ -21,6 +21,6 @@ test("falls back to customerType, then default", () => {
 test("no copy claims availability at the address", () => {
   for (const copy of [wizardCopyEn, wizardCopyEs]) {
     const text = JSON.stringify(copy, (_k, v) => (typeof v === "function" ? v("30301", "$50") : v)).toLowerCase();
-    assert.doesNotMatch(text, /b(is|are)( now)? available at your address|est[aá] disponible en tu direcci/);
+    assert.doesNotMatch(text, /\b(is|are)( now)? available at your address|est[aá] disponible en tu direcci/);
   }
 });
