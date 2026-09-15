@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import { useWizard } from "@/components/WizardProvider";
 import HeroPanel from "@/components/HeroPanel";
 import { IconPhone } from "@/components/Icons";
-import { phoneNumber, telHref } from "@/lib/site-config";
+import { phoneNumber, telHref, wirelessPlans, wirelessFootnote } from "@/lib/site-config";
 
 const phones = ["iPhone 15 Pro", "Samsung Galaxy S24", "Google Pixel 8"];
 
@@ -35,6 +35,43 @@ export default function WirelessPage() {
             </a>
           </div>
         </HeroPanel>
+
+        <section className="reveal att-section bg-white border-b border-att-gray-200" aria-labelledby="wplans-title">
+          <div className="att-container">
+            <div className="text-center mb-10 sm:mb-12">
+              <h2 id="wplans-title" className="att-h2 mb-3">Unlimited plans</h2>
+              <p className="att-lead max-w-2xl mx-auto">
+                Four unlimited tiers on the same 5G network. Mix and match plans across lines;
+                the price below is per line with four lines.
+              </p>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6" role="list">
+              {wirelessPlans.map((plan, i) => (
+                <article key={plan.name} className={`plan-card ${i === 2 ? "plan-card-highlighted" : ""}`} role="listitem">
+                  <div className="plan-header">
+                    <span className="text-white font-bold tracking-wide text-sm uppercase">{plan.name}</span>
+                    {i === 2 && <span className="plan-badge">Most popular</span>}
+                  </div>
+                  <div className="plan-body">
+                    <p className="plan-label">AT&amp;T Unlimited</p>
+                    <div className="plan-price">
+                      <span className="plan-price-amount">{plan.price}</span>
+                      <span className="plan-price-period">/mo per line*</span>
+                    </div>
+                    <p className="att-fine text-att-gray-500 mb-3">
+                      {plan.regularPrice}/mo without AutoPay &amp; Paperless. 4 lines.
+                    </p>
+                    <p className="plan-details">{plan.tagline}</p>
+                    <button onClick={() => openWizard({ source: "wireless-plan" })} className={`w-full ${i === 2 ? "btn-primary" : "btn-secondary"}`}>
+                      Get a quote
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
+            <p className="att-fine text-att-gray-500 text-center mt-8 max-w-3xl mx-auto">* {wirelessFootnote}</p>
+          </div>
+        </section>
 
         <section className="reveal att-section bg-white" aria-labelledby="phones-title">
           <div className="att-container">

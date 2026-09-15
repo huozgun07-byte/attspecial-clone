@@ -96,6 +96,9 @@ export default function ATTInternetAirPage() {
                   <span className="text-att-ink font-bold text-5xl">$55</span>
                   <span className="text-att-gray-600">/mo*</span>
                 </div>
+                <p className="att-fine font-bold text-att-navy bg-att-light-blue rounded-lg px-3 py-1.5 mt-3 inline-block">
+                  $47/mo with an AT&amp;T unlimited wireless plan‡
+                </p>
               </div>
               <ul className="space-y-4 text-att-gray-700 mb-8" role="list">
                 {included.map((item) => (
@@ -111,7 +114,7 @@ export default function ATTInternetAirPage() {
                 Check availability
               </button>
               <p className="att-fine text-att-gray-500 text-center mt-4">
-                *$55/mo w/ AutoPay &amp; Paperless bill ($60/mo w/o). †Speeds based on wired connection. Actual speeds vary.
+                *$55/mo w/ AutoPay &amp; Paperless bill ($60/mo w/o). ‡20% off for customers with an eligible AT&amp;T unlimited wireless plan on the same account; wireless must be added within 24 hours of the Internet Air order. †Speeds based on wired connection. Actual speeds vary.
               </p>
             </div>
           </div>

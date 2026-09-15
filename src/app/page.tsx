@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
@@ -12,7 +12,7 @@ import HeroSwoosh from "@/components/HeroSwoosh";
 import { useWizard } from "@/components/WizardProvider";
 import WizardButton from "@/components/WizardButton";
 import { IconFiber, IconContract, IconInstall, IconSupport } from "@/components/Icons";
-import { plans, features, steps, faqs, businessPhone, businessHours, type Plan, type Feature } from "@/lib/site-config";
+import { plans, features, steps, faqs, businessPhone, businessHours, bundleFootnote, type Plan, type Feature } from "@/lib/site-config";
 
 const featureIcons: Record<Feature["icon"], (props: React.SVGProps<SVGSVGElement>) => React.ReactElement> = {
   fiber: IconFiber,
@@ -25,6 +25,18 @@ export default function Home() {
   const [showBusinessModal, setShowBusinessModal] = useState(false);
   const [showTermsModal, setShowTermsModal] = useState<string | null>(null);
   const [showRewardModal, setShowRewardModal] = useState<string | null>(null);
+  const [showBundleModal, setShowBundleModal] = useState(false);
+
+  // Hero rotates between the 1 GIG offer and the bundle offer. The right-hand
+  // availability card never moves. Paused on hover, on focus inside, and for
+  // visitors who asked for reduced motion.
+  const [slide, setSlide] = useState(0);
+  const [heroPaused, setHeroPaused] = useState(false);
+  useEffect(() => {
+    if (heroPaused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const id = window.setInterval(() => setSlide((s) => (s + 1) % 2), 4500);
+    return () => window.clearInterval(id);
+  }, [heroPaused]);
   // Every "check availability" surface on the page opens the same step-by-step
   // wizard, which is mounted once at the app root.
   const { openWizard } = useWizard();
@@ -36,14 +48,28 @@ export default function Home() {
       <main className="flex-1">
         {/* ---------------- Hero ---------------- */}
         <section className="att-container pt-5 pb-10 sm:pt-7 sm:pb-12" aria-labelledby="hero-title">
-          <div className="att-hero-shell">
+          <div
+            className="att-hero-shell"
+            onMouseEnter={() => setHeroPaused(true)}
+            onMouseLeave={() => setHeroPaused(false)}
+            onFocusCapture={() => setHeroPaused(true)}
+            onBlurCapture={() => setHeroPaused(false)}
+          >
             <Image
               src="/images/hero-family-2.jpg"
               alt=""
               fill
               priority
               sizes="(max-width: 1296px) 100vw, 1296px"
-              className="object-cover object-[68%_center]"
+              className={`object-cover object-[68%_center] transition-opacity duration-700 ease-in-out ${slide === 0 ? "opacity-100" : "opacity-0"}`}
+              aria-hidden="true"
+            />
+            <Image
+              src="/images/hero-bundle.jpg"
+              alt=""
+              fill
+              sizes="(max-width: 1296px) 100vw, 1296px"
+              className={`object-cover object-[68%_center] transition-opacity duration-700 ease-in-out ${slide === 1 ? "opacity-100" : "opacity-0"}`}
               aria-hidden="true"
             />
             <div className="att-hero-scrim" aria-hidden="true" />
@@ -52,8 +78,12 @@ export default function Home() {
             <HeroSwoosh />
 
             <div className="relative grid lg:grid-cols-[1.1fr_minmax(300px,410px)] gap-8 lg:gap-14 items-center p-6 sm:p-9 lg:p-12">
-              {/* Left — offer copy */}
-              <div>
+              {/* Left — offer copy. Both slides share one grid cell and cross-fade. */}
+              <div className="grid">
+              <div
+                className={`col-start-1 row-start-1 transition-opacity duration-700 ease-in-out ${slide === 0 ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+                aria-hidden={slide !== 0}
+              >
                 <Image
                   src="/images/att-fiber-logo-whtblue.png"
                   alt="AT&T Fiber"
@@ -87,6 +117,58 @@ export default function Home() {
                     </a>
                   </p>
                 </div>
+              </div>
+
+              <div
+                className={`col-start-1 row-start-1 transition-opacity duration-700 ease-in-out ${slide === 1 ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+                aria-hidden={slide !== 1}
+              >
+                <p className="att-eyebrow text-att-sky mb-4">Fiber + wireless bundle</p>
+                <p className="att-display mb-5">
+                  1 GIG Fiber for <span className="whitespace-nowrap">$30/mo</span> <br className="hidden sm:block" />
+                  with an unlimited wireless plan
+                </p>
+                <div className="inline-flex items-center gap-3 bg-white/12 border border-white/25 rounded-full pl-2 pr-5 py-2 mb-4">
+                  <Image
+                    src="/images/att-reward-card.png"
+                    alt=""
+                    width={900}
+                    height={594}
+                    className="w-14 h-auto rounded-sm"
+                    aria-hidden="true"
+                  />
+                  <span className="text-white font-bold text-base sm:text-lg">
+                    + $200 AT&amp;T Visa<sup className="att-reg">®</sup> Reward Card
+                  </span>
+                </div>
+                <div className="text-white/85 max-w-xl space-y-0.5 att-fine">
+                  <p>
+                    For 12 mos. w/ elig. AT&amp;T unlimited wireless, AutoPay &amp; Paperless bill. Reward Card redemption req&apos;d. Ltd. avail/areas.{" "}
+                    <a
+                      href="#modal-terms-bundle"
+                      className="font-bold underline underline-offset-2 text-white hover:text-att-sky"
+                      onClick={(e) => { e.preventDefault(); setShowBundleModal(true); }}
+                    >
+                      See details
+                    </a>
+                  </p>
+                </div>
+              </div>
+
+              {/* Slide dots */}
+              <div className="col-start-1 row-start-2 mt-6 flex gap-2" role="tablist" aria-label="Offers">
+                {[0, 1].map((i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    role="tab"
+                    aria-selected={slide === i}
+                    aria-label={i === 0 ? "1 GIG offer" : "Bundle offer"}
+                    onClick={() => setSlide(i)}
+                    className={`h-2 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-att-cyan ${slide === i ? "w-8 bg-white" : "w-2 bg-white/45 hover:bg-white/70"}`}
+                  />
+                ))}
+              </div>
               </div>
 
               {/* Right — availability card */}
@@ -163,6 +245,7 @@ export default function Home() {
             <div className="mt-10 att-fine text-att-gray-500 max-w-3xl mx-auto space-y-2" role="contentinfo">
               <p>‡ Upload speed comparison against Xfinity, Spectrum and Cox cable service at comparable download tiers with uploads of 10, 20 and 35 Mbps. Speeds vary and are not guaranteed. See www.att.com/speed101.</p>
               <p>† Speed based on wired connection. Actual speeds may vary. For 5GIG, single device wired speed maximum 4.7Gbps. For more info, go to www.att.com/speed101.</p>
+              <p>{bundleFootnote}</p>
               <p>* Limited time offer. Subject to change. New AT&amp;T Fiber customers will receive a discount for 12 months off the monthly recurring charge for an AT&amp;T Fiber plan ($15/mo w/300M or 500M; $30/mo w/1 Gig or higher). Pay full plan cost until discount starts w/in 3 bills. After 12 mos, prevailing rate for fiber plan applies.</p>
             </div>
           </div>
@@ -351,6 +434,17 @@ export default function Home() {
         </Modal>
       )}
 
+      {showBundleModal && (
+        <Modal onClose={() => setShowBundleModal(false)} title="Fiber + wireless bundle offer" large>
+          <div className="space-y-4 text-sm text-att-gray-600">
+            <p className="font-bold text-att-ink">1 GIG FOR $30/MO WITH AN AT&amp;T UNLIMITED WIRELESS PLAN: Limited time offer, subject to change.</p>
+            <p>{bundleFootnote.replace(/^‡ /, "")}</p>
+            <p>Reflects the $30/mo new-customer discount for 12 months, the $10/mo AutoPay &amp; Paperless bill discount and the $20/mo wireless bundle discount on the $90/mo 1 GIG rate. Taxes &amp; fees extra. After 12 months, prevailing rate applies.</p>
+            <p>$200 AT&amp;T Visa® Reward Card for new residential AT&amp;T Fiber customers who order through this site. Redemption required within 75 days of the reward notice. Card issued by The Bancorp Bank N.A., Member FDIC, pursuant to a license from Visa U.S.A. Inc.</p>
+          </div>
+        </Modal>
+      )}
+
       {showRewardModal && (
         <Modal onClose={() => setShowRewardModal(null)} title="$200 AT&T Visa® Reward Card" large>
           <div className="space-y-4 text-sm text-att-gray-600">
@@ -392,8 +486,11 @@ function PlanCard({ plan, onCtaClick, onDetailsClick }: { plan: Plan; onCtaClick
           <span className="plan-price-amount">{plan.price}</span>
           <span className="plan-price-period">/mo*</span>
         </div>
-        <p className="att-fine text-att-gray-500 mb-3">
+        <p className="att-fine text-att-gray-500 mb-2">
           Reg. {plan.regularPrice}/mo after 12 mos.
+        </p>
+        <p className="att-fine font-bold text-att-navy bg-att-light-blue rounded-lg px-2.5 py-1.5 mb-3">
+          {plan.bundlePrice}/mo with an AT&amp;T unlimited wireless plan‡
         </p>
         <ul className="mb-3 space-y-1.5" role="list">
           <li className="att-fine text-att-ink font-medium">{plan.devices}</li>

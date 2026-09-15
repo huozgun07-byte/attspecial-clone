@@ -9,7 +9,7 @@ import AvailabilityCard from "@/components/AvailabilityCard";
 import WizardButton from "@/components/WizardButton";
 import TrustStrip from "@/components/TrustStrip";
 import { cities, citiesBySlug, cityHeroImage, hasCityHero } from "@/lib/cities";
-import { plans, phoneNumber, telHref, faqs } from "@/lib/site-config";
+import { plans, phoneNumber, telHref, faqs, bundleFootnote } from "@/lib/site-config";
 import { siteUrl, pageMetadata } from "@/lib/seo";
 
 export function generateStaticParams() {
@@ -196,6 +196,9 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                       <span className="plan-price-amount">{plan.price}</span>
                       <span className="plan-price-period">/mo*</span>
                     </div>
+                    <p className="att-fine font-bold text-att-navy bg-att-light-blue rounded-lg px-2.5 py-1.5 mb-3">
+                      {plan.bundlePrice}/mo with an AT&amp;T unlimited wireless plan‡
+                    </p>
                     <ul className="mb-3 space-y-1.5" role="list">
                       <li className="att-fine text-att-ink font-medium">{plan.devices}</li>
                       <li className="att-fine text-att-gray-600">{plan.bestFor}</li>
@@ -214,7 +217,8 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
             <TrustStrip className="mt-10" />
 
-            <p className="mt-10 att-fine text-att-gray-500 max-w-3xl mx-auto">
+            <p className="mt-10 att-fine text-att-gray-500 max-w-3xl mx-auto">{bundleFootnote}</p>
+            <p className="mt-3 att-fine text-att-gray-500 max-w-3xl mx-auto">
               * Limited time offer, subject to change. Prices shown include the new-customer
               discount for 12 mos and the $10/mo AutoPay &amp; Paperless bill discount; the
               prevailing rate applies after 12 mos. † Speeds based on wired connection; on 5 GIG a

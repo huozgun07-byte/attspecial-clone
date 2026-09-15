@@ -29,6 +29,12 @@ export interface Plan {
   price: string;
   /** Prevailing rate once the 12-month new-customer discount ends. */
   regularPrice: string;
+  /**
+   * Monthly price with an eligible AT&T unlimited wireless plan on the same
+   * name/address. att.com/bundles/internet-wireless (Sept 2026): $15 off
+   * 300M/500M, $20 off 1 GIG, $25 off 5 GIG, for the first 12 months.
+   */
+  bundlePrice: string;
   details: string;
   cta: string;
   modal: string;
@@ -48,6 +54,7 @@ export const plans: Plan[] = [
     speed: "300 Mbps",
     price: "$35",
     regularPrice: "$60",
+    bundlePrice: "$20",
     details:
       "Room for a couple of 4K streams, video calls and everyday browsing at once. Reflects $15/mo off for 12 mos for new customers plus the $10/mo AutoPay & Paperless bill discount.",
     cta: "Shop internet",
@@ -62,6 +69,7 @@ export const plans: Plan[] = [
     speed: "500 Mbps",
     price: "$50",
     regularPrice: "$75",
+    bundlePrice: "$35",
     details:
       "A step up for households that upload as much as they download — cloud backups, large file shares and several people online together. Reflects $15/mo off for 12 mos for new customers plus $10/mo AutoPay & Paperless bill.",
     cta: "Shop internet",
@@ -76,6 +84,7 @@ export const plans: Plan[] = [
     speed: "1 GIG",
     price: "$50",
     regularPrice: "$90",
+    bundlePrice: "$30",
     details:
       "Our most-ordered plan: gigabit speed for smart-home devices, gaming and working from home without anyone slowing anyone else down. Ltd. avail/areas. Reflects $30/mo off for 12 mos for new customers plus $10/mo AutoPay & Paperless bill.",
     cta: "Shop internet",
@@ -91,6 +100,7 @@ export const plans: Plan[] = [
     speed: "5 GIG",
     price: "$95",
     regularPrice: "$135",
+    bundlePrice: "$70",
     details:
       "The top tier, for home studios, self-hosted servers and anyone moving very large files daily. Ltd avail/areas. Reflects $30/mo off for 12 mos for new customers plus $10/mo AutoPay & Paperless bill.",
     cta: "Shop internet",
@@ -100,6 +110,28 @@ export const plans: Plan[] = [
     bestFor: "Home studios, creators moving huge files and self-hosted servers",
   },
 ];
+
+/** Shown wherever a bundle price appears. Keep in sync with the Plan.bundlePrice note. */
+export const bundleFootnote =
+  "‡ Bundle price for new residential customers who purchase AT&T Fiber and an eligible AT&T unlimited postpaid wireless plan under the same name and address: $15/mo off 300M or 500M, $20/mo off 1 GIG, $25/mo off 5 GIG for 12 months. Discount starts within 3 bills and is applied before the AutoPay & Paperless discount. Must maintain eligible wireless service. Services billed separately.";
+
+export interface WirelessPlan {
+  name: string;
+  /** Per line per month with 4 lines, AutoPay & Paperless bill. att.com/plans/wireless (Sept 2026). */
+  price: string;
+  regularPrice: string;
+  tagline: string;
+}
+
+export const wirelessPlans: WirelessPlan[] = [
+  { name: "Value 2.0", price: "$30", regularPrice: "$40", tagline: "Unlimited talk, text and data on AT&T 5G at the lowest per-line price." },
+  { name: "Extra 2.0", price: "$40", regularPrice: "$50", tagline: "More high-speed data and hotspot for people who use their phone all day." },
+  { name: "Premium 2.0", price: "$50", regularPrice: "$60", tagline: "Everything in Extra 2.0 with more of what heavy users need to stay connected." },
+  { name: "Elite 2.0", price: "$70", regularPrice: "$80", tagline: "AT&T's best plan: all the perks of Premium 2.0 plus more." },
+];
+
+export const wirelessFootnote =
+  "Prices per line per month with 4 lines, eligible AutoPay & Paperless bill; the $10/mo discount starts within 2 bills. Single-line and 2–3 line pricing differs — a specialist quotes your exact lines. Taxes and fees extra. AT&T may temporarily slow data speeds if the network is busy. Limited time offer, subject to change.";
 
 export interface Feature {
   title: string;
