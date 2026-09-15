@@ -80,5 +80,6 @@ own machine.
   sourced from the real attspecial.com site, not AT&T's internal "you Refer"
   employee-referral brand kit (that kit requires Legal approval and isn't for
   public-facing use). Photography: `hero-family-2.jpg` (homepage + city-page
-  fallback), `hero-internet-air-3.jpg`, `hero-wireless-2.jpg` and
+  fallback), `hero-internet-air-3.jpg`, `hero-wireless-2.jpg`,
+  `offer-iphone.jpg` (Unsplash photo-1709528922440, Abhijeet Barak) and
   `cities/*.jpg` are Unsplash-licensed.

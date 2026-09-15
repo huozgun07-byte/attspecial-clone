@@ -6,7 +6,6 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Modal from "@/components/Modal";
-import AvailabilityCard from "@/components/AvailabilityCard";
 import TrustStrip from "@/components/TrustStrip";
 import HeroSwoosh from "@/components/HeroSwoosh";
 import DealCta from "@/components/DealCta";
@@ -15,9 +14,9 @@ import WirelessPlanCard from "@/components/WirelessPlanCard";
 import PhoneOffer from "@/components/PhoneOffer";
 import { useWizard } from "@/components/WizardProvider";
 import WizardButton from "@/components/WizardButton";
-import { IconFiber, IconContract, IconInstall, IconSupport, IconShield, IconPhone } from "@/components/Icons";
+import { IconFiber, IconContract, IconInstall, IconSupport, IconShield, IconPhone, IconGlobe, IconWireless, IconBox } from "@/components/Icons";
 import {
-  plans, features, steps, faqs, bundleFootnote, bundleSavingsNote,
+  plans, features, steps, faqs, bundleFootnote, bundleSavingsNote, phoneNumber, telHref,
   wirelessPlans, wirelessFootnote, broadbandFactsUrl, serviceChoices, guarantee, switcherOffer, phoneOffers,
   type Plan, type Feature,
 } from "@/lib/site-config";
@@ -28,6 +27,12 @@ const featureIcons: Record<Feature["icon"], (props: React.SVGProps<SVGSVGElement
   contract: IconContract,
   install: IconInstall,
   support: IconSupport,
+};
+
+const serviceIcons: Record<(typeof serviceChoices)[number]["value"], (props: React.SVGProps<SVGSVGElement>) => React.ReactElement> = {
+  internet: IconGlobe,
+  wireless: IconWireless,
+  bundle: IconBox,
 };
 
 const guaranteeIcons = [IconShield, IconSupport, IconPhone];
@@ -78,9 +83,9 @@ export default function Home() {
       <Header />
 
       <main className="flex-1">
-        {/* ---------------- Hero ---------------- */}
+        {/* ---------------- Hero: offer left, "what are you looking for?" picker right ---------------- */}
         <section className="att-container pt-4 sm:pt-5" aria-labelledby="hero-title">
-          <div className="att-hero-shell lg:min-h-[430px]">
+          <div className="att-hero-shell lg:min-h-[400px]">
             <Image
               src="/images/hero-family-2.jpg"
               alt=""
@@ -100,9 +105,9 @@ export default function Home() {
                   alt="AT&T Fiber"
                   width={170}
                   height={36}
-                  className="h-7 w-auto mb-4"
+                  className="h-6 w-auto mb-4"
                 />
-                <h1 id="hero-title" className="att-display mb-4">
+                <h1 id="hero-title" className="att-display mb-4" style={{ fontSize: "clamp(2rem, 3.6vw, 2.9rem)" }}>
                   AT&amp;T Fiber<sup className="att-reg">®</sup> 1 Gig <br className="hidden sm:block" />
                   internet at your address
                 </h1>
@@ -116,52 +121,57 @@ export default function Home() {
                 <p className="text-white font-bold text-base sm:text-lg mb-3">
                   + taxes &amp; fees for 12 mos.
                 </p>
-                <div className="text-white/85 max-w-xl space-y-0.5 att-fine">
-                  <p>w/ elig AutoPay &amp; Paperless bill. Ltd. avail/areas.</p>
-                  <p>
-                    Price after discounts $30/mo for 12 mos new customers, and $10/mo AutoPay &amp; Paperless bill. Discounts start w/in 3 bills.{" "}
-                    <a
-                      href="#modal-terms-1g"
-                      className="font-bold underline underline-offset-2 text-white hover:text-att-sky"
-                      onClick={(e) => { e.preventDefault(); setShowTermsModal("modal-terms-1g"); }}
-                    >
-                      See details
-                    </a>
-                  </p>
-                </div>
+                <p className="text-white/85 max-w-xl att-fine">
+                  w/ elig AutoPay &amp; Paperless bill. Ltd. avail/areas. Price after discounts $30/mo for 12 mos new customers, and $10/mo AutoPay &amp; Paperless bill. Discounts start w/in 3 bills.{" "}
+                  <a
+                    href="#modal-terms-1g"
+                    className="font-bold underline underline-offset-2 text-white hover:text-att-sky"
+                    onClick={(e) => { e.preventDefault(); setShowTermsModal("modal-terms-1g"); }}
+                  >
+                    See details
+                  </a>
+                </p>
               </div>
 
-              <AvailabilityCard
-                className="att-hero-card"
-                title="Check availability at your address"
-                source="home-hero"
-                cta="Check my address"
-              />
+              {/* The picker: three rows, each starts the wizard with that answer filled in. */}
+              <div className="att-hero-card">
+                <h2 className="att-h3 mb-1">What are you looking for?</h2>
+                <p className="text-att-gray-600 text-sm mb-3">Pick one — we check your address next. About 30 seconds.</p>
+                <div className="divide-y divide-att-gray-200 border-y border-att-gray-200" role="list">
+                  {serviceChoices.map((choice) => {
+                    const Icon = serviceIcons[choice.value];
+                    return (
+                      <button
+                        key={choice.value}
+                        type="button"
+                        role="listitem"
+                        onClick={() => openWizard({ source: `home-service-${choice.value}`, service: choice.value })}
+                        className="w-full flex items-center gap-3 py-3 text-left rounded-lg hover:bg-white/70 focus:outline-none focus:ring-2 focus:ring-att-cyan"
+                      >
+                        <Icon className="w-7 h-7 shrink-0 text-att-ink" strokeWidth={1.4} aria-hidden="true" />
+                        <span className="flex-1 min-w-0">
+                          <span className="block font-bold text-att-ink leading-tight">{choice.label}</span>
+                          <span className="block att-fine text-att-gray-600">{choice.hint}</span>
+                        </span>
+                        <svg className="w-5 h-5 shrink-0 text-att-navy" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 6l6 6-6 6" />
+                        </svg>
+                      </button>
+                    );
+                  })}
+                </div>
+                <p className="att-fine text-att-gray-500 mt-3">
+                  Rather talk to someone? Call{" "}
+                  <a href={telHref(phoneNumber)} className="text-att-navy font-bold underline underline-offset-2">{phoneNumber}</a>
+                  {" "}— open 24/7.
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* ---------------- Offer strip: every deal, one screen under the hero ---------------- */}
-        <section className="att-container pt-4 sm:pt-5" aria-label="Current offers">
-          <div className="grid md:grid-cols-3 gap-4" role="list">
-            <DealTile
-              eyebrow="Fiber + wireless"
-              title={<>1 Gig internet for $30/mo for 12 mos.*</>}
-              sub={<>Save up to <strong className="text-att-ink">$420/year</strong> when you combine AT&amp;T wireless and AT&amp;T Fiber, plus a $200 AT&amp;T Visa<sup className="att-reg">®</sup> Reward Card.</>}
-              href={dealHref("fiber-wireless-bundle")}
-            />
-            <PhoneOffer offer={phoneOffers[0]} compact />
-            <DealTile
-              eyebrow="Switching carriers?"
-              title={switcherOffer.headline}
-              sub={switcherOffer.sub}
-              href={dealHref("switcher-800")}
-            />
-          </div>
-        </section>
-
-        {/* ---------------- Bundle: the detailed version ---------------- */}
-        <section className="att-container py-8 sm:py-10" aria-labelledby="bundle-title">
+        {/* ---------------- Bundle: the headline offer, with the Reward Card ---------------- */}
+        <section className="att-container pt-4 sm:pt-5" aria-labelledby="bundle-title">
           <div className="rounded-att overflow-hidden bg-att-light-blue grid lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
             <div className="p-6 sm:p-10">
               <p className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-3 text-att-ink font-bold text-xl sm:text-2xl tracking-tight" aria-label="AT&T Fiber plus AT&T Wireless">
@@ -173,25 +183,23 @@ export default function Home() {
                 Get America&apos;s fastest 1 Gig internet<sup className="att-reg">1</sup> for{" "}
                 <span className="whitespace-nowrap">$30/mo.</span> for 12 mos.*
               </h2>
-              <p className="att-lead mb-6">when you bundle with an unlimited wireless plan.</p>
+              <p className="att-lead mb-6">
+                when you bundle with an unlimited wireless plan. Save up to $420/year when you combine AT&amp;T wireless and AT&amp;T Fiber.
+              </p>
 
-              <dl className="grid grid-cols-3 gap-4 sm:gap-6 mb-6 max-w-lg">
+              <dl className="flex flex-wrap gap-x-10 gap-y-4 mb-6">
                 <div>
-                  <dt className="att-fine text-att-gray-600">1 GIG, was $90/mo</dt>
-                  <dd className="text-3xl sm:text-4xl font-bold text-att-navy tracking-tight">$30<span className="text-base font-normal text-att-gray-600">/mo</span></dd>
+                  <dd className="text-4xl sm:text-5xl font-bold text-att-navy tracking-tight leading-none">$30<span className="text-lg font-normal text-att-gray-600">/mo</span></dd>
+                  <dt className="att-fine text-att-gray-600 mt-1">1 GIG for 12 months, <span className="line-through">$90/mo</span></dt>
                 </div>
                 <div>
-                  <dt className="att-fine text-att-gray-600">Save up to, per year</dt>
-                  <dd className="text-3xl sm:text-4xl font-bold text-att-navy tracking-tight">$420</dd>
-                </div>
-                <div>
-                  <dt className="att-fine text-att-gray-600">Visa<sup className="att-reg">®</sup> Reward Card</dt>
-                  <dd className="text-3xl sm:text-4xl font-bold text-att-navy tracking-tight">$200</dd>
+                  <dd className="text-4xl sm:text-5xl font-bold text-att-navy tracking-tight leading-none">$420</dd>
+                  <dt className="att-fine text-att-gray-600 mt-1">saved per year, up to</dt>
                 </div>
               </dl>
 
               <ul className="space-y-2 mb-6 max-w-xl" role="list">
-                <li className="flex items-start gap-2 text-att-gray-700 text-[15px]"><Check /><span>$20/mo off 1 GIG for 12 months with an eligible AT&amp;T unlimited wireless plan — $15 off 300M/500M, $25 off 5 GIG.</span></li>
+                <li className="flex items-start gap-2 text-att-gray-700 text-[15px]"><Check /><span>$20/mo off 1 GIG for 12 months with an eligible AT&amp;T unlimited wireless plan. $15 off 300M/500M, $25 off 5 GIG.</span></li>
                 <li className="flex items-start gap-2 text-att-gray-700 text-[15px]"><Check /><span>$200 AT&amp;T Visa<sup className="att-reg">®</sup> Reward Card with your Fiber order.{" "}
                   <a href="#modal-terms-250-visa" className="text-att-navy font-bold underline underline-offset-2" onClick={(e) => { e.preventDefault(); setShowRewardModal(true); }}>See details</a></span></li>
                 <li className="flex items-start gap-2 text-att-gray-700 text-[15px]"><Check /><span>Both services backed by the AT&amp;T Guarantee<sup className="att-reg">SM</sup>.</span></li>
@@ -211,39 +219,33 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="relative min-h-[240px] lg:min-h-0">
-              <Image src="/images/hero-bundle.jpg" alt="" fill sizes="(max-width: 1024px) 100vw, 540px" className="object-cover object-[60%_center]" aria-hidden="true" />
-              <div className="absolute inset-x-5 bottom-5 bg-white/95 rounded-2xl p-4 flex items-center gap-4 shadow-lg">
-                <Image src="/images/att-reward-card.png" alt="AT&T Visa Reward Card" width={900} height={594} className="w-24 h-auto rounded-sm shrink-0" />
-                <div>
-                  <p className="font-bold text-att-ink leading-tight">Save up to $420/year</p>
-                  <p className="att-fine text-att-gray-600">when you combine AT&amp;T wireless and AT&amp;T Fiber. Redemption required for the Reward Card.</p>
-                </div>
-              </div>
+            {/* The one loud element on the page: the card itself. */}
+            <div className="relative overflow-hidden bg-gradient-to-br from-att-navy via-[#0B57B8] to-att-cyan text-white p-8 sm:p-10 flex flex-col items-center justify-center text-center min-h-[320px]">
+              <Image
+                src="/images/att-reward-card.png"
+                alt="AT&T Visa Reward Card"
+                width={900}
+                height={594}
+                className="w-60 sm:w-72 h-auto rounded-lg shadow-2xl -rotate-6 mb-7"
+              />
+              <p className="text-3xl sm:text-4xl font-bold tracking-tight leading-none">$200 Reward Card</p>
+              <p className="text-white/85 mt-2">AT&amp;T Visa<sup className="att-reg">®</sup> Reward Card with your AT&amp;T Fiber order. Redemption required.</p>
+              <p className="mt-5 inline-block bg-white text-att-navy rounded-full px-4 py-1.5 font-bold text-sm">+ Save up to $420/year on the bundle</p>
             </div>
           </div>
         </section>
 
-        {/* ---------------- What are you looking for? (slim) ---------------- */}
-        <section className="att-container pb-8 sm:pb-10" aria-labelledby="service-title">
-          <div className="rounded-att border border-att-gray-200 bg-white px-5 py-4 flex flex-col md:flex-row md:items-center gap-3 md:gap-6">
-            <div className="md:mr-auto">
-              <h2 id="service-title" className="att-h3">What are you looking for?</h2>
-              <p className="att-fine text-att-gray-600">Pick one and we start your quote there — about 30 seconds.</p>
-            </div>
-            <div className="flex flex-wrap gap-2" role="list">
-              {serviceChoices.map((choice) => (
-                <button
-                  key={choice.value}
-                  type="button"
-                  role="listitem"
-                  onClick={() => openWizard({ source: `home-service-${choice.value}`, service: choice.value })}
-                  className="btn-outline !px-4 !py-2.5 !text-sm"
-                >
-                  {choice.label}
-                </button>
-              ))}
-            </div>
+        {/* ---------------- Two more deals ---------------- */}
+        <section className="att-container py-4 sm:py-5" aria-label="Current offers">
+          <div className="grid lg:grid-cols-2 gap-4" role="list">
+            <PhoneOffer offer={phoneOffers[0]} compact />
+            <DealTile
+              eyebrow="Switching carriers?"
+              title={switcherOffer.headline}
+              sub={switcherOffer.sub}
+              href={dealHref("switcher-800")}
+              image={{ src: "/images/hero-wireless-2.jpg", alt: "Couple looking at a phone together", position: "object-[62%_center]" }}
+            />
           </div>
         </section>
 
@@ -295,6 +297,10 @@ export default function Home() {
                   {" · "}
                   <Link href="/att-fiber" className="text-att-navy font-bold underline underline-offset-2">
                     AT&amp;T Fiber by city
+                  </Link>
+                  {" · "}
+                  <Link href="/att-internet-air" className="text-att-navy font-bold underline underline-offset-2">
+                    Fiber not built at your address yet? AT&amp;T Internet Air from $55/mo
                   </Link>
                 </p>
 
@@ -352,23 +358,16 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ---------------- Why AT&T Fiber ---------------- */}
+        {/* ---------------- Why AT&T Fiber: one row ---------------- */}
         <section className="reveal py-10 sm:py-12 bg-white" aria-labelledby="why-title">
-          <div className="att-container grid lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] gap-8 lg:gap-14 items-start">
-            <div>
-              <p className="att-eyebrow text-att-navy mb-2">Why fiber</p>
-              <h2 id="why-title" className="att-h2 mb-3">What you get with AT&amp;T Fiber</h2>
-              <p className="text-att-gray-600">
-                A 100% fiber network behaves differently from cable, and the differences are
-                the ones you notice on a work call or a Saturday night.
-              </p>
-              <p className="mt-4">
-                <Link href="/why-fiber" className="text-att-navy font-bold underline underline-offset-2">
-                  Read how fiber actually differs from cable
-                </Link>
-              </p>
+          <div className="att-container">
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2 mb-6">
+              <h2 id="why-title" className="att-h2">What you get with AT&amp;T Fiber</h2>
+              <Link href="/why-fiber" className="text-att-navy font-bold underline underline-offset-2 att-fine">
+                How fiber differs from cable
+              </Link>
             </div>
-            <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-6" role="list">
+            <ul className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6" role="list">
               {features.map((feature) => (
                 <FeatureCard key={feature.title} feature={feature} />
               ))}
@@ -397,57 +396,12 @@ export default function Home() {
               {steps.map((step, i) => (
                 <li key={step.title} className="timeline-item">
                   <span className="timeline-dot" aria-hidden="true">{i + 1}</span>
-                  <p className="att-fine font-bold uppercase tracking-wide text-att-sky mb-1">{step.when}</p>
+                  <p className="att-fine font-bold text-att-sky mb-1">{step.when}</p>
                   <h3 className="font-bold text-white text-lg mb-1">{step.title}</h3>
                   <p className="text-white/75 text-sm leading-relaxed">{step.desc}</p>
                 </li>
               ))}
             </ol>
-          </div>
-        </section>
-
-        {/* ---------------- Fiber vs Internet Air ---------------- */}
-        <section className="reveal py-10 sm:py-12 bg-att-gray-100 border-t border-att-gray-200" aria-labelledby="compare-title">
-          <div className="att-container">
-            <div className="text-center mb-6 sm:mb-8">
-              <h2 id="compare-title" className="att-h2 mb-2">
-                AT&amp;T Fiber or AT&amp;T Internet Air?
-              </h2>
-              <p className="text-att-gray-600 max-w-2xl mx-auto">
-                Fiber is the better service wherever it is built. Internet Air is how AT&amp;T
-                covers addresses the fiber network hasn&apos;t reached yet.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-4 sm:gap-6 max-w-4xl mx-auto">
-              <article className="bg-white rounded-2xl border border-att-gray-200 p-6">
-                <h3 className="att-h3 mb-3">AT&amp;T Fiber</h3>
-                <ul className="space-y-2 text-att-gray-700 text-[15px]" role="list">
-                  <li className="flex gap-2"><Check />300 Mbps to 5 GIG, symmetrical upload and download</li>
-                  <li className="flex gap-2"><Check />Unlimited data, no annual contract on eligible plans</li>
-                  <li className="flex gap-2"><Check />Professional installation included</li>
-                  <li className="flex gap-2"><Check />From $35/mo with AutoPay &amp; Paperless bill</li>
-                </ul>
-                <p className="att-fine text-att-gray-500 mt-4">
-                  Available where the fiber network has been built — check your address above.
-                </p>
-              </article>
-
-              <article className="bg-white rounded-2xl border border-att-gray-200 p-6">
-                <h3 className="att-h3 mb-3">AT&amp;T Internet Air™</h3>
-                <ul className="space-y-2 text-att-gray-700 text-[15px]" role="list">
-                  <li className="flex gap-2"><Check />Up to 100 Mbps over the AT&amp;T 5G network</li>
-                  <li className="flex gap-2"><Check />Unlimited data, no annual contract</li>
-                  <li className="flex gap-2"><Check />Self-setup in minutes, no technician visit</li>
-                  <li className="flex gap-2"><Check />$55/mo with AutoPay &amp; Paperless bill ($60/mo without)</li>
-                </ul>
-                <p className="att-fine text-att-gray-500 mt-4">
-                  <Link href="/att-internet-air" className="text-att-navy font-bold underline underline-offset-2">
-                    See AT&amp;T Internet Air details
-                  </Link>
-                </p>
-              </article>
-            </div>
           </div>
         </section>
 
@@ -520,13 +474,11 @@ export default function Home() {
 function FeatureCard({ feature }: { feature: Feature }) {
   const Icon = featureIcons[feature.icon];
   return (
-    <li className="flex gap-4">
+    <li>
       {/* Bare, thin-line, ink — the way att.com draws benefit icons. */}
-      <Icon className="shrink-0 w-9 h-9 text-att-ink" strokeWidth={1.4} aria-hidden="true" />
-      <div>
-        <h3 className="feature-title">{feature.title}</h3>
-        <p className="feature-desc">{feature.desc}</p>
-      </div>
+      <Icon className="w-9 h-9 text-att-ink mb-3" strokeWidth={1.4} aria-hidden="true" />
+      <h3 className="feature-title">{feature.title}</h3>
+      <p className="feature-desc">{feature.desc}</p>
     </li>
   );
 }

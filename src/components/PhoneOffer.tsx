@@ -17,7 +17,13 @@ export default function PhoneOffer({ offer, compact = false, className = "" }: {
   return (
     <>
       {compact ? (
-        <DealTile eyebrow="Phone deal" title={offer.headline} sub={offer.sub} onMoreInfo={() => setOpen(true)} />
+        <DealTile
+          eyebrow="Phone deal"
+          title={offer.headline}
+          sub={offer.sub}
+          onMoreInfo={() => setOpen(true)}
+          image={{ src: "/images/offer-iphone.jpg", alt: "iPhone Pro on a desk", position: "object-[50%_42%]" }}
+        />
       ) : (
         <div className={`surface-card p-6 sm:p-10 flex flex-col ${className}`}>
           <p className="att-eyebrow text-att-navy mb-3">Phone deal</p>
