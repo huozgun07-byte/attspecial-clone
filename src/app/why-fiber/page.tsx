@@ -115,11 +115,11 @@ export default function WhyFiberPage() {
         </section>
 
         {/* The three knowledge sections */}
-        {sections.map(({ section, Icon }, index) => (
+        {sections.map(({ section, Icon }) => (
           <section
             key={section.id}
             id={section.id}
-            className={`att-section ${index % 2 === 1 ? "bg-att-gray-100 border-y border-att-gray-200" : "bg-white"}`}
+            className="att-section bg-white border-t border-att-gray-200"
             aria-labelledby={`${section.id}-title`}
           >
             <div className="att-container">
@@ -136,7 +136,7 @@ export default function WhyFiberPage() {
                 {section.points.map((point) => (
                   <div
                     key={point.title}
-                    className={index % 2 === 1 ? "bg-white rounded-att border border-att-gray-200 p-6" : "surface-card p-6"}
+                    className="surface-card p-6"
                   >
                     <h3 className="font-bold text-att-ink text-base mb-2">{point.title}</h3>
                     <p className="text-att-gray-600 text-sm leading-relaxed">{point.desc}</p>

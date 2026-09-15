@@ -37,7 +37,7 @@ export const fiberVsCable: KnowledgeSection = {
     },
     {
       title: "Steady in the evening",
-      desc: "Peak-hour slowdowns are a capacity problem. Fiber has capacity to spare, so 8 p.m. feels like 8 a.m.",
+      desc: "Evening slowdowns come from shared capacity. Fiber has plenty, so speeds hold up at 8 p.m. the same as at noon.",
     },
   ],
   footnote:
