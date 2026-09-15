@@ -20,6 +20,12 @@ export interface OpenWizardOptions {
   zip?: string;
   /** "es" switches the wizard to Spanish for the /espanol page. */
   lang?: "en" | "es";
+  /**
+   * Pre-answers the first question ("What are you looking for?") so the wizard
+   * opens on question 2. One of the `service.choices` values in wizard-copy:
+   * internet | wireless | bundle | unsure.
+   */
+  service?: string;
 }
 
 interface WizardContextValue {
@@ -60,6 +66,7 @@ export default function WizardProvider({ children }: { children: ReactNode }) {
         <AvailabilityWizard
           source={options.source}
           initialZip={options.zip}
+          initialService={options.service}
           copy={COPY[options.lang || "en"]}
           onClose={closeWizard}
         />

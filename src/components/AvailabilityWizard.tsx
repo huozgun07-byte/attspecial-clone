@@ -108,6 +108,8 @@ export interface AvailabilityWizardProps {
   copy?: WizardCopy;
   /** Pre-fills the ZIP, e.g. when opened from a city page. */
   initialZip?: string;
+  /** Pre-answers "What are you looking for?" so the flow opens on question 2. */
+  initialService?: string;
 }
 
 export default function AvailabilityWizard({
@@ -115,16 +117,21 @@ export default function AvailabilityWizard({
   onClose,
   copy = wizardCopyEn,
   initialZip,
+  initialService,
 }: AvailabilityWizardProps) {
   // Restored from the tab's sessionStorage so close → reopen resumes. The
   // wizard only mounts on a click, never during SSR, so this is client-safe.
   const [saved] = useState(loadSaved);
   const savedIndex = saved?.stepIndex ?? 0;
-  const [stepIndex, setStepIndex] = useState(STEP_IDS[savedIndex] === "scan" ? savedIndex - 1 : savedIndex);
+  // A pre-answered service skips question 1, but never rewinds a resumed session.
+  const [stepIndex, setStepIndex] = useState(
+    STEP_IDS[savedIndex] === "scan" ? savedIndex - 1 : initialService && savedIndex === 0 ? 1 : savedIndex
+  );
   const [answers, setAnswers] = useState<Answers>(() => ({
     ...emptyAnswers,
     ...saved?.answers,
     zip: initialZip || saved?.answers.zip || "",
+    service: initialService || saved?.answers.service || "",
   }));
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
