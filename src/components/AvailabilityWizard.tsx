@@ -129,12 +129,26 @@ export default function AvailabilityWizard({
   const [done, setDone] = useState(false);
   /** Which way the next step slides in from. */
   const [dir, setDir] = useState<"fwd" | "back">("fwd");
+  const [exitPrompt, setExitPrompt] = useState(false);
+  const exitShownRef = useRef(false);
 
   const dialogRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const openerRef = useRef<HTMLElement | null>(null);
   /** Set once the partial lead has gone out, so it is never filed twice. */
   const partialSentRef = useRef(saved?.partialSent ?? false);
+
+  // First close attempt after a ZIP gets one ask for a number; the second closes.
+  const requestClose = useCallback(() => {
+    const hasZip = digitsOnly(answers.zip).length === 5;
+    const hasPhone = digitsOnly(answers.phone).length === 10;
+    if (hasZip && !hasPhone && !done && !exitShownRef.current) {
+      exitShownRef.current = true;
+      setExitPrompt(true);
+      return;
+    }
+    onClose();
+  }, [answers.zip, answers.phone, done, onClose]);
 
   const step: StepId = STEP_IDS[stepIndex];
   const questionNumber = STEP_IDS.slice(0, stepIndex + 1).filter((s) => s !== "scan").length;
@@ -162,7 +176,7 @@ export default function AvailabilityWizard({
   // hear the question rather than being left on a button that has moved.
   useEffect(() => {
     headingRef.current?.focus();
-  }, [stepIndex, done]);
+  }, [stepIndex, done, exitPrompt]);
 
   useEffect(() => {
     if (!done && step !== "scan") trackWizardStep(questionNumber, step);
@@ -177,11 +191,11 @@ export default function AvailabilityWizard({
   // and a React handler on the dialog would then never see the key.
   useEffect(() => {
     const onEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") requestClose();
     };
     document.addEventListener("keydown", onEscape);
     return () => document.removeEventListener("keydown", onEscape);
-  }, [onClose]);
+  }, [requestClose]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key !== "Tab") return;
@@ -294,6 +308,36 @@ export default function AvailabilityWizard({
     }
   };
 
+  const submitExitPhone = async () => {
+    if (digitsOnly(answers.phone).length !== 10) {
+      setError(copy.contact.errorPhone);
+      return;
+    }
+    setBusy(true);
+    setError(null);
+    try {
+      await submitLead({
+        zip: answers.zip,
+        source: `${source}-exit`,
+        website: answers.website,
+        stage: "partial",
+        phone: digitsOnly(answers.phone),
+        email: answers.email,
+        service: answers.service,
+        customerType: answers.customerType,
+        timeline: answers.timeline,
+      });
+      trackQualifiedLead({ source, zip: answers.zip });
+      save(null);
+      setExitPrompt(false);
+      setDone(true);
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : copy.genericError);
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const restart = () => {
     save(null);
     partialSentRef.current = false;
@@ -313,7 +357,7 @@ export default function AvailabilityWizard({
     >
       <div
         className="fixed inset-0 bg-att-ink/60 backdrop-blur-[2px]"
-        onClick={onClose}
+        onClick={requestClose}
         aria-hidden="true"
       />
 
@@ -329,7 +373,7 @@ export default function AvailabilityWizard({
             </span>
             <button
               type="button"
-              onClick={onClose}
+              onClick={requestClose}
               aria-label={copy.close}
               className="-mr-1 p-1.5 text-att-gray-500 hover:text-att-ink rounded-full hover:bg-att-gray-100 focus:outline-none focus:ring-2 focus:ring-att-cyan"
             >
@@ -361,7 +405,40 @@ export default function AvailabilityWizard({
 
         {/* Body */}
         <div className="px-5 sm:px-8 pb-6 overflow-y-auto flex-1">
-          {done ? (
+          {exitPrompt && !done ? (
+            <form onSubmit={(e) => { e.preventDefault(); submitExitPhone(); }} noValidate className="wizard-step">
+              <StepHeading headingRef={headingRef} question={copy.exit.title} help={copy.exit.help} />
+              <label htmlFor="wizard-exit-phone" className="label-text">{copy.contact.phone}</label>
+              <input
+                id="wizard-exit-phone"
+                type="tel"
+                inputMode="tel"
+                className="input-field"
+                autoComplete="tel"
+                autoFocus
+                placeholder={copy.contact.phonePlaceholder}
+                value={answers.phone}
+                onChange={(e) => set("phone", formatPhone(e.target.value))}
+                disabled={busy}
+              />
+              <p className="att-fine text-att-gray-500 mt-3">{copy.contact.consent}</p>
+              {error && (
+                <p className="mt-4 text-sm text-red-700 font-medium" role="alert">{error}</p>
+              )}
+              <div className="flex items-center gap-3 mt-5">
+                <button type="submit" className="btn-primary flex-1 disabled:opacity-60" disabled={busy}>
+                  {busy ? <><span className="spinner" aria-hidden="true" />{copy.contact.submitting}</> : copy.exit.callMe}
+                </button>
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="text-sm font-bold text-att-navy underline underline-offset-2 hover:text-att-navy-dark focus:outline-none focus:ring-2 focus:ring-att-cyan rounded"
+                >
+                  {copy.exit.leave}
+                </button>
+              </div>
+            </form>
+          ) : done ? (
             <DonePanel copy={copy} zip={answers.zip} onRestart={restart} headingRef={headingRef} />
           ) : (
             // Keyed by step so the wrapper remounts and the slide-in replays.
@@ -542,7 +619,7 @@ export default function AvailabilityWizard({
         </div>
 
         {/* Footer: navigation + trust line */}
-        {!done && (
+        {!done && !exitPrompt && (
           <div className="px-5 sm:px-8 pb-5 sm:pb-6 pt-4 bg-white border-t border-att-gray-200">
             <div className="flex items-center gap-3">
               {stepIndex > 0 && step !== "scan" && (
