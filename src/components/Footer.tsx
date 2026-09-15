@@ -3,12 +3,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import { phoneNumber, businessPhone, telHref } from "@/lib/site-config";
+import { deals, dealHref } from "@/lib/deals";
 
 export default function Footer() {
   return (
     <footer className="bg-att-dark text-white" role="contentinfo">
       <div className="att-container py-14">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-10">
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-8 mb-10">
           <div className="col-span-2">
             <Image
               src="/images/att-preferred-dealer-white.png"
@@ -36,6 +37,15 @@ export default function Footer() {
               <li><Link href="/business" className="hover:text-white">Business</Link></li>
               <li><Link href="/att-fiber" className="hover:text-white">Fiber by city</Link></li>
               <li><Link href="/why-fiber" className="hover:text-white">Why AT&amp;T Fiber</Link></li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-bold text-white mb-4 text-base">Deals</h3>
+            <ul className="space-y-2.5 text-sm text-white/70">
+              {deals.map((deal) => (
+                <li key={deal.slug}><Link href={dealHref(deal.slug)} className="hover:text-white">{deal.navLabel}</Link></li>
+              ))}
             </ul>
           </div>
 

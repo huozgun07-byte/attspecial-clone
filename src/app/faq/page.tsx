@@ -25,7 +25,7 @@ export default function FAQPage() {
               ))}
             </div>
             <div className="mt-12 text-center">
-              <p className="text-att-gray-600 mb-4">Still have questions?</p>
+              <h2 className="text-att-gray-600 mb-4 text-base font-normal">Still have questions?</h2>
               <a href={telHref(phoneNumber)} className="text-att-navy font-semibold hover:underline focus:outline-none focus:ring-2 focus:ring-att-cyan rounded">Call {phoneNumber} - Available 24/7</a>
             </div>
           </div>

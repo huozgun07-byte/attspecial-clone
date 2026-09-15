@@ -10,13 +10,15 @@ import AvailabilityCard from "@/components/AvailabilityCard";
 import TrustStrip from "@/components/TrustStrip";
 import HeroSwoosh from "@/components/HeroSwoosh";
 import DealCta from "@/components/DealCta";
+import WirelessPlanCard from "@/components/WirelessPlanCard";
+import PhoneOffer from "@/components/PhoneOffer";
 import { useWizard } from "@/components/WizardProvider";
 import WizardButton from "@/components/WizardButton";
 import { IconFiber, IconContract, IconInstall, IconSupport, IconGlobe, IconWireless, IconBox, IconShield, IconPhone } from "@/components/Icons";
 import {
   plans, features, steps, faqs, bundleFootnote, bundleSavingsNote,
   wirelessPlans, wirelessFootnote, broadbandFactsUrl, serviceChoices, guarantee, switcherOffer, phoneOffers,
-  type Plan, type Feature, type WirelessPlan,
+  type Plan, type Feature,
 } from "@/lib/site-config";
 import { dealHref } from "@/lib/deals";
 
@@ -42,7 +44,6 @@ export default function Home() {
   const [showTermsModal, setShowTermsModal] = useState<string | null>(null);
   const [showRewardModal, setShowRewardModal] = useState(false);
   const [showBundleModal, setShowBundleModal] = useState(false);
-  const [showPhoneModal, setShowPhoneModal] = useState(false);
 
   // Internet Packages | Wireless Plans. The hash is the deep link (/#wireless)
   // and is kept in sync so a shared URL opens on the right tab.
@@ -67,7 +68,6 @@ export default function Home() {
   // Every "check availability" surface on the page opens the same step-by-step
   // wizard, which is mounted once at the app root.
   const { openWizard } = useWizard();
-  const phone = phoneOffers[0];
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -231,12 +231,7 @@ export default function Home() {
               <div id="panel-wireless" role="tabpanel" aria-labelledby="tab-wireless">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" role="list">
                   {wirelessPlans.map((plan, i) => (
-                    <WirelessPlanCard
-                      key={plan.name}
-                      plan={plan}
-                      highlighted={i === 2}
-                      onCtaClick={() => openWizard({ source: "home-wireless-card", service: "wireless" })}
-                    />
+                    <WirelessPlanCard key={plan.name} plan={plan} highlighted={i === 2} source="home-wireless-card" />
                   ))}
                 </div>
                 <p className="mt-6 text-center att-fine text-att-gray-600">
@@ -339,15 +334,7 @@ export default function Home() {
             <DealCta href={dealHref("switcher-800")} onDark />
           </div>
 
-          <div className="surface-card p-6 sm:p-10 flex flex-col">
-            <p className="att-eyebrow text-att-navy mb-3">Phone deal</p>
-            <h2 className="att-h2 mb-3">{phone.headline}</h2>
-            <p className="att-lead mb-6 flex-1">{phone.sub}</p>
-            <DealCta onMoreInfo={() => setShowPhoneModal(true)} />
-            <p className="att-fine text-att-gray-500 mt-5">
-              Req. trade-in of iPhone 14 or higher (excl. 16e) &amp; eligible plan. Limited time offer, subject to change.
-            </p>
-          </div>
+          <PhoneOffer offer={phoneOffers[0]} />
         </section>
 
         {/* ---------------- Why AT&T Fiber ---------------- */}
@@ -544,17 +531,6 @@ export default function Home() {
         </Modal>
       )}
 
-      {showPhoneModal && (
-        <Modal onClose={() => setShowPhoneModal(false)} title={phone.headline} large>
-          <div className="space-y-4 text-sm text-att-gray-600">
-            <p className="font-bold text-att-ink">{phone.device} {phone.sub}</p>
-            <p>{phone.terms}</p>
-            <p className="att-fine text-att-gray-500">
-              Trade-in credits are applied monthly over the credit period and stop if the line is cancelled. Call to confirm the credit for your specific phone and plan — offer verified against att.com; subject to change.
-            </p>
-          </div>
-        </Modal>
-      )}
     </div>
   );
 }
@@ -613,40 +589,6 @@ function PlanCard({ plan, onCtaClick, onDetailsClick }: { plan: Plan; onCtaClick
           className={`w-full ${plan.highlighted ? "btn-primary" : "btn-secondary"}`}
         >
           {plan.cta}
-        </button>
-      </div>
-    </article>
-  );
-}
-
-function WirelessPlanCard({ plan, highlighted, onCtaClick }: { plan: WirelessPlan; highlighted: boolean; onCtaClick: () => void }) {
-  return (
-    <article className={`plan-card ${highlighted ? "plan-card-highlighted" : ""}`} role="listitem">
-      <div className="plan-header">
-        <span className="text-white font-bold tracking-wide text-sm uppercase">{plan.name}</span>
-        {highlighted && <span className="plan-badge">Most popular</span>}
-      </div>
-      <div className="plan-body">
-        <p className="plan-label">AT&amp;T Unlimited</p>
-        <div className="plan-price">
-          <span className="plan-price-amount">{plan.price}</span>
-          <span className="plan-price-period">/mo per line*</span>
-        </div>
-        <p className="att-fine text-att-gray-500 mb-3">
-          {plan.regularPrice}/mo without AutoPay &amp; Paperless. 4 lines.
-        </p>
-        <ul className="mb-5 space-y-2 flex-1" role="list">
-          {plan.features.map((f) => (
-            <li key={f} className="flex items-start gap-2 att-fine text-att-gray-700">
-              <svg className="w-4 h-4 shrink-0 mt-px text-att-cyan" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
-              {f}
-            </li>
-          ))}
-        </ul>
-        <button onClick={onCtaClick} className={`w-full ${highlighted ? "btn-primary" : "btn-secondary"}`}>
-          Get a quote
         </button>
       </div>
     </article>

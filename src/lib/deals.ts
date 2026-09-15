@@ -6,6 +6,8 @@ import { bundleFootnote, bundleSavingsNote, switcherOffer, guarantee } from "./s
 
 export interface Deal {
   slug: string;
+  /** Short label for footer navigation. */
+  navLabel: string;
   eyebrow: string;
   title: string;
   /** One or two sentences under the title. */
@@ -29,6 +31,7 @@ export interface Deal {
 export const deals: Deal[] = [
   {
     slug: "fiber-wireless-bundle",
+    navLabel: "Fiber + wireless bundle",
     eyebrow: "AT&T Fiber + AT&T Wireless",
     title: "1 Gig internet for $30/mo when you bundle",
     summary:
@@ -58,6 +61,7 @@ export const deals: Deal[] = [
   },
   {
     slug: "switcher-800",
+    navLabel: "Switch & save up to $800/line",
     eyebrow: "Switching carriers",
     title: switcherOffer.headline,
     summary: switcherOffer.sub,
@@ -80,6 +84,7 @@ export const deals: Deal[] = [
   },
   {
     slug: "att-guarantee",
+    navLabel: "AT&T Guarantee",
     eyebrow: "AT&T Guarantee",
     title: "All guaranteed, or AT&T will make it right",
     summary: "The first and only guarantee that covers both wireless and fiber networks — at no extra charge, with nothing to sign up for.",

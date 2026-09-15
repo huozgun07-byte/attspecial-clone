@@ -4,10 +4,11 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useWizard } from "@/components/WizardProvider";
 import HeroPanel from "@/components/HeroPanel";
-import { IconPhone } from "@/components/Icons";
-import { phoneNumber, telHref, wirelessPlans, wirelessFootnote, switcherOffer } from "@/lib/site-config";
-
-const phones = ["iPhone 15 Pro", "Samsung Galaxy S24", "Google Pixel 8"];
+import DealCta from "@/components/DealCta";
+import WirelessPlanCard from "@/components/WirelessPlanCard";
+import PhoneOffer from "@/components/PhoneOffer";
+import { phoneNumber, telHref, wirelessPlans, wirelessFootnote, switcherOffer, phoneOffers } from "@/lib/site-config";
+import { dealHref } from "@/lib/deals";
 
 export default function WirelessPage() {
   const { openWizard } = useWizard();
@@ -27,7 +28,7 @@ export default function WirelessPage() {
             bundled with your internet if you want a single bill.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <button onClick={() => openWizard({ source: "wireless" })} className="btn-on-dark">
+            <button onClick={() => openWizard({ source: "wireless", service: "wireless" })} className="btn-on-dark">
               Shop phones
             </button>
             <a href={telHref(phoneNumber)} className="btn-outline-white">
@@ -42,14 +43,7 @@ export default function WirelessPage() {
               <p className="att-eyebrow text-att-navy mb-3">Switching from another carrier?</p>
               <h2 id="switch-title" className="att-h2 mb-3">{switcherOffer.headline}</h2>
               <p className="att-lead mb-5">{switcherOffer.sub}</p>
-              <div className="flex flex-wrap gap-3">
-                <button onClick={() => openWizard({ source: "wireless-switch" })} className="btn-primary">
-                  Start my switch
-                </button>
-                <a href={telHref(phoneNumber)} className="btn-outline">
-                  Call {phoneNumber}
-                </a>
-              </div>
+              <DealCta href={dealHref("switcher-800")} />
             </div>
             <p className="att-fine text-att-gray-600 lg:border-l lg:border-att-navy/15 lg:pl-8">{switcherOffer.terms}</p>
           </div>
@@ -66,26 +60,7 @@ export default function WirelessPage() {
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6" role="list">
               {wirelessPlans.map((plan, i) => (
-                <article key={plan.name} className={`plan-card ${i === 2 ? "plan-card-highlighted" : ""}`} role="listitem">
-                  <div className="plan-header">
-                    <span className="text-white font-bold tracking-wide text-sm uppercase">{plan.name}</span>
-                    {i === 2 && <span className="plan-badge">Most popular</span>}
-                  </div>
-                  <div className="plan-body">
-                    <p className="plan-label">AT&amp;T Unlimited</p>
-                    <div className="plan-price">
-                      <span className="plan-price-amount">{plan.price}</span>
-                      <span className="plan-price-period">/mo per line*</span>
-                    </div>
-                    <p className="att-fine text-att-gray-500 mb-3">
-                      {plan.regularPrice}/mo without AutoPay &amp; Paperless. 4 lines.
-                    </p>
-                    <p className="plan-details">{plan.tagline}</p>
-                    <button onClick={() => openWizard({ source: "wireless-plan" })} className={`w-full ${i === 2 ? "btn-primary" : "btn-secondary"}`}>
-                      Get a quote
-                    </button>
-                  </div>
-                </article>
+                <WirelessPlanCard key={plan.name} plan={plan} highlighted={i === 2} source="wireless-plan" />
               ))}
             </div>
             <p className="att-fine text-att-gray-500 text-center mt-8 max-w-3xl mx-auto">* {wirelessFootnote}</p>
@@ -95,30 +70,16 @@ export default function WirelessPage() {
         <section className="reveal att-section bg-white" aria-labelledby="phones-title">
           <div className="att-container">
             <div className="text-center mb-10 sm:mb-12">
-              <h2 id="phones-title" className="att-h2">Phones people order most</h2>
+              <h2 id="phones-title" className="att-h2 mb-3">Phone deals</h2>
+              <p className="att-lead max-w-2xl mx-auto">
+                Trade-in credits on the current flagships, applied to your bill monthly. Verified against att.com; a specialist confirms the credit for your exact phone.
+              </p>
             </div>
-            <div className="grid md:grid-cols-3 gap-6" role="list">
-              {phones.map((phone) => (
-                <article key={phone} className="plan-card" role="listitem">
-                  <div className="plan-body text-center">
-                    <div className="icon-badge" aria-hidden="true">
-                      <IconPhone />
-                    </div>
-                    <h3 className="feature-title mb-2">{phone}</h3>
-                    <p className="text-att-gray-600 text-sm mb-6 flex-1">
-                      From $0/mo with an eligible trade-in and unlimited plan
-                    </p>
-                    <button onClick={() => openWizard({ source: "wireless" })} className="btn-secondary w-full">
-                      View deals
-                    </button>
-                  </div>
-                </article>
+            <div className={`grid gap-6 mx-auto ${phoneOffers.length > 1 ? "md:grid-cols-2 max-w-4xl" : "max-w-xl"}`}>
+              {phoneOffers.map((offer) => (
+                <PhoneOffer key={offer.slug} offer={offer} />
               ))}
             </div>
-            <p className="att-fine text-att-gray-500 text-center mt-8 max-w-3xl mx-auto">
-              Trade-in offers require eligible device in good condition and qualifying unlimited plan.
-              Credits applied over 36 months. Limited time offer, subject to change.
-            </p>
           </div>
         </section>
 

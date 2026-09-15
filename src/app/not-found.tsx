@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { phoneNumber, telHref } from "@/lib/site-config";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -16,7 +15,7 @@ export default function NotFound() {
         <div className="text-center max-w-md">
           <h1 className="text-9xl font-bold text-att-light-blue mb-4">404</h1>
           <h2 className="text-3xl font-bold text-att-ink mb-4">Page Not Found</h2>
-          <p className="text-att-gray-600 mb-8">Sorry, we couldn't find the page you're looking for. It might have been moved or doesn't exist.</p>
+          <p className="text-att-gray-600 mb-8">Sorry, we couldn&apos;t find the page you&apos;re looking for. It might have been moved or doesn&apos;t exist.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/"
