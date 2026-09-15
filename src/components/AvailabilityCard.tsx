@@ -60,7 +60,7 @@ export default function AvailabilityCard({
           {bullets.map((item) => (
             <li key={item} className="flex items-start gap-2 att-fine text-att-gray-600">
               <svg
-                className="w-4 h-4 shrink-0 mt-px text-att-navy"
+                className="w-4 h-4 shrink-0 mt-px text-att-cyan"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth={2}

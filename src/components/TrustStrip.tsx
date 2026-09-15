@@ -12,7 +12,7 @@ export default function TrustStrip({ className = "" }: { className?: string }) {
         {noSurprises.map((item) => (
           <li key={item.title} className="flex items-start gap-3">
             <svg
-              className="w-5 h-5 shrink-0 mt-0.5 text-att-navy"
+              className="w-5 h-5 shrink-0 mt-0.5 text-att-cyan"
               fill="none"
               stroke="currentColor"
               strokeWidth={1.75}

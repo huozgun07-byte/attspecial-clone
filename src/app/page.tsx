@@ -14,7 +14,7 @@ import WizardButton from "@/components/WizardButton";
 import { IconFiber, IconContract, IconInstall, IconSupport } from "@/components/Icons";
 import { plans, features, steps, faqs, businessPhone, businessHours, type Plan, type Feature } from "@/lib/site-config";
 
-const featureIcons: Record<Feature["icon"], (props: { className?: string }) => React.ReactElement> = {
+const featureIcons: Record<Feature["icon"], (props: React.SVGProps<SVGSVGElement>) => React.ReactElement> = {
   fiber: IconFiber,
   contract: IconContract,
   install: IconInstall,
@@ -367,9 +367,8 @@ function FeatureCard({ feature }: { feature: Feature }) {
   const Icon = featureIcons[feature.icon];
   return (
     <li className="flex gap-4">
-      <span className="shrink-0 mt-0.5 w-9 h-9 rounded-lg bg-white border border-att-gray-200 text-att-navy flex items-center justify-center [&>svg]:w-5 [&>svg]:h-5" aria-hidden="true">
-        <Icon />
-      </span>
+      {/* Bare, thin-line, ink — the way att.com draws benefit icons. */}
+      <Icon className="shrink-0 w-10 h-10 text-att-ink" strokeWidth={1.4} aria-hidden="true" />
       <div>
         <h3 className="feature-title">{feature.title}</h3>
         <p className="feature-desc">{feature.desc}</p>

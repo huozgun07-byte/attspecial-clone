@@ -125,9 +125,7 @@ export default function WhyFiberPage() {
             <div className="att-container">
               <div className="grid lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] gap-8 lg:gap-16 items-start">
                 <div className="lg:sticky lg:top-40">
-                  <span className="inline-flex w-9 h-9 rounded-lg bg-att-light-blue text-att-navy items-center justify-center mb-4 [&>svg]:w-5 [&>svg]:h-5" aria-hidden="true">
-                    <Icon />
-                  </span>
+                  <Icon className="w-11 h-11 text-att-ink mb-4" strokeWidth={1.4} aria-hidden="true" />
                   <h2 id={`${section.id}-title`} className="att-h2 mb-3">{section.title}</h2>
                   <p className="att-lead">{section.lead}</p>
                 </div>

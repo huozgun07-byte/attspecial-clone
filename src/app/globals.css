@@ -211,16 +211,11 @@
 
   /* ---- Feature / icon badges ---- */
   .feature-card { @apply text-center; }
-  .feature-icon {
-    @apply w-14 h-14 mx-auto mb-4 rounded-full bg-att-light-blue text-att-navy
-    flex items-center justify-center;
-  }
-  .feature-icon svg { @apply w-7 h-7; }
-  .icon-badge {
-    @apply w-14 h-14 rounded-full bg-att-light-blue text-att-navy
-    flex items-center justify-center mx-auto mb-4;
-  }
-  .icon-badge svg { @apply w-7 h-7; }
+  /* att.com draws benefit icons bare: thin single line, ink, no background disc. */
+  .feature-icon,
+  .icon-badge { @apply w-12 h-12 mx-auto mb-4 text-att-ink flex items-center justify-center; }
+  .feature-icon svg,
+  .icon-badge svg { @apply w-11 h-11; stroke-width: 1.4; }
   .feature-title { @apply font-bold text-att-ink mb-1.5; font-size: 1.0625rem; }
   .feature-desc { @apply text-att-gray-600 text-sm; line-height: 1.5; }
 
