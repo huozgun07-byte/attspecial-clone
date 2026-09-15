@@ -11,7 +11,7 @@ export default function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="bg-white sticky top-0 z-50">
+    <header className="sticky top-0 z-50 bg-white/85 backdrop-blur-md">
       {/* Row 1 — logo + call block (attspecial.com / att.com: all white, no colored bar) */}
       <div className="att-container">
         <div className="flex items-center justify-between gap-4 pt-4 pb-3 sm:pt-5">

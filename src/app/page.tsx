@@ -67,7 +67,7 @@ export default function Home() {
 
                 <div className="flex items-baseline gap-1.5 mb-1" aria-label="Price">
                   <span className="text-white font-bold text-2xl sm:text-3xl">$</span>
-                  <span className="text-white font-bold text-5xl sm:text-6xl tracking-tight">50</span>
+                  <span className="text-white font-bold text-6xl sm:text-7xl tracking-tight">50</span>
                   <span className="text-white/90 text-lg">/mo*</span>
                 </div>
                 <p className="text-white font-bold text-base sm:text-lg mb-3">
