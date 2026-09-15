@@ -19,12 +19,17 @@ GitHub: `huozgun07-byte/attspecial-clone`.
 - `src/lib/site-config.ts` — single source of truth for phone numbers, business
   hours, plans, FAQs, nav items, and `telHref()`. Never hardcode a phone number
   or plan price directly in a page — import from here.
-- `src/components/AddressForm.tsx` / `AvailabilityModal.tsx` / `AddressCheckFlow.tsx`
-  — shared form components used across the homepage hero, `att-internet-air`,
-  `wireless`, and `espanol` pages. Includes an invisible honeypot field
-  (`website`) for spam protection.
+- `src/components/AvailabilityWizard.tsx` + `src/lib/wizard-copy.ts` — the
+  step-by-step lead wizard (mounted once by `WizardProvider`, opened from any
+  page via `WizardButton` / `useWizard`). Includes an invisible honeypot field
+  (`website`). Answers persist in `sessionStorage` for the tab, so close →
+  reopen resumes. `scripts/wizard-copy.test.mjs` (`node --test
+  scripts/wizard-copy.test.mjs`) guards the personalised-heading helper and
+  the "never claim availability at the address" copy rule.
+- `src/components/MobileCtaBar.tsx` — sticky bottom bar below `lg`; `body`
+  gets matching bottom padding in `globals.css`.
 - `src/lib/api.ts` — `checkAvailability()` and `submitLead()` fetch wrappers
-  used by `AddressCheckFlow`.
+  used by the wizard.
 - `src/lib/rate-limit.ts` — simple in-memory per-IP rate limiter (not shared
   across serverless instances; swap for Upstash Redis if traffic grows).
 - `src/app/api/check-availability/route.ts` — simulated availability check
@@ -64,8 +69,16 @@ own machine.
   date-free or clearly marked as needing periodic review.
 - **No Netlify** — the project deploys to Vercel only. Do not reintroduce
   `netlify.toml` or `@netlify/plugin-nextjs`.
-- **Images**: only `att-fiber-logo-whtblue.png`, `att-preferred-dealer.png`,
-  `att-reward-card.png`, and `updater-logo.svg` in `public/images/` are
-  actually used — sourced from the real attspecial.com site, not AT&T's
-  internal "you Refer" employee-referral brand kit (that kit requires Legal
-  approval and isn't for public-facing use).
+- **Scroll reveal is CSS-only** (`.reveal` + `animation-timeline: view()` in
+  `globals.css`); don't add a JS IntersectionObserver for it. Never put
+  `.reveal` on a hero section — it is the LCP element.
+- **Images are immutable-cached for a year** (`next.config.ts`). To replace a
+  photo, give it a new file name; overwriting in place keeps serving the old
+  one from browser and CDN caches.
+- **Images**: brand assets in use are `att-fiber-logo-whtblue.png`,
+  `att-preferred-dealer.png`, `att-reward-card.png` and `updater-logo.svg` —
+  sourced from the real attspecial.com site, not AT&T's internal "you Refer"
+  employee-referral brand kit (that kit requires Legal approval and isn't for
+  public-facing use). Photography: `hero-family-2.jpg` (homepage + city-page
+  fallback), `hero-internet-air-2.jpg`, `hero-wireless-2.jpg` and
+  `cities/*.jpg` are Unsplash-licensed.
