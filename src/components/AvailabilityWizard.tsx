@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState, ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, ReactNode } from "react";
 import { submitLead, ApiError } from "@/lib/api";
 import { trackLead, trackQualifiedLead, trackWizardStep, trackCall } from "@/lib/tracking";
 import { phoneNumber, telHref, plans } from "@/lib/site-config";
-import { WizardCopy, wizardCopyEn } from "@/lib/wizard-copy";
+import { WizardCopy, wizardCopyEn, contactQuestion } from "@/lib/wizard-copy";
 import { IconGlobe, IconWireless, IconBox, IconDocument } from "./Icons";
 
 /**
@@ -26,8 +26,10 @@ import { IconGlobe, IconWireless, IconBox, IconDocument } from "./Icons";
  *    step still leaves us something to work with.
  */
 
-const STEP_IDS = ["service", "customer", "timeline", "zip", "email", "contact"] as const;
+const STEP_IDS = ["service", "customer", "timeline", "zip", "scan", "email", "contact"] as const;
 type StepId = (typeof STEP_IDS)[number];
+/** The scan is a beat, not a question — it gets no progress segment. */
+const QUESTION_STEPS = STEP_IDS.filter((s) => s !== "scan");
 const TOTAL_STEPS = STEP_IDS.length;
 
 const SERVICE_ICONS: Record<string, (props: { className?: string }) => ReactNode> = {
@@ -115,7 +117,8 @@ export default function AvailabilityWizard({
   // Restored from the tab's sessionStorage so close → reopen resumes. The
   // wizard only mounts on a click, never during SSR, so this is client-safe.
   const saved = useRef(loadSaved()).current;
-  const [stepIndex, setStepIndex] = useState(saved?.stepIndex ?? 0);
+  const savedIndex = saved?.stepIndex ?? 0;
+  const [stepIndex, setStepIndex] = useState(STEP_IDS[savedIndex] === "scan" ? savedIndex - 1 : savedIndex);
   const [answers, setAnswers] = useState<Answers>(() => ({
     ...emptyAnswers,
     ...saved?.answers,
@@ -134,6 +137,12 @@ export default function AvailabilityWizard({
   const partialSentRef = useRef(saved?.partialSent ?? false);
 
   const step: StepId = STEP_IDS[stepIndex];
+  const questionNumber = STEP_IDS.slice(0, stepIndex + 1).filter((s) => s !== "scan").length;
+  const stepLabel = done
+    ? copy.doneLabel
+    : step === "contact"
+      ? copy.lastStep
+      : copy.stepOf(questionNumber, QUESTION_STEPS.length);
 
   const set = <K extends keyof Answers>(key: K, value: Answers[K]) =>
     setAnswers((prev) => ({ ...prev, [key]: value }));
@@ -156,8 +165,8 @@ export default function AvailabilityWizard({
   }, [stepIndex, done]);
 
   useEffect(() => {
-    if (!done) trackWizardStep(stepIndex + 1, step);
-  }, [stepIndex, step, done]);
+    if (!done && step !== "scan") trackWizardStep(questionNumber, step);
+  }, [questionNumber, step, done]);
 
   useEffect(() => {
     if (!done) save({ answers, stepIndex, partialSent: partialSentRef.current });
@@ -194,14 +203,15 @@ export default function AvailabilityWizard({
   const goBack = () => {
     setError(null);
     setDir("back");
-    setStepIndex((i) => Math.max(0, i - 1));
+    // Back from the email step lands on the ZIP, not on the scan beat.
+    setStepIndex((i) => (STEP_IDS[i - 1] === "scan" ? i - 2 : Math.max(0, i - 1)));
   };
 
-  const advance = () => {
+  const advance = useCallback(() => {
     setError(null);
     setDir("fwd");
     setStepIndex((i) => Math.min(TOTAL_STEPS - 1, i + 1));
-  };
+  }, []);
 
   /** Choice steps advance on tap — no separate Next press. */
   const choose = (key: "service" | "customerType" | "timeline", value: string) => {
@@ -315,7 +325,7 @@ export default function AvailabilityWizard({
         <div className="px-5 sm:px-8 pt-5 sm:pt-6 pb-4">
           <div className="flex items-center justify-between gap-4 mb-3">
             <span className="att-fine font-bold text-att-navy tracking-wide uppercase">
-              {done ? copy.doneLabel : copy.stepOf(stepIndex + 1, TOTAL_STEPS)}
+              {stepLabel}
             </span>
             <button
               type="button"
@@ -334,15 +344,15 @@ export default function AvailabilityWizard({
             className="flex gap-1.5"
             role="progressbar"
             aria-valuemin={0}
-            aria-valuemax={TOTAL_STEPS}
-            aria-valuenow={done ? TOTAL_STEPS : stepIndex + 1}
+            aria-valuemax={QUESTION_STEPS.length}
+            aria-valuenow={done ? QUESTION_STEPS.length : questionNumber}
             aria-label={copy.dialogLabel}
           >
-            {STEP_IDS.map((id, i) => (
+            {QUESTION_STEPS.map((id, i) => (
               <span
                 key={id}
                 className={`h-1.5 flex-1 rounded-full transition-colors duration-300 ${
-                  done || i <= stepIndex ? "bg-att-cyan" : "bg-att-gray-150"
+                  done || i < questionNumber ? "bg-att-cyan" : "bg-att-gray-150"
                 }`}
               />
             ))}
@@ -424,9 +434,17 @@ export default function AvailabilityWizard({
                 </form>
               )}
 
+              {step === "scan" && (
+                <ScanStep lines={copy.scan.lines} zip={answers.zip} onDone={advance} />
+              )}
+
               {step === "email" && (
                 <form onSubmit={(e) => { e.preventDefault(); submitEmail(); }} noValidate>
-                  <StepHeading headingRef={headingRef} question={copy.email.question} help={copy.email.help} />
+                  <StepHeading
+                    headingRef={headingRef}
+                    question={copy.email.questionNearZip(answers.zip, plans[0].price)}
+                    help={copy.email.help}
+                  />
                   <label htmlFor="wizard-email" className="label-text">{copy.email.label}</label>
                   <input
                     id="wizard-email"
@@ -451,7 +469,7 @@ export default function AvailabilityWizard({
 
               {step === "contact" && (
                 <form onSubmit={(e) => { e.preventDefault(); submitContact(); }} noValidate>
-                  <StepHeading headingRef={headingRef} question={copy.contact.question} help={copy.contact.help} />
+                  <StepHeading headingRef={headingRef} question={contactQuestion(copy, answers)} help={copy.contact.help} />
                   <div className="space-y-4">
                     <div className="grid grid-cols-2 gap-3">
                       <div>
@@ -527,7 +545,7 @@ export default function AvailabilityWizard({
         {!done && (
           <div className="px-5 sm:px-8 pb-5 sm:pb-6 pt-4 bg-white border-t border-att-gray-200">
             <div className="flex items-center gap-3">
-              {stepIndex > 0 && (
+              {stepIndex > 0 && step !== "scan" && (
                 <button type="button" onClick={goBack} className="btn-outline shrink-0" disabled={busy}>
                   ← {copy.back}
                 </button>
@@ -576,6 +594,27 @@ export default function AvailabilityWizard({
  */
 function SubmitOnEnter() {
   return <button type="submit" className="sr-only" tabIndex={-1} aria-hidden="true" />;
+}
+
+/** 1.6 s beat after the ZIP: nothing is checked here, it only paces the flow. */
+function ScanStep({ lines, zip, onDone }: { lines: string[]; zip: string; onDone: () => void }) {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    const cycle = window.setInterval(() => setI((n) => Math.min(n + 1, lines.length - 1)), 520);
+    const finish = window.setTimeout(onDone, 1600);
+    return () => { window.clearInterval(cycle); window.clearTimeout(finish); };
+  }, [lines.length, onDone]);
+  return (
+    <div className="py-10 text-center" role="status" aria-live="polite">
+      <span className="relative mx-auto mb-6 flex w-16 h-16 items-center justify-center" aria-hidden="true">
+        <span className="pulse-ring absolute inset-0 rounded-full bg-att-cyan/40" />
+        <span className="relative w-10 h-10 rounded-full bg-att-navy text-white flex items-center justify-center">
+          <span className="spinner" />
+        </span>
+      </span>
+      <p className="font-bold text-att-ink text-lg">{lines[i].replace("{zip}", zip)}</p>
+    </div>
+  );
 }
 
 function StepHeading({
