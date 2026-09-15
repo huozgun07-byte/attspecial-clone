@@ -2,6 +2,7 @@
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import HeroPanel from "@/components/HeroPanel";
 import { useWizard } from "@/components/WizardProvider";
 import { IconFiber, Icon5G, IconPhone } from "@/components/Icons";
 import { phoneNumber, telHref } from "@/lib/site-config";
@@ -32,24 +33,22 @@ export default function EspanolPage() {
       <Header />
 
       <main className="flex-1">
-        <section className="att-container pt-5 pb-10 sm:pt-7 sm:pb-12" aria-labelledby="hero-title">
-          <div className="surface-card px-6 py-14 sm:px-12 sm:py-20 text-center">
-            <p className="att-eyebrow text-att-navy mb-3">AT&amp;T Preferred Dealer</p>
-            <h1 id="hero-title" className="att-h2 mb-4 max-w-3xl mx-auto">AT&amp;T en Español</h1>
-            <p className="att-lead mb-8 max-w-2xl mx-auto">
-              Verificamos la disponibilidad en su dirección, le explicamos los descuentos y
-              agendamos la instalación. Atención en español las 24 horas, todos los días.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button onClick={() => openWizard({ source: "espanol", lang: "es" })} className="btn-primary">
-                Verificar disponibilidad
-              </button>
-              <a href={telHref(phoneNumber)} className="btn-outline">
-                Llame al {phoneNumber}
-              </a>
-            </div>
+        <HeroPanel image="/images/hero-espanol.jpg" imagePosition="object-[65%_center]">
+          <p className="att-eyebrow text-att-sky mb-3">AT&amp;T Preferred Dealer</p>
+          <h1 id="hero-title" className="att-display mb-5">AT&amp;T en Español</h1>
+          <p className="text-white/85 text-lg mb-8 max-w-xl">
+            Verificamos la disponibilidad en su dirección, le explicamos los descuentos y
+            agendamos la instalación. Atención en español las 24 horas, todos los días.
+          </p>
+          <div className="flex flex-wrap gap-4">
+            <button onClick={() => openWizard({ source: "espanol", lang: "es" })} className="btn-on-dark">
+              Verificar disponibilidad
+            </button>
+            <a href={telHref(phoneNumber)} className="btn-outline-white">
+              Llame al {phoneNumber}
+            </a>
           </div>
-        </section>
+        </HeroPanel>
 
         <section className="att-section bg-white" aria-labelledby="services-title">
           <div className="att-container">

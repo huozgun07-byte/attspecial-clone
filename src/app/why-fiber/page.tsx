@@ -3,6 +3,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import TrustStrip from "@/components/TrustStrip";
+import HeroPanel from "@/components/HeroPanel";
 import WizardButton from "@/components/WizardButton";
 import { IconFiber, IconGlobe, IconShield } from "@/components/Icons";
 import {
@@ -73,12 +74,10 @@ export default function WhyFiberPage() {
         </nav>
 
         {/* Intro */}
-        <section className="att-container pt-4 pb-10 sm:pt-6 sm:pb-12" aria-labelledby="why-title">
-          <div className="surface-card p-6 sm:p-10 lg:p-12">
-            <div className="max-w-3xl">
-              <p className="att-eyebrow text-att-navy mb-3">AT&amp;T Preferred Dealer</p>
-              <h1 id="why-title" className="att-h2 mb-4">Why AT&amp;T Fiber is different</h1>
-              <p className="att-lead mb-6">
+        <HeroPanel image="/images/hero-why-fiber.jpg" imagePosition="object-[70%_center]">
+              <p className="att-eyebrow text-att-sky mb-3">AT&amp;T Preferred Dealer</p>
+              <h1 id="hero-title" className="att-display mb-5">Why AT&amp;T Fiber is different</h1>
+              <p className="text-white/85 text-lg mb-6">
                 Every provider advertises a download number, and at the same tier those numbers look
                 alike. The differences that show up in a real household are elsewhere: what the line
                 is physically made of, how fast data leaves your home, what hardware you have to pay
@@ -86,16 +85,14 @@ export default function WhyFiberPage() {
                 covers all four, without the sales gloss.
               </p>
               <div className="flex flex-wrap gap-3">
-                <WizardButton source="why-fiber-hero" className="btn-primary">
+                <WizardButton source="why-fiber-hero" className="btn-on-dark">
                   Check my address
                 </WizardButton>
-                <a href={telHref(phoneNumber)} className="btn-outline">
+                <a href={telHref(phoneNumber)} className="btn-outline-white">
                   Call {phoneNumber}
                 </a>
               </div>
-            </div>
-          </div>
-        </section>
+        </HeroPanel>
 
         {/* Upload comparison */}
         <section className="reveal att-section bg-att-gray-100 border-y border-att-gray-200" aria-labelledby="upload-title">

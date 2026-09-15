@@ -4,6 +4,7 @@ import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Modal from "@/components/Modal";
+import HeroPanel from "@/components/HeroPanel";
 import { IconGlobe, IconWireless, IconShield } from "@/components/Icons";
 import { businessPhone, businessHours, telHref } from "@/lib/site-config";
 
@@ -33,27 +34,25 @@ export default function BusinessPage() {
       <Header />
 
       <main className="flex-1">
-        <section className="att-container pt-5 pb-10 sm:pt-7 sm:pb-12" aria-labelledby="hero-title">
-          <div className="surface-card px-6 py-14 sm:px-12 sm:py-20 text-center">
-            <p className="att-eyebrow text-att-navy mb-3">AT&amp;T Business</p>
-            <h1 id="hero-title" className="att-h2 mb-4 max-w-3xl mx-auto">
-              AT&amp;T business internet and wireless
-            </h1>
-            <p className="att-lead mb-8 max-w-2xl mx-auto">
-              Fiber with an uptime guarantee, wireless lines for the team, and one account
-              manager who knows your setup — quoted by an AT&amp;T Preferred Dealer.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button onClick={() => setShowModal(true)} className="btn-primary">
-                Get a quote
-              </button>
-              <a href={telHref(businessPhone)} className="btn-outline">
-                Call {businessPhone}
-              </a>
-            </div>
-            <p className="att-fine text-att-gray-500 mt-5">{businessHours}</p>
+        <HeroPanel image="/images/hero-business.jpg" imagePosition="object-[65%_center]">
+          <p className="att-eyebrow text-att-sky mb-3">AT&amp;T Business</p>
+          <h1 id="hero-title" className="att-display mb-5">
+            AT&amp;T business internet and wireless
+          </h1>
+          <p className="text-white/85 text-lg mb-8 max-w-xl">
+            Fiber with an uptime guarantee, wireless lines for the team, and one account
+            manager who knows your setup — quoted by an AT&amp;T Preferred Dealer.
+          </p>
+          <div className="flex flex-wrap gap-4">
+            <button onClick={() => setShowModal(true)} className="btn-on-dark">
+              Get a quote
+            </button>
+            <a href={telHref(businessPhone)} className="btn-outline-white">
+              Call {businessPhone}
+            </a>
           </div>
-        </section>
+          <p className="att-fine text-white/70 mt-5">{businessHours}</p>
+        </HeroPanel>
 
         <section className="att-section bg-white" aria-labelledby="services-title">
           <div className="att-container">

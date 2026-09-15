@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Image from "next/image";
 import AvailabilityCard from "@/components/AvailabilityCard";
+import HeroSwoosh from "@/components/HeroSwoosh";
 import { cities, citiesByState } from "@/lib/cities";
 import { phoneNumber, telHref } from "@/lib/site-config";
 import { siteUrl, pageMetadata } from "@/lib/seo";
@@ -56,22 +58,33 @@ export default function AttFiberHubPage() {
         </nav>
 
         <section className="att-container pt-4 pb-10 sm:pt-6 sm:pb-12" aria-labelledby="hub-title">
-          <div className="surface-card p-6 sm:p-10 lg:p-12">
-            <div className="grid lg:grid-cols-[1.15fr_minmax(300px,400px)] gap-10 lg:gap-16 items-start">
+          <div className="att-hero-shell">
+            <Image
+              src="/images/hero-cities.jpg"
+              alt=""
+              fill
+              priority
+              sizes="(max-width: 1296px) 100vw, 1296px"
+              className="object-cover object-[60%_center]"
+              aria-hidden="true"
+            />
+            <div className="att-hero-scrim" aria-hidden="true" />
+            <HeroSwoosh />
+            <div className="relative grid lg:grid-cols-[1.15fr_minmax(300px,400px)] gap-10 lg:gap-16 items-center p-6 sm:p-9 lg:p-12">
               <div>
-                <p className="att-eyebrow text-att-navy mb-3">AT&amp;T Preferred Dealer</p>
-                <h1 id="hub-title" className="att-h2 mb-4">
+                <p className="att-eyebrow text-att-sky mb-3">AT&amp;T Preferred Dealer</p>
+                <h1 id="hub-title" className="att-display mb-5">
                   AT&amp;T Fiber availability by city
                 </h1>
-                <p className="att-lead mb-4">
+                <p className="text-white/85 text-lg mb-4">
                   AT&amp;T Fiber is sold across a 21-state footprint, and inside those states the
                   network is built out street by street rather than city-wide. These pages cover the{" "}
                   {cities.length} metros we take the most orders in — pick yours for local detail, or
                   just check your address on the right.
                 </p>
-                <p className="text-att-gray-600">
+                <p className="text-white/80">
                   Not on the list? We still order anywhere AT&amp;T Fiber is available. Call{" "}
-                  <a href={telHref(phoneNumber)} className="text-att-navy font-bold underline underline-offset-2">
+                  <a href={telHref(phoneNumber)} className="text-white font-bold underline underline-offset-2 hover:text-att-sky">
                     {phoneNumber}
                   </a>{" "}
                   and a specialist will check it with you.
@@ -79,7 +92,7 @@ export default function AttFiberHubPage() {
               </div>
 
               <AvailabilityCard
-                className="bg-white rounded-2xl p-6 border border-att-gray-200"
+                className="att-hero-card"
                 title="Check any address"
                 source="att-fiber-hub"
                 cta="Check availability"
