@@ -15,7 +15,7 @@ const { chromium } = require("playwright-core");
 
 const CARDS = [
   { out: "og-image", photo: "hero-family-2.jpg", title: "AT&T Fiber® 1 Gig", sub: "$50/mo* for 12 months", line: "Free professional install · $200 Reward Card · No annual contract" },
-  { out: "og-internet-air", photo: "hero-internet-air-2.jpg", title: "AT&T Internet Air™", sub: "$55/mo* home internet", line: "5G home internet · No annual contract · Set up in minutes" },
+  { out: "og-internet-air", photo: "hero-internet-air-3.jpg", title: "AT&T Internet Air™", sub: "$55/mo* home internet", line: "5G home internet · No annual contract · Set up in minutes" },
   { out: "og-wireless", photo: "hero-wireless-2.jpg", title: "AT&T Wireless", sub: "Phones from $0/mo*", line: "America's most reliable 5G network · Trade-in offers" },
   { out: "og-business", photo: "hero-business.jpg", title: "AT&T Business", sub: "Fiber up to 5 GIGs", line: "99.9% uptime SLA · Wireless for your team · Managed security" },
 ];

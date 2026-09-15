@@ -41,7 +41,7 @@ export default function ATTInternetAirPage() {
       <Header />
 
       <main className="flex-1">
-        <HeroPanel image="/images/hero-internet-air-2.jpg" imagePosition="object-[70%_center]">
+        <HeroPanel image="/images/hero-internet-air-3.jpg" imagePosition="object-[70%_center]">
           <p className="att-eyebrow text-att-sky mb-3">AT&amp;T Internet Air™</p>
           <h1 id="hero-title" className="att-display mb-5 max-w-2xl">
             AT&amp;T Internet Air™ — home internet over 5G
